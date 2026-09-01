@@ -7,17 +7,57 @@
 <title>Lluc Health</title>
 
 <style>
+
+/* =========================================================
+   BASE
+========================================================= */
+
 * {
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
 }
 
+:root {
+  --background: #f2f2f7;
+  --card: #ffffff;
+  --secondary: #f2f2f7;
+  --text: #111111;
+  --secondary-text: #8e8e93;
+  --separator: #eeeef2;
+  --blue: #007aff;
+  --green: #34c759;
+  --red: #ff3b30;
+  --nav-background: rgba(255,255,255,.92);
+  --shadow: rgba(0,0,0,.12);
+}
+
+body.dark {
+  --background: #000000;
+  --card: #1c1c1e;
+  --secondary: #2c2c2e;
+  --text: #ffffff;
+  --secondary-text: #98989f;
+  --separator: #38383a;
+  --nav-background: rgba(28,28,30,.92);
+  --shadow: rgba(0,0,0,.45);
+}
+
 body {
   margin: 0;
-  background: #f2f2f7;
-  color: #111;
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
-    "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+  background: var(--background);
+  color: var(--text);
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "SF Pro Display",
+    "SF Pro Text",
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
+
+  transition:
+    background .25s ease,
+    color .25s ease;
 }
 
 button,
@@ -28,6 +68,7 @@ input {
 button {
   border: none;
   cursor: pointer;
+  color: inherit;
 }
 
 .app {
@@ -35,6 +76,11 @@ button {
   margin: 0 auto;
   padding: 0 16px 100px;
 }
+
+
+/* =========================================================
+   HEADER
+========================================================= */
 
 .header {
   padding: 28px 4px 18px;
@@ -49,9 +95,14 @@ button {
 
 .header p {
   margin: 5px 0 0;
-  color: #8e8e93;
+  color: var(--secondary-text);
   font-size: 15px;
 }
+
+
+/* =========================================================
+   SCREENS
+========================================================= */
 
 .screen {
   display: none;
@@ -61,12 +112,20 @@ button {
   display: block;
 }
 
+
+/* =========================================================
+   CARDS
+========================================================= */
+
 .card {
-  background: white;
+  background: var(--card);
   border-radius: 22px;
   padding: 18px;
   margin-bottom: 14px;
-  box-shadow: 0 1px 2px rgba(0,0,0,.03);
+  box-shadow: 0 1px 2px var(--shadow);
+  transition:
+    background .25s ease,
+    box-shadow .25s ease;
 }
 
 .section-title {
@@ -75,6 +134,11 @@ button {
   margin: 24px 4px 10px;
   letter-spacing: -.4px;
 }
+
+
+/* =========================================================
+   DATE
+========================================================= */
 
 .date-card {
   text-align: center;
@@ -88,10 +152,15 @@ button {
 }
 
 .date-sub {
-  color: #8e8e93;
+  color: var(--secondary-text);
   font-size: 14px;
   margin-top: 3px;
 }
+
+
+/* =========================================================
+   WEIGHT
+========================================================= */
 
 .weight-card {
   display: flex;
@@ -106,7 +175,7 @@ button {
 
 .weight-left p {
   margin: 4px 0 0;
-  color: #8e8e93;
+  color: var(--secondary-text);
   font-size: 13px;
 }
 
@@ -114,19 +183,25 @@ button {
   width: 100px;
   padding: 11px 10px;
   border: none;
-  background: #f2f2f7;
+  background: var(--secondary);
+  color: var(--text);
   border-radius: 13px;
   text-align: right;
   font-size: 18px;
   outline: none;
 }
 
+
+/* =========================================================
+   MEALS
+========================================================= */
+
 .meal-row {
   display: flex;
   align-items: center;
   gap: 13px;
   min-height: 52px;
-  border-bottom: 1px solid #eeeef2;
+  border-bottom: 1px solid var(--separator);
 }
 
 .meal-row:last-child {
@@ -137,7 +212,7 @@ button {
   width: 27px;
   height: 27px;
   border-radius: 50%;
-  background: #e5e5ea;
+  background: var(--secondary);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -149,13 +224,18 @@ button {
 }
 
 .meal-row.checked .check {
-  background: #34c759;
+  background: var(--green);
   color: white;
 }
 
 .meal-name {
   font-size: 16px;
 }
+
+
+/* =========================================================
+   ACTIVITY
+========================================================= */
 
 .activity-grid {
   display: grid;
@@ -166,17 +246,22 @@ button {
 .activity-button {
   padding: 14px 8px;
   border-radius: 15px;
-  background: #f2f2f7;
-  color: #3a3a3c;
+  background: var(--secondary);
+  color: var(--text);
   font-size: 14px;
   font-weight: 600;
   transition: .2s ease;
 }
 
 .activity-button.selected {
-  background: #007aff;
+  background: var(--blue);
   color: white;
 }
+
+
+/* =========================================================
+   SLEEP
+========================================================= */
 
 .sleep-row {
   display: flex;
@@ -191,19 +276,30 @@ button {
 .sleep-input {
   width: 90px;
   padding: 11px;
-  background: #f2f2f7;
+  background: var(--secondary);
+  color: var(--text);
   border: none;
   border-radius: 13px;
   text-align: right;
   outline: none;
 }
 
+
+/* =========================================================
+   SAVED
+========================================================= */
+
 .saved {
   text-align: center;
-  color: #34c759;
+  color: var(--green);
   font-size: 13px;
   margin: 12px 0 0;
 }
+
+
+/* =========================================================
+   STRENGTH
+========================================================= */
 
 .exercise-card {
   padding: 17px;
@@ -222,7 +318,7 @@ button {
 }
 
 .add-set {
-  background: #007aff;
+  background: var(--blue);
   color: white;
   border-radius: 12px;
   padding: 8px 12px;
@@ -240,7 +336,8 @@ button {
 .set-input {
   width: 100%;
   border: none;
-  background: #f2f2f7;
+  background: var(--secondary);
+  color: var(--text);
   border-radius: 11px;
   padding: 10px;
   outline: none;
@@ -248,28 +345,29 @@ button {
 }
 
 .delete-set {
-  background: #f2f2f7;
-  color: #ff3b30;
+  background: var(--secondary);
+  color: var(--red);
   border-radius: 11px;
   font-size: 18px;
 }
 
 .volume {
   margin-top: 8px;
-  color: #8e8e93;
+  color: var(--secondary-text);
   font-size: 13px;
 }
 
 .empty {
-  color: #8e8e93;
+  color: var(--secondary-text);
   text-align: center;
   padding: 16px 0;
   font-size: 14px;
 }
 
-/* =========================
-   PROGRÉS
-========================= */
+
+/* =========================================================
+   PROGRESS
+========================================================= */
 
 .stats-grid {
   display: grid;
@@ -278,13 +376,13 @@ button {
 }
 
 .stat-card {
-  background: white;
+  background: var(--card);
   border-radius: 19px;
   padding: 17px;
 }
 
 .stat-label {
-  color: #8e8e93;
+  color: var(--secondary-text);
   font-size: 13px;
 }
 
@@ -297,12 +395,17 @@ button {
 
 .stat-small {
   font-size: 13px;
-  color: #8e8e93;
+  color: var(--secondary-text);
   margin-top: 3px;
 }
 
+
+/* =========================================================
+   CHARTS
+========================================================= */
+
 .chart-card {
-  background: white;
+  background: var(--card);
   border-radius: 22px;
   padding: 18px;
   margin-bottom: 14px;
@@ -315,14 +418,14 @@ button {
 }
 
 .chart-subtitle {
-  color: #8e8e93;
+  color: var(--secondary-text);
   font-size: 13px;
   margin-bottom: 14px;
 }
 
 .chart-switcher {
   display: flex;
-  background: #f2f2f7;
+  background: var(--secondary);
   padding: 3px;
   border-radius: 11px;
   margin-bottom: 17px;
@@ -333,15 +436,15 @@ button {
   padding: 7px 4px;
   border-radius: 9px;
   background: transparent;
-  color: #8e8e93;
+  color: var(--secondary-text);
   font-size: 12px;
   font-weight: 600;
 }
 
 .chart-switch.active {
-  background: white;
-  color: #111;
-  box-shadow: 0 1px 3px rgba(0,0,0,.08);
+  background: var(--card);
+  color: var(--text);
+  box-shadow: 0 1px 3px var(--shadow);
 }
 
 .line-chart {
@@ -354,7 +457,7 @@ button {
 .chart-y-label {
   position: absolute;
   left: 0;
-  color: #8e8e93;
+  color: var(--secondary-text);
   font-size: 11px;
 }
 
@@ -377,15 +480,16 @@ button {
   right: 5px;
   top: 8px;
   bottom: 27px;
-  border-top: 1px solid #e5e5ea;
-  border-bottom: 1px solid #e5e5ea;
+  border-top: 1px solid var(--separator);
+  border-bottom: 1px solid var(--separator);
 }
 
 .chart-grid-line {
   position: absolute;
   left: 0;
   right: 0;
-  border-top: 1px solid #f0f0f3;
+  border-top: 1px solid var(--separator);
+  opacity: .5;
 }
 
 .chart-grid-1 {
@@ -404,14 +508,14 @@ button {
 }
 
 .chart-point {
-  fill: white;
-  stroke: #007aff;
+  fill: var(--card);
+  stroke: var(--blue);
   stroke-width: 2.5;
 }
 
 .chart-line {
   fill: none;
-  stroke: #007aff;
+  stroke: var(--blue);
   stroke-width: 3;
   stroke-linecap: round;
   stroke-linejoin: round;
@@ -431,7 +535,7 @@ button {
 }
 
 .chart-label {
-  color: #8e8e93;
+  color: var(--secondary-text);
   font-size: 10px;
 }
 
@@ -465,7 +569,7 @@ button {
 }
 
 .exercise-progress-best span {
-  color: #8e8e93;
+  color: var(--secondary-text);
   font-size: 11px;
 }
 
@@ -477,13 +581,13 @@ button {
 }
 
 .mini-stat {
-  background: #f2f2f7;
+  background: var(--secondary);
   border-radius: 12px;
   padding: 9px;
 }
 
 .mini-stat-label {
-  color: #8e8e93;
+  color: var(--secondary-text);
   font-size: 10px;
 }
 
@@ -494,20 +598,21 @@ button {
 }
 
 .no-chart {
-  background: #f2f2f7;
+  background: var(--secondary);
   border-radius: 14px;
   padding: 18px;
   text-align: center;
-  color: #8e8e93;
+  color: var(--secondary-text);
   font-size: 13px;
 }
 
-/* =========================
-   HISTORIAL
-========================= */
+
+/* =========================================================
+   HISTORY
+========================================================= */
 
 .history-item {
-  background: white;
+  background: var(--card);
   border-radius: 19px;
   padding: 16px;
   margin-bottom: 9px;
@@ -521,18 +626,19 @@ button {
 }
 
 .history-summary {
-  color: #8e8e93;
+  color: var(--secondary-text);
   font-size: 13px;
   margin-top: 3px;
 }
 
 .history-arrow {
-  color: #c7c7cc;
+  color: var(--secondary-text);
   font-size: 23px;
 }
 
 .back-button {
-  background: #f2f2f7;
+  background: var(--secondary);
+  color: var(--text);
   border-radius: 12px;
   padding: 9px 13px;
   font-size: 14px;
@@ -541,7 +647,7 @@ button {
 
 .detail-row {
   padding: 12px 0;
-  border-bottom: 1px solid #eeeef2;
+  border-bottom: 1px solid var(--separator);
 }
 
 .detail-row:last-child {
@@ -549,7 +655,7 @@ button {
 }
 
 .detail-label {
-  color: #8e8e93;
+  color: var(--secondary-text);
   font-size: 13px;
 }
 
@@ -565,16 +671,17 @@ button {
   font-size: 14px;
 }
 
-/* =========================
+
+/* =========================================================
    MÉS
-========================= */
+========================================================= */
 
 .more-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 14px 0;
-  border-bottom: 1px solid #eeeef2;
+  border-bottom: 1px solid var(--separator);
 }
 
 .more-row:last-child {
@@ -586,19 +693,20 @@ button {
 }
 
 .more-subtitle {
-  color: #8e8e93;
+  color: var(--secondary-text);
   font-size: 13px;
   margin-top: 3px;
 }
 
 .more-arrow {
-  color: #c7c7cc;
+  color: var(--secondary-text);
   font-size: 22px;
 }
 
-/* =========================
+
+/* =========================================================
    BACKUP
-========================= */
+========================================================= */
 
 .backup-card {
   text-align: center;
@@ -608,7 +716,7 @@ button {
   width: 58px;
   height: 58px;
   border-radius: 18px;
-  background: #f2f2f7;
+  background: var(--secondary);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -622,7 +730,7 @@ button {
 }
 
 .backup-description {
-  color: #8e8e93;
+  color: var(--secondary-text);
   font-size: 14px;
   line-height: 1.45;
   margin: 7px auto 18px;
@@ -633,7 +741,7 @@ button {
   width: 100%;
   padding: 14px;
   border-radius: 14px;
-  background: #007aff;
+  background: var(--blue);
   color: white;
   font-size: 16px;
   font-weight: 600;
@@ -641,29 +749,65 @@ button {
 }
 
 .backup-button.secondary {
-  background: #f2f2f7;
-  color: #007aff;
+  background: var(--secondary);
+  color: var(--blue);
 }
 
 .backup-status {
   text-align: center;
-  color: #34c759;
+  color: var(--green);
   font-size: 13px;
   min-height: 18px;
   margin-top: 5px;
 }
 
 .backup-warning {
-  color: #8e8e93;
+  color: var(--secondary-text);
   font-size: 12px;
   line-height: 1.4;
   text-align: center;
   margin-top: 14px;
 }
 
-/* =========================
-   NAV
-========================= */
+
+/* =========================================================
+   DARK MODE SWITCH
+========================================================= */
+
+.theme-switch {
+  width: 51px;
+  height: 31px;
+  border-radius: 20px;
+  background: var(--secondary);
+  position: relative;
+  transition: .25s ease;
+  flex-shrink: 0;
+}
+
+.theme-switch.on {
+  background: var(--green);
+}
+
+.theme-switch-knob {
+  position: absolute;
+  width: 27px;
+  height: 27px;
+  border-radius: 50%;
+  background: white;
+  top: 2px;
+  left: 2px;
+  box-shadow: 0 1px 3px rgba(0,0,0,.25);
+  transition: .25s ease;
+}
+
+.theme-switch.on .theme-switch-knob {
+  transform: translateX(20px);
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
 
 .bottom-nav {
   position: fixed;
@@ -673,12 +817,12 @@ button {
   transform: translateX(-50%);
   width: min(720px, calc(100% - 24px));
   height: 67px;
-  background: rgba(255,255,255,.92);
+  background: var(--nav-background);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(0,0,0,.06);
+  border: 1px solid var(--separator);
   border-radius: 22px;
-  box-shadow: 0 7px 30px rgba(0,0,0,.12);
+  box-shadow: 0 7px 30px var(--shadow);
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   padding: 5px;
@@ -686,7 +830,7 @@ button {
 
 .nav-button {
   background: transparent;
-  color: #8e8e93;
+  color: var(--secondary-text);
   border-radius: 17px;
   display: flex;
   flex-direction: column;
@@ -696,7 +840,7 @@ button {
 }
 
 .nav-button.active {
-  color: #007aff;
+  color: var(--blue);
 }
 
 .nav-icon {
@@ -708,6 +852,11 @@ button {
   font-size: 10px;
   font-weight: 600;
 }
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
 
 @media (max-width: 480px) {
 
@@ -729,30 +878,48 @@ button {
   }
 
 }
+
 </style>
 </head>
+
 
 <body>
 
 <div class="app">
 
   <div class="header">
-    <h1 id="pageTitle">Avui</h1>
+
+    <h1 id="pageTitle">
+      Avui
+    </h1>
+
     <p id="pageSubtitle">
       La meva salut, alimentació i entrenament
     </p>
+
   </div>
 
 
-  <!-- =========================
+  <!-- =====================================================
        AVUI
-  ========================== -->
+  ====================================================== -->
 
-  <section id="todayScreen" class="screen active">
+  <section
+    id="todayScreen"
+    class="screen active"
+  >
 
     <div class="date-card card">
-      <div class="date-main" id="todayDate"></div>
-      <div class="date-sub">Registre d'avui</div>
+
+      <div
+        class="date-main"
+        id="todayDate"
+      ></div>
+
+      <div class="date-sub">
+        Registre d'avui
+      </div>
+
     </div>
 
 
@@ -760,13 +927,16 @@ button {
 
       <div class="weight-left">
 
-        <h2>Pes corporal</h2>
+        <h2>
+          Pes corporal
+        </h2>
 
         <p id="weightDifference">
           Encara no registrat
         </p>
 
       </div>
+
 
       <input
         id="weightInput"
@@ -784,7 +954,10 @@ button {
     </div>
 
 
-    <div class="card" id="meals"></div>
+    <div
+      class="card"
+      id="meals"
+    ></div>
 
 
     <div class="section-title">
@@ -831,7 +1004,9 @@ button {
         Entrenament de força
       </div>
 
-      <div id="strengthExercises"></div>
+      <div
+        id="strengthExercises"
+      ></div>
 
     </div>
 
@@ -871,11 +1046,14 @@ button {
   </section>
 
 
-  <!-- =========================
+  <!-- =====================================================
        PROGRÉS
-  ========================== -->
+  ====================================================== -->
 
-  <section id="progressScreen" class="screen">
+  <section
+    id="progressScreen"
+    class="screen"
+  >
 
     <div class="section-title">
       Resum
@@ -1015,7 +1193,9 @@ button {
       </div>
 
 
-      <div id="weightChart"></div>
+      <div
+        id="weightChart"
+      ></div>
 
     </div>
 
@@ -1074,18 +1254,25 @@ button {
     </div>
 
 
-    <div id="exerciseProgress"></div>
+    <div
+      id="exerciseProgress"
+    ></div>
 
   </section>
 
 
-  <!-- =========================
+  <!-- =====================================================
        HISTORIAL
-  ========================== -->
+  ====================================================== -->
 
-  <section id="historyScreen" class="screen">
+  <section
+    id="historyScreen"
+    class="screen"
+  >
 
-    <div id="historyList"></div>
+    <div
+      id="historyList"
+    ></div>
 
     <div
       id="historyDetail"
@@ -1095,11 +1282,14 @@ button {
   </section>
 
 
-  <!-- =========================
+  <!-- =====================================================
        MÉS
-  ========================== -->
+  ====================================================== -->
 
-  <section id="moreScreen" class="screen">
+  <section
+    id="moreScreen"
+    class="screen"
+  >
 
     <div class="section-title">
       Aplicació
@@ -1138,7 +1328,7 @@ button {
           </div>
 
           <div class="more-subtitle">
-            Pas 14
+            Pas 15
           </div>
 
         </div>
@@ -1165,6 +1355,49 @@ button {
     </div>
 
 
+    <!-- MODE FOSC -->
+
+    <div class="section-title">
+      Aparença
+    </div>
+
+
+    <div class="card">
+
+      <div class="more-row">
+
+        <div>
+
+          <div class="more-title">
+            Mode fosc
+          </div>
+
+          <div class="more-subtitle">
+            Aspecte fosc tipus Apple
+          </div>
+
+        </div>
+
+
+        <button
+          class="theme-switch"
+          id="themeSwitch"
+          aria-label="Canviar mode fosc"
+        >
+
+          <div
+            class="theme-switch-knob"
+          ></div>
+
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <!-- BACKUP -->
+
     <div class="section-title">
       Còpia de seguretat
     </div>
@@ -1181,8 +1414,9 @@ button {
       </div>
 
       <div class="backup-description">
-        Desa una còpia de totes les dades de Lluc Health
-        en un fitxer. Si algun dia canvies de dispositiu
+        Desa una còpia de totes les dades
+        de Lluc Health en un fitxer.
+        Si algun dia canvies de dispositiu
         o navegador, podràs recuperar-les.
       </div>
 
@@ -1224,44 +1458,14 @@ button {
 
     </div>
 
-
-    <div class="section-title">
-      Properament
-    </div>
-
-
-    <div class="card">
-
-      <div class="more-row">
-
-        <div>
-
-          <div class="more-title">
-            Mode fosc
-          </div>
-
-          <div class="more-subtitle">
-            Aspecte fosc tipus Apple
-          </div>
-
-        </div>
-
-        <div class="more-arrow">
-          ›
-        </div>
-
-      </div>
-
-    </div>
-
   </section>
 
 </div>
 
 
-<!-- =========================
+<!-- =======================================================
      NAVEGACIÓ
-========================= -->
+======================================================== -->
 
 <nav class="bottom-nav">
 
@@ -1337,29 +1541,174 @@ button {
    CONFIGURACIÓ
 ========================================================= */
 
-const STORAGE_KEY = "lluc-health-data-v1";
+const STORAGE_KEY =
+  "lluc-health-data-v1";
+
+const THEME_KEY =
+  "lluc-health-theme";
+
 
 const mealDefinitions = [
+
   ["coffee", "Cafè"],
+
   ["breakfast", "Esmorzar"],
-  ["rice", "Crema d’arròs amb galetes i llet"],
+
+  [
+    "rice",
+    "Crema d’arròs amb galetes i llet"
+  ],
+
   ["lunch", "Dinar"],
+
   ["snack", "Berenar"],
+
   ["creatine", "Creatina"],
+
   ["protein", "Batut proteïna"],
+
   ["dinner", "Sopar"]
+
 ];
+
 
 const exercises = [
+
   ["bench", "Press banca"],
+
   ["row", "Rem amb barra"],
-  ["shoulder", "Press militar amb manuelles"],
-  ["lateral", "Elevacions laterals"],
-  ["biceps", "Curl de bíceps amb barra"],
-  ["triceps", "Extensió de tríceps"]
+
+  [
+    "shoulder",
+    "Press militar amb manuelles"
+  ],
+
+  [
+    "lateral",
+    "Elevacions laterals"
+  ],
+
+  [
+    "biceps",
+    "Curl de bíceps amb barra"
+  ],
+
+  [
+    "triceps",
+    "Extensió de tríceps"
+  ]
+
 ];
 
-let selectedWeightRange = "7";
+
+let selectedWeightRange =
+  "7";
+
+
+/* =========================================================
+   TEMA
+========================================================= */
+
+function loadTheme() {
+
+  const savedTheme =
+    localStorage.getItem(
+      THEME_KEY
+    );
+
+
+  if (
+    savedTheme === "dark"
+  ) {
+
+    document.body.classList.add(
+      "dark"
+    );
+
+  }
+
+
+  updateThemeSwitch();
+
+}
+
+
+function toggleTheme() {
+
+  document.body.classList.toggle(
+    "dark"
+  );
+
+
+  const isDark =
+    document.body.classList.contains(
+      "dark"
+    );
+
+
+  localStorage.setItem(
+    THEME_KEY,
+    isDark
+      ? "dark"
+      : "light"
+  );
+
+
+  document
+    .querySelector(
+      'meta[name="theme-color"]'
+    )
+    .setAttribute(
+      "content",
+      isDark
+        ? "#000000"
+        : "#f2f2f7"
+    );
+
+
+  updateThemeSwitch();
+
+}
+
+
+function updateThemeSwitch() {
+
+  const switchButton =
+    document.getElementById(
+      "themeSwitch"
+    );
+
+
+  if (!switchButton) {
+    return;
+  }
+
+
+  const isDark =
+    document.body.classList.contains(
+      "dark"
+    );
+
+
+  switchButton.classList.toggle(
+    "on",
+    isDark
+  );
+
+}
+
+
+document
+  .getElementById(
+    "themeSwitch"
+  )
+  .addEventListener(
+    "click",
+    toggleTheme
+  );
+
+
+loadTheme();
 
 
 /* =========================================================
@@ -1371,51 +1720,73 @@ function loadData() {
   try {
 
     const raw =
-      localStorage.getItem(STORAGE_KEY);
+      localStorage.getItem(
+        STORAGE_KEY
+      );
+
 
     if (!raw) {
       return {};
     }
 
+
     const parsed =
       JSON.parse(raw);
 
-    for (const date in parsed) {
+
+    for (
+      const date in parsed
+    ) {
 
       if (!parsed[date].meals) {
         parsed[date].meals = {};
       }
 
+
       if (!parsed[date].strength) {
         parsed[date].strength = {};
       }
 
-      mealDefinitions.forEach(([key]) => {
 
-        if (
-          typeof parsed[date].meals[key]
-          !== "boolean"
-        ) {
-          parsed[date].meals[key] = false;
-        }
+      mealDefinitions.forEach(
+        ([key]) => {
 
-      });
+          if (
+            typeof
+            parsed[date].meals[key]
+            !== "boolean"
+          ) {
 
-      exercises.forEach(([key]) => {
+            parsed[date].meals[key] =
+              false;
 
-        if (
-          !Array.isArray(
-            parsed[date].strength[key]
-          )
-        ) {
-
-          parsed[date].strength[key] = [];
+          }
 
         }
+      );
 
-      });
+
+      exercises.forEach(
+        ([key]) => {
+
+          if (
+            !Array.isArray(
+              parsed[date]
+                .strength[key]
+            )
+          ) {
+
+            parsed[date]
+              .strength[key] =
+              [];
+
+          }
+
+        }
+      );
 
     }
+
 
     return parsed;
 
@@ -1426,6 +1797,7 @@ function loadData() {
       error
     );
 
+
     return {};
 
   }
@@ -1433,7 +1805,8 @@ function loadData() {
 }
 
 
-let data = loadData();
+let data =
+  loadData();
 
 
 function saveData() {
@@ -1455,16 +1828,22 @@ function todayKey() {
   const now =
     new Date();
 
+
   const year =
     now.getFullYear();
 
+
   const month =
-    String(now.getMonth() + 1)
-      .padStart(2, "0");
+    String(
+      now.getMonth() + 1
+    ).padStart(2, "0");
+
 
   const day =
-    String(now.getDate())
-      .padStart(2, "0");
+    String(
+      now.getDate()
+    ).padStart(2, "0");
+
 
   return `${year}-${month}-${day}`;
 
@@ -1497,7 +1876,8 @@ function getToday() {
     mealDefinitions.forEach(
       ([meal]) => {
 
-        data[key].meals[meal] =
+        data[key]
+          .meals[meal] =
           false;
 
       }
@@ -1507,7 +1887,8 @@ function getToday() {
     exercises.forEach(
       ([exercise]) => {
 
-        data[key].strength[exercise] =
+        data[key]
+          .strength[exercise] =
           [];
 
       }
@@ -1520,7 +1901,10 @@ function getToday() {
 
 
   if (!data[key].strength) {
-    data[key].strength = {};
+
+    data[key].strength =
+      {};
+
   }
 
 
@@ -1529,11 +1913,13 @@ function getToday() {
 
       if (
         !Array.isArray(
-          data[key].strength[exercise]
+          data[key]
+            .strength[exercise]
         )
       ) {
 
-        data[key].strength[exercise] =
+        data[key]
+          .strength[exercise] =
           [];
 
       }
@@ -1547,12 +1933,16 @@ function getToday() {
 }
 
 
-function formatDate(dateString) {
+function formatDate(
+  dateString
+) {
 
   const date =
     new Date(
-      dateString + "T12:00:00"
+      dateString +
+      "T12:00:00"
     );
+
 
   return date.toLocaleDateString(
     "ca-ES",
@@ -1567,12 +1957,16 @@ function formatDate(dateString) {
 }
 
 
-function shortDate(dateString) {
+function shortDate(
+  dateString
+) {
 
   const date =
     new Date(
-      dateString + "T12:00:00"
+      dateString +
+      "T12:00:00"
     );
+
 
   return date.toLocaleDateString(
     "ca-ES",
@@ -1596,9 +1990,13 @@ function renderToday() {
 
 
   document
-    .getElementById("todayDate")
+    .getElementById(
+      "todayDate"
+    )
     .textContent =
-    formatDate(todayKey());
+    formatDate(
+      todayKey()
+    );
 
 
   const weightInput =
@@ -1666,10 +2064,11 @@ function renderWeightDifference() {
 
   const dates =
     Object.keys(data)
-      .filter(date =>
-        data[date].weight !== null &&
-        data[date].weight !== undefined &&
-        data[date].weight !== ""
+      .filter(
+        date =>
+          data[date].weight !== null &&
+          data[date].weight !== undefined &&
+          data[date].weight !== ""
       )
       .sort();
 
@@ -1685,7 +2084,9 @@ function renderWeightDifference() {
 
 
   const currentIndex =
-    dates.indexOf(todayKey());
+    dates.indexOf(
+      todayKey()
+    );
 
 
   if (currentIndex <= 0) {
@@ -1699,7 +2100,9 @@ function renderWeightDifference() {
 
 
   const previousDate =
-    dates[currentIndex - 1];
+    dates[
+      currentIndex - 1
+    ];
 
 
   const previousWeight =
@@ -1718,7 +2121,9 @@ function renderWeightDifference() {
     element.textContent =
       `+${difference.toFixed(1)} kg respecte l'anterior`;
 
-  } else if (difference < 0) {
+  } else if (
+    difference < 0
+  ) {
 
     element.textContent =
       `${difference.toFixed(1)} kg respecte l'anterior`;
@@ -1745,7 +2150,8 @@ function renderMeals() {
     );
 
 
-  container.innerHTML = "";
+  container.innerHTML =
+    "";
 
 
   mealDefinitions.forEach(
@@ -1786,6 +2192,7 @@ function renderMeals() {
           day.meals[key] =
             !day.meals[key];
 
+
           saveData();
 
           renderMeals();
@@ -1794,7 +2201,9 @@ function renderMeals() {
       );
 
 
-      container.appendChild(row);
+      container.appendChild(
+        row
+      );
 
     }
   );
@@ -1812,15 +2221,17 @@ function renderActivity() {
     .querySelectorAll(
       ".activity-button"
     )
-    .forEach(button => {
+    .forEach(
+      button => {
 
-      button.classList.toggle(
-        "selected",
-        button.dataset.activity ===
-        day.activity
-      );
+        button.classList.toggle(
+          "selected",
+          button.dataset.activity ===
+          day.activity
+        );
 
-    });
+      }
+    );
 
 }
 
@@ -1838,7 +2249,8 @@ function renderStrength() {
 
 
   if (
-    day.activity !== "strength"
+    day.activity !==
+    "strength"
   ) {
 
     section.style.display =
@@ -1859,7 +2271,8 @@ function renderStrength() {
     );
 
 
-  container.innerHTML = "";
+  container.innerHTML =
+    "";
 
 
   exercises.forEach(
@@ -1876,10 +2289,12 @@ function renderStrength() {
 
 
       const sets =
-        day.strength[key] || [];
+        day.strength[key] ||
+        [];
 
 
-      let setsHTML = "";
+      let setsHTML =
+        "";
 
 
       sets.forEach(
@@ -1930,10 +2345,19 @@ function renderStrength() {
 
       const volume =
         sets.reduce(
-          (total, set) =>
+          (
+            total,
+            set
+          ) =>
             total +
-            (Number(set.reps) || 0) *
-            (Number(set.kg) || 0),
+            (
+              Number(set.reps) ||
+              0
+            ) *
+            (
+              Number(set.kg) ||
+              0
+            ),
           0
         );
 
@@ -1957,20 +2381,28 @@ function renderStrength() {
 
         ${
           setsHTML ||
-          '<div class="empty">Encara no hi ha sèries</div>'
+          `
+            <div class="empty">
+              Encara no hi ha sèries
+            </div>
+          `
         }
 
         <div class="volume">
+
           Volum:
           <strong>
             ${volume.toFixed(0)} kg
           </strong>
+
         </div>
 
       `;
 
 
-      container.appendChild(card);
+      container.appendChild(
+        card
+      );
 
     }
   );
@@ -1984,118 +2416,142 @@ function renderStrength() {
 function attachStrengthEvents() {
 
   document
-    .querySelectorAll("[data-add]")
-    .forEach(button => {
+    .querySelectorAll(
+      "[data-add]"
+    )
+    .forEach(
+      button => {
 
-      button.addEventListener(
-        "click",
-        () => {
+        button.addEventListener(
+          "click",
+          () => {
 
-          const exercise =
-            button.dataset.add;
-
-
-          const day =
-            getToday();
+            const exercise =
+              button.dataset.add;
 
 
-          day.strength[exercise]
-            .push({
+            const day =
+              getToday();
+
+
+            day.strength[
+              exercise
+            ].push({
+
               reps: "",
+
               kg: ""
+
             });
 
 
-          saveData();
+            saveData();
 
-          renderStrength();
+            renderStrength();
 
-        }
-      );
+          }
+        );
 
-    });
-
-
-  document
-    .querySelectorAll(".delete-set")
-    .forEach(button => {
-
-      button.addEventListener(
-        "click",
-        () => {
-
-          const exercise =
-            button.dataset.exercise;
-
-
-          const index =
-            Number(
-              button.dataset.index
-            );
-
-
-          const day =
-            getToday();
-
-
-          day.strength[exercise]
-            .splice(index, 1);
-
-
-          saveData();
-
-          renderStrength();
-
-        }
-      );
-
-    });
+      }
+    );
 
 
   document
-    .querySelectorAll(".set-input")
-    .forEach(input => {
+    .querySelectorAll(
+      ".delete-set"
+    )
+    .forEach(
+      button => {
 
-      input.addEventListener(
-        "input",
-        () => {
+        button.addEventListener(
+          "click",
+          () => {
 
-          const exercise =
-            input.dataset.exercise;
+            const exercise =
+              button.dataset.exercise;
 
 
-          const index =
-            Number(
-              input.dataset.index
+            const index =
+              Number(
+                button.dataset.index
+              );
+
+
+            const day =
+              getToday();
+
+
+            day.strength[
+              exercise
+            ].splice(
+              index,
+              1
             );
 
 
-          const field =
-            input.dataset.field;
+            saveData();
+
+            renderStrength();
+
+          }
+        );
+
+      }
+    );
 
 
-          const day =
-            getToday();
+  document
+    .querySelectorAll(
+      ".set-input"
+    )
+    .forEach(
+      input => {
+
+        input.addEventListener(
+          "input",
+          () => {
+
+            const exercise =
+              input.dataset.exercise;
 
 
-          day.strength[exercise][index][field] =
-            input.value;
+            const index =
+              Number(
+                input.dataset.index
+              );
 
 
-          saveData();
+            const field =
+              input.dataset.field;
 
 
-          updateExerciseVolume(
-            input.closest(
-              ".exercise-card"
-            ),
-            day.strength[exercise]
-          );
+            const day =
+              getToday();
 
-        }
-      );
 
-    });
+            day.strength[
+              exercise
+            ][index][field] =
+              input.value;
+
+
+            saveData();
+
+
+            updateExerciseVolume(
+              input.closest(
+                ".exercise-card"
+              ),
+              day.strength[
+                exercise
+              ]
+            );
+
+          }
+        );
+
+      }
+    );
 
 }
 
@@ -2107,10 +2563,19 @@ function updateExerciseVolume(
 
   const volume =
     sets.reduce(
-      (total, set) =>
+      (
+        total,
+        set
+      ) =>
         total +
-        (Number(set.reps) || 0) *
-        (Number(set.kg) || 0),
+        (
+          Number(set.reps) ||
+          0
+        ) *
+        (
+          Number(set.kg) ||
+          0
+        ),
       0
     );
 
@@ -2136,7 +2601,9 @@ function updateExerciseVolume(
 ========================================================= */
 
 document
-  .getElementById("weightInput")
+  .getElementById(
+    "weightInput"
+  )
   .addEventListener(
     "input",
     event => {
@@ -2164,7 +2631,9 @@ document
 
 
 document
-  .getElementById("sleepInput")
+  .getElementById(
+    "sleepInput"
+  )
   .addEventListener(
     "input",
     event => {
@@ -2193,30 +2662,32 @@ document
   .querySelectorAll(
     ".activity-button"
   )
-  .forEach(button => {
+  .forEach(
+    button => {
 
-    button.addEventListener(
-      "click",
-      () => {
+      button.addEventListener(
+        "click",
+        () => {
 
-        const day =
-          getToday();
-
-
-        day.activity =
-          button.dataset.activity;
+          const day =
+            getToday();
 
 
-        saveData();
+          day.activity =
+            button.dataset.activity;
 
-        renderActivity();
 
-        renderStrength();
+          saveData();
 
-      }
-    );
+          renderActivity();
 
-  });
+          renderStrength();
+
+        }
+      );
+
+    }
+  );
 
 
 /* =========================================================
@@ -2227,28 +2698,41 @@ function getWeightRecords() {
 
   return Object.keys(data)
 
-    .filter(date =>
-      data[date].weight !== null &&
-      data[date].weight !== undefined &&
-      data[date].weight !== ""
+    .filter(
+      date =>
+        data[date].weight !== null &&
+        data[date].weight !== undefined &&
+        data[date].weight !== ""
     )
 
-    .map(date => ({
+    .map(
+      date => ({
 
-      date,
+        date,
 
-      weight:
-        Number(data[date].weight)
+        weight:
+          Number(
+            data[date].weight
+          )
 
-    }))
+      })
+    )
 
-    .filter(item =>
-      Number.isFinite(item.weight)
+    .filter(
+      item =>
+        Number.isFinite(
+          item.weight
+        )
     )
 
     .sort(
-      (a, b) =>
-        a.date.localeCompare(b.date)
+      (
+        a,
+        b
+      ) =>
+        a.date.localeCompare(
+          b.date
+        )
     );
 
 }
@@ -2265,41 +2749,59 @@ function renderProgress() {
 
 
   document
-    .getElementById("recordedDays")
+    .getElementById(
+      "recordedDays"
+    )
     .textContent =
     days.length;
 
 
   const currentWeight =
     records.length
-      ? records[records.length - 1].weight
+      ? records[
+          records.length - 1
+        ].weight
       : null;
 
 
   document
-    .getElementById("currentWeight")
+    .getElementById(
+      "currentWeight"
+    )
     .textContent =
     currentWeight !== null
       ? currentWeight.toFixed(1)
       : "—";
 
 
-  if (records.length >= 2) {
+  if (
+    records.length >= 2
+  ) {
 
     const change =
-      records[records.length - 1].weight -
+      records[
+        records.length - 1
+      ].weight -
       records[0].weight;
 
 
     document
-      .getElementById("weightChange")
+      .getElementById(
+        "weightChange"
+      )
       .textContent =
-      `${change >= 0 ? "+" : ""}${change.toFixed(1)}`;
+      `${
+        change >= 0
+          ? "+"
+          : ""
+      }${change.toFixed(1)}`;
 
   } else {
 
     document
-      .getElementById("weightChange")
+      .getElementById(
+        "weightChange"
+      )
       .textContent =
       "—";
 
@@ -2312,38 +2814,60 @@ function renderProgress() {
 
 
   Object.values(data)
-    .forEach(day => {
+    .forEach(
+      day => {
 
-      if (day.activity === "HIIT") {
-        hiit++;
+        if (
+          day.activity ===
+          "HIIT"
+        ) {
+
+          hiit++;
+
+        }
+
+
+        if (
+          day.activity ===
+          "strength"
+        ) {
+
+          strength++;
+
+        }
+
       }
-
-      if (day.activity === "strength") {
-        strength++;
-      }
-
-    });
+    );
 
 
   document
-    .getElementById("hiitCount")
+    .getElementById(
+      "hiitCount"
+    )
     .textContent =
     hiit;
 
 
   document
-    .getElementById("strengthCount")
+    .getElementById(
+      "strengthCount"
+    )
     .textContent =
     strength;
 
 
   document
-    .getElementById("totalWorkouts")
+    .getElementById(
+      "totalWorkouts"
+    )
     .textContent =
     hiit + strength;
 
 
-  renderWeightChart(records);
+  renderWeightChart(
+    records
+  );
+
 
   renderExerciseProgress();
 
@@ -2354,40 +2878,43 @@ document
   .querySelectorAll(
     "[data-weight-range]"
   )
-  .forEach(button => {
+  .forEach(
+    button => {
 
-    button.addEventListener(
-      "click",
-      () => {
+      button.addEventListener(
+        "click",
+        () => {
 
-        document
-          .querySelectorAll(
-            "[data-weight-range]"
-          )
-          .forEach(item =>
-            item.classList.remove(
-              "active"
+          document
+            .querySelectorAll(
+              "[data-weight-range]"
             )
+            .forEach(
+              item =>
+                item.classList.remove(
+                  "active"
+                )
+            );
+
+
+          button.classList.add(
+            "active"
           );
 
 
-        button.classList.add(
-          "active"
-        );
+          selectedWeightRange =
+            button.dataset.weightRange;
 
 
-        selectedWeightRange =
-          button.dataset.weightRange;
+          renderWeightChart(
+            getWeightRecords()
+          );
 
+        }
+      );
 
-        renderWeightChart(
-          getWeightRecords()
-        );
-
-      }
-    );
-
-  });
+    }
+  );
 
 
 function renderWeightChart(
@@ -2431,12 +2958,16 @@ function renderWeightChart(
 
 
     filtered =
-      filtered.slice(-amount);
+      filtered.slice(
+        -amount
+      );
 
   }
 
 
-  if (filtered.length === 1) {
+  if (
+    filtered.length === 1
+  ) {
 
     const value =
       filtered[0].weight;
@@ -2457,30 +2988,40 @@ function renderWeightChart(
 
   const values =
     filtered.map(
-      item => item.weight
+      item =>
+        item.weight
     );
 
 
   let min =
-    Math.min(...values);
+    Math.min(
+      ...values
+    );
 
 
   let max =
-    Math.max(...values);
+    Math.max(
+      ...values
+    );
 
 
   if (min === max) {
 
     min -= 1;
+
     max += 1;
 
   } else {
 
     const padding =
-      (max - min) * 0.15;
+      (
+        max - min
+      ) *
+      .15;
 
 
     min -= padding;
+
     max += padding;
 
   }
@@ -2520,7 +3061,10 @@ function createLineChart(
 
   const points =
     records.map(
-      (item, index) => {
+      (
+        item,
+        index
+      ) => {
 
         const x =
           records.length === 1
@@ -2530,16 +3074,22 @@ function createLineChart(
             : paddingX +
               (
                 index /
-                (records.length - 1)
+                (
+                  records.length - 1
+                )
               ) *
               usableWidth;
 
 
         const normalized =
           (
-            item.weight - min
+            item.weight -
+            min
           ) /
-          (max - min);
+          (
+            max -
+            min
+          );
 
 
         const y =
@@ -2550,10 +3100,17 @@ function createLineChart(
 
 
         return {
+
           x,
+
           y,
-          value: item.weight,
-          date: item.date
+
+          value:
+            item.weight,
+
+          date:
+            item.date
+
         };
 
       }
@@ -2563,7 +3120,10 @@ function createLineChart(
   const path =
     points
       .map(
-        (point, index) =>
+        (
+          point,
+          index
+        ) =>
           `${
             index === 0
               ? "M"
@@ -2575,10 +3135,29 @@ function createLineChart(
 
   const areaPath =
     `${path} L ${
-      points[points.length - 1].x
+      points[
+        points.length - 1
+      ].x
     } ${height} L ${
       points[0].x
     } ${height} Z`;
+
+
+  const pointsHTML =
+    points
+      .map(
+        point => `
+
+          <circle
+            class="chart-point"
+            cx="${point.x}"
+            cy="${point.y}"
+            r="4"
+          />
+
+        `
+      )
+      .join("");
 
 
   const first =
@@ -2599,44 +3178,6 @@ function createLineChart(
     ];
 
 
-  const labels = `
-
-    <div class="chart-labels">
-
-      <div class="chart-label">
-        ${shortDate(first.date)}
-      </div>
-
-      <div class="chart-label">
-        ${shortDate(middle.date)}
-      </div>
-
-      <div class="chart-label">
-        ${shortDate(last.date)}
-      </div>
-
-    </div>
-
-  `;
-
-
-  const pointsHTML =
-    points
-      .map(
-        point => `
-
-          <circle
-            class="chart-point"
-            cx="${point.x}"
-            cy="${point.y}"
-            r="4"
-          />
-
-        `
-      )
-      .join("");
-
-
   return `
 
     <div class="line-chart">
@@ -2652,7 +3193,10 @@ function createLineChart(
         class="chart-y-label chart-y-middle"
       >
         ${(
-          (max + min) / 2
+          (
+            max +
+            min
+          ) / 2
         ).toFixed(1)}
       </div>
 
@@ -2698,7 +3242,21 @@ function createLineChart(
       </div>
 
 
-      ${labels}
+      <div class="chart-labels">
+
+        <div class="chart-label">
+          ${shortDate(first.date)}
+        </div>
+
+        <div class="chart-label">
+          ${shortDate(middle.date)}
+        </div>
+
+        <div class="chart-label">
+          ${shortDate(last.date)}
+        </div>
+
+      </div>
 
     </div>
 
@@ -2720,97 +3278,118 @@ function getExerciseSessions(
 
   Object.keys(data)
     .sort()
-    .forEach(date => {
+    .forEach(
+      date => {
 
-      const day =
-        data[date];
-
-
-      const sets =
-        day.strength?.[
-          exerciseKey
-        ] || [];
+        const day =
+          data[date];
 
 
-      const validSets =
-        sets.filter(
-          set =>
-            Number(set.kg) > 0
-        );
+        const sets =
+          day.strength?.[
+            exerciseKey
+          ] || [];
 
 
-      if (!validSets.length) {
-        return;
-      }
-
-
-      const maxKg =
-        Math.max(
-          ...validSets.map(
+        const validSets =
+          sets.filter(
             set =>
-              Number(set.kg)
-          )
-        );
+              Number(set.kg) >
+              0
+          );
 
 
-      const bestSet =
-        validSets.reduce(
-          (best, set) => {
-
-            const volume =
-              Number(set.reps || 0) *
-              Number(set.kg || 0);
+        if (!validSets.length) {
+          return;
+        }
 
 
-            const bestVolume =
-              Number(best.reps || 0) *
-              Number(best.kg || 0);
+        const maxKg =
+          Math.max(
+            ...validSets.map(
+              set =>
+                Number(set.kg)
+            )
+          );
 
 
-            return volume >
-              bestVolume
-              ? set
-              : best;
+        const bestSet =
+          validSets.reduce(
+            (
+              best,
+              set
+            ) => {
 
-          },
-          validSets[0]
-        );
-
-
-      const volume =
-        validSets.reduce(
-          (total, set) =>
-            total +
-            Number(set.reps || 0) *
-            Number(set.kg || 0),
-          0
-        );
+              const volume =
+                Number(
+                  set.reps || 0
+                ) *
+                Number(
+                  set.kg || 0
+                );
 
 
-      sessions.push({
+              const bestVolume =
+                Number(
+                  best.reps || 0
+                ) *
+                Number(
+                  best.kg || 0
+                );
 
-        date,
 
-        maxKg,
+              return volume >
+                bestVolume
+                ? set
+                : best;
 
-        bestReps:
-          Number(
-            bestSet.reps || 0
-          ),
+            },
+            validSets[0]
+          );
 
-        bestKg:
-          Number(
-            bestSet.kg || 0
-          ),
 
-        volume,
+        const volume =
+          validSets.reduce(
+            (
+              total,
+              set
+            ) =>
+              total +
+              Number(
+                set.reps || 0
+              ) *
+              Number(
+                set.kg || 0
+              ),
+            0
+          );
 
-        sets:
-          validSets.length
 
-      });
+        sessions.push({
 
-    });
+          date,
+
+          maxKg,
+
+          bestReps:
+            Number(
+              bestSet.reps || 0
+            ),
+
+          bestKg:
+            Number(
+              bestSet.kg || 0
+            ),
+
+          volume,
+
+          sets:
+            validSets.length
+
+        });
+
+      }
+    );
 
 
   return sessions;
@@ -2826,14 +3405,17 @@ function renderExerciseProgress() {
     );
 
 
-  container.innerHTML = "";
+  container.innerHTML =
+    "";
 
 
   exercises.forEach(
     ([key, name]) => {
 
       const sessions =
-        getExerciseSessions(key);
+        getExerciseSessions(
+          key
+        );
 
 
       const card =
@@ -2866,7 +3448,10 @@ function renderExerciseProgress() {
         `;
 
 
-        container.appendChild(card);
+        container.appendChild(
+          card
+        );
+
 
         return;
 
@@ -2884,7 +3469,10 @@ function renderExerciseProgress() {
 
       const totalVolume =
         sessions.reduce(
-          (total, session) =>
+          (
+            total,
+            session
+          ) =>
             total +
             session.volume,
           0
@@ -2924,15 +3512,20 @@ function renderExerciseProgress() {
       if (min === max) {
 
         min -= 1;
+
         max += 1;
 
       } else {
 
         const padding =
-          (max - min) * 0.20;
+          (
+            max - min
+          ) *
+          .20;
 
 
         min -= padding;
+
         max += padding;
 
       }
@@ -3014,16 +3607,20 @@ function renderExerciseProgress() {
         </div>
 
 
-        ${createExerciseLineChart(
-          recent,
-          min,
-          max
-        )}
+        ${
+          createExerciseLineChart(
+            recent,
+            min,
+            max
+          )
+        }
 
       `;
 
 
-      container.appendChild(card);
+      container.appendChild(
+        card
+      );
 
     }
   );
@@ -3055,7 +3652,10 @@ function createExerciseLineChart(
 
   const points =
     sessions.map(
-      (session, index) => {
+      (
+        session,
+        index
+      ) => {
 
         const x =
           sessions.length === 1
@@ -3065,16 +3665,22 @@ function createExerciseLineChart(
             : paddingX +
               (
                 index /
-                (sessions.length - 1)
+                (
+                  sessions.length - 1
+                )
               ) *
               usableWidth;
 
 
         const normalized =
           (
-            session.maxKg - min
+            session.maxKg -
+            min
           ) /
-          (max - min);
+          (
+            max -
+            min
+          );
 
 
         const y =
@@ -3087,9 +3693,14 @@ function createExerciseLineChart(
         return {
 
           x,
+
           y,
-          value: session.maxKg,
-          date: session.date
+
+          value:
+            session.maxKg,
+
+          date:
+            session.date
 
         };
 
@@ -3100,7 +3711,10 @@ function createExerciseLineChart(
   const path =
     points
       .map(
-        (point, index) =>
+        (
+          point,
+          index
+        ) =>
           `${
             index === 0
               ? "M"
@@ -3112,7 +3726,9 @@ function createExerciseLineChart(
 
   const areaPath =
     `${path} L ${
-      points[points.length - 1].x
+      points[
+        points.length - 1
+      ].x
     } ${height} L ${
       points[0].x
     } ${height} Z`;
@@ -3168,7 +3784,10 @@ function createExerciseLineChart(
         class="chart-y-label chart-y-middle"
       >
         ${(
-          (max + min) / 2
+          (
+            max +
+            min
+          ) / 2
         ).toFixed(1)}
       </div>
 
@@ -3284,90 +3903,113 @@ function renderHistory() {
   }
 
 
-  list.innerHTML = "";
+  list.innerHTML =
+    "";
 
 
-  dates.forEach(date => {
+  dates.forEach(
+    date => {
 
-    const day =
-      data[date];
+      const day =
+        data[date];
 
 
-    const item =
-      document.createElement(
-        "div"
+      const item =
+        document.createElement(
+          "div"
+        );
+
+
+      item.className =
+        "history-item";
+
+
+      let activity =
+        "Sense activitat";
+
+
+      if (
+        day.activity ===
+        "HIIT"
+      ) {
+
+        activity =
+          "HIIT";
+
+      }
+
+
+      if (
+        day.activity ===
+        "strength"
+      ) {
+
+        activity =
+          "Força";
+
+      }
+
+
+      if (
+        day.activity ===
+        "rest"
+      ) {
+
+        activity =
+          "Descans";
+
+      }
+
+
+      const weight =
+        day.weight !== null &&
+        day.weight !== undefined &&
+        day.weight !== ""
+
+          ? `${Number(
+              day.weight
+            ).toFixed(1)} kg`
+
+          : "Pes —";
+
+
+      item.innerHTML = `
+
+        <div>
+
+          <div class="history-date">
+            ${formatDate(date)}
+          </div>
+
+          <div class="history-summary">
+            ${weight} · ${activity}
+          </div>
+
+        </div>
+
+
+        <div class="history-arrow">
+          ›
+        </div>
+
+      `;
+
+
+      item.addEventListener(
+        "click",
+        () =>
+          showHistoryDetail(
+            date
+          )
       );
 
 
-    item.className =
-      "history-item";
+      list.appendChild(
+        item
+      );
 
-
-    let activity =
-      "Sense activitat";
-
-
-    if (
-      day.activity === "HIIT"
-    ) {
-      activity = "HIIT";
     }
-
-
-    if (
-      day.activity === "strength"
-    ) {
-      activity = "Força";
-    }
-
-
-    if (
-      day.activity === "rest"
-    ) {
-      activity = "Descans";
-    }
-
-
-    const weight =
-      day.weight !== null &&
-      day.weight !== undefined &&
-      day.weight !== ""
-        ? `${Number(day.weight).toFixed(1)} kg`
-        : "Pes —";
-
-
-    item.innerHTML = `
-
-      <div>
-
-        <div class="history-date">
-          ${formatDate(date)}
-        </div>
-
-        <div class="history-summary">
-          ${weight} · ${activity}
-        </div>
-
-      </div>
-
-
-      <div class="history-arrow">
-        ›
-      </div>
-
-    `;
-
-
-    item.addEventListener(
-      "click",
-      () =>
-        showHistoryDetail(date)
-    );
-
-
-    list.appendChild(item);
-
-  });
+  );
 
 }
 
@@ -3405,27 +4047,40 @@ function showHistoryDetail(
 
 
   if (
-    day.activity === "HIIT"
+    day.activity ===
+    "HIIT"
   ) {
-    activity = "HIIT";
+
+    activity =
+      "HIIT";
+
   }
 
 
   if (
-    day.activity === "strength"
+    day.activity ===
+    "strength"
   ) {
-    activity = "Força";
+
+    activity =
+      "Força";
+
   }
 
 
   if (
-    day.activity === "rest"
+    day.activity ===
+    "rest"
   ) {
-    activity = "Descans";
+
+    activity =
+      "Descans";
+
   }
 
 
-  let mealsHTML = "";
+  let mealsHTML =
+    "";
 
 
   mealDefinitions.forEach(
@@ -3444,11 +4099,13 @@ function showHistoryDetail(
           </div>
 
           <div class="detail-value">
+
             ${
               done
                 ? "✓ Fet"
                 : "— No registrat"
             }
+
           </div>
 
         </div>
@@ -3459,19 +4116,22 @@ function showHistoryDetail(
   );
 
 
-  let strengthHTML = "";
+  let strengthHTML =
+    "";
 
 
   if (
-    day.activity === "strength"
+    day.activity ===
+    "strength"
   ) {
 
     exercises.forEach(
       ([key, name]) => {
 
         const sets =
-          day.strength?.[key] ||
-          [];
+          day.strength?.[
+            key
+          ] || [];
 
 
         if (!sets.length) {
@@ -3479,11 +4139,15 @@ function showHistoryDetail(
         }
 
 
-        let setsRows = "";
+        let setsRows =
+          "";
 
 
         sets.forEach(
-          (set, index) => {
+          (
+            set,
+            index
+          ) => {
 
             setsRows += `
 
@@ -3556,8 +4220,9 @@ function showHistoryDetail(
             day.weight !== null &&
             day.weight !== undefined
 
-              ? Number(day.weight)
-                  .toFixed(1) +
+              ? Number(
+                  day.weight
+                ).toFixed(1) +
                 " kg"
 
               : "No registrat"
@@ -3593,7 +4258,8 @@ function showHistoryDetail(
             day.sleep !== null &&
             day.sleep !== undefined
 
-              ? day.sleep + " h"
+              ? day.sleep +
+                " h"
 
               : "No registrat"
           }
@@ -3616,7 +4282,8 @@ function showHistoryDetail(
 
 
     ${
-      day.activity === "strength"
+      day.activity ===
+      "strength"
 
         ? `
 
@@ -3677,12 +4344,14 @@ document
             "Lluc Health",
 
           version:
-            "Pas 14",
+            "Pas 15",
 
           createdAt:
-            new Date().toISOString(),
+            new Date()
+              .toISOString(),
 
-          data: data
+          data:
+            data
 
         };
 
@@ -3720,7 +4389,10 @@ document
         const date =
           new Date()
             .toISOString()
-            .slice(0, 10);
+            .slice(
+              0,
+              10
+            );
 
 
         link.href =
@@ -3732,7 +4404,9 @@ document
 
 
         document.body
-          .appendChild(link);
+          .appendChild(
+            link
+          );
 
 
         link.click();
@@ -3761,7 +4435,8 @@ document
               .getElementById(
                 "backupStatus"
               )
-              .textContent = "";
+              .textContent =
+              "";
 
           },
           4000
@@ -3873,32 +4548,15 @@ document
             }
 
 
-            const hasValidStructure =
-              Object.values(
-                importedData
-              ).every(day =>
-                day &&
-                typeof day ===
-                  "object"
-              );
-
-
-            if (!hasValidStructure) {
-
-              throw new Error(
-                "Dades incorrectes"
-              );
-
-            }
-
-
             const confirmImport =
               confirm(
                 "Això substituirà les dades actuals per les dades de la còpia de seguretat. Vols continuar?"
               );
 
 
-            if (!confirmImport) {
+            if (
+              !confirmImport
+            ) {
 
               event.target.value =
                 "";
@@ -3917,9 +4575,7 @@ document
 
             renderToday();
 
-
             renderProgress();
-
 
             renderHistory();
 
@@ -3939,7 +4595,8 @@ document
                   .getElementById(
                     "backupStatus"
                   )
-                  .textContent = "";
+                  .textContent =
+                  "";
 
               },
               5000
@@ -3970,7 +4627,9 @@ document
         };
 
 
-      reader.readAsText(file);
+      reader.readAsText(
+        file
+      );
 
     }
   );
@@ -4009,105 +4668,135 @@ document
   .querySelectorAll(
     ".nav-button"
   )
-  .forEach(button => {
+  .forEach(
+    button => {
 
-    button.addEventListener(
-      "click",
-      () => {
+      button.addEventListener(
+        "click",
+        () => {
 
-        const tab =
-          button.dataset.tab;
+          const tab =
+            button.dataset.tab;
 
 
-        document
-          .querySelectorAll(
-            ".nav-button"
-          )
-          .forEach(item =>
-            item.classList.remove(
-              "active"
+          document
+            .querySelectorAll(
+              ".nav-button"
             )
-          );
+            .forEach(
+              item =>
+                item.classList.remove(
+                  "active"
+                )
+            );
 
 
-        button.classList.add(
-          "active"
-        );
-
-
-        Object.values(screens)
-          .forEach(screen =>
-            screen.classList.remove(
-              "active"
-            )
-          );
-
-
-        screens[tab]
-          .classList.add(
+          button.classList.add(
             "active"
           );
 
 
-        const titles = {
-
-          today: [
-            "Avui",
-            "La meva salut, alimentació i entrenament"
-          ],
-
-          progress: [
-            "Progrés",
-            "La teva evolució"
-          ],
-
-          history: [
-            "Historial",
-            "Tot el que has registrat"
-          ],
-
-          more: [
-            "Més",
-            "Configuració i informació"
-          ]
-
-        };
-
-
-        document
-          .getElementById(
-            "pageTitle"
+          Object.values(
+            screens
           )
-          .textContent =
-          titles[tab][0];
+            .forEach(
+              screen =>
+                screen.classList.remove(
+                  "active"
+                )
+            );
 
 
-        document
-          .getElementById(
-            "pageSubtitle"
-          )
-          .textContent =
-          titles[tab][1];
+          screens[tab]
+            .classList.add(
+              "active"
+            );
 
 
-        if (tab === "today") {
-          renderToday();
+          const titles = {
+
+            today: [
+
+              "Avui",
+
+              "La meva salut, alimentació i entrenament"
+
+            ],
+
+            progress: [
+
+              "Progrés",
+
+              "La teva evolució"
+
+            ],
+
+            history: [
+
+              "Historial",
+
+              "Tot el que has registrat"
+
+            ],
+
+            more: [
+
+              "Més",
+
+              "Configuració i informació"
+
+            ]
+
+          };
+
+
+          document
+            .getElementById(
+              "pageTitle"
+            )
+            .textContent =
+            titles[tab][0];
+
+
+          document
+            .getElementById(
+              "pageSubtitle"
+            )
+            .textContent =
+            titles[tab][1];
+
+
+          if (
+            tab === "today"
+          ) {
+
+            renderToday();
+
+          }
+
+
+          if (
+            tab === "progress"
+          ) {
+
+            renderProgress();
+
+          }
+
+
+          if (
+            tab === "history"
+          ) {
+
+            renderHistory();
+
+          }
+
         }
+      );
 
-
-        if (tab === "progress") {
-          renderProgress();
-        }
-
-
-        if (tab === "history") {
-          renderHistory();
-        }
-
-      }
-    );
-
-  });
+    }
+  );
 
 
 /* =========================================================

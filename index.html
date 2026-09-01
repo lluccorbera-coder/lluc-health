@@ -22,6 +22,15 @@
             -webkit-font-smoothing: antialiased;
         }
 
+        button,
+        input {
+            font-family: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
         .app {
             max-width: 500px;
             margin: 0 auto;
@@ -57,10 +66,6 @@
             overflow: hidden;
         }
 
-        .weight-card {
-            padding: 20px;
-        }
-
         .section-title {
             font-size: 13px;
             font-weight: 600;
@@ -70,6 +75,12 @@
             margin: 25px 6px 8px;
         }
 
+        /* PES */
+
+        .weight-card {
+            padding: 20px;
+        }
+
         .weight-label {
             color: #8e8e93;
             font-size: 15px;
@@ -77,21 +88,27 @@
 
         .weight-row {
             display: flex;
-            align-items: baseline;
+            align-items: center;
             justify-content: space-between;
-            margin-top: 5px;
+            margin-top: 4px;
         }
 
-        .weight {
+        .weight-input {
+            border: none;
+            outline: none;
+            background: transparent;
+            width: 130px;
             font-size: 38px;
             font-weight: 700;
             letter-spacing: -1.5px;
+            padding: 0;
+            color: #1c1c1e;
         }
 
         .weight-unit {
             font-size: 17px;
             color: #8e8e93;
-            margin-left: 4px;
+            margin-left: -35px;
         }
 
         .change {
@@ -100,16 +117,27 @@
             font-weight: 500;
         }
 
+        /* FILES */
+
         .row {
+            width: 100%;
             display: flex;
             align-items: center;
-            padding: 16px 18px;
+            padding: 15px 18px;
             min-height: 64px;
+            border: none;
             border-bottom: 1px solid #e5e5ea;
+            background: white;
+            text-align: left;
+            color: #1c1c1e;
         }
 
         .row:last-child {
             border-bottom: none;
+        }
+
+        .row:active {
+            background: #f2f2f7;
         }
 
         .icon {
@@ -141,13 +169,19 @@
             width: 25px;
             height: 25px;
             border-radius: 50%;
-            background: #34c759;
-            color: white;
+            background: #e5e5ea;
+            color: transparent;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 14px;
             font-weight: 700;
+            transition: 0.15s;
+        }
+
+        .check.active {
+            background: #34c759;
+            color: white;
         }
 
         .arrow {
@@ -156,28 +190,69 @@
             margin-left: 10px;
         }
 
-        .stats {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1px;
-            background: #e5e5ea;
+        /* ACTIVITAT */
+
+        .activity-row {
+            display: flex;
+            padding: 8px;
+            gap: 5px;
         }
 
-        .stat {
+        .activity-button {
+            flex: 1;
+            border: none;
             background: white;
+            border-radius: 14px;
+            padding: 14px 5px;
+            color: #8e8e93;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .activity-button .activity-icon {
+            display: block;
+            font-size: 22px;
+            margin-bottom: 5px;
+        }
+
+        .activity-button.active {
+            background: #007aff;
+            color: white;
+        }
+
+        /* DESCANS */
+
+        .rest-card {
             padding: 18px;
         }
 
-        .stat-label {
+        .rest-label {
             color: #8e8e93;
-            font-size: 13px;
+            font-size: 15px;
+            margin-bottom: 7px;
         }
 
-        .stat-value {
-            font-size: 24px;
-            font-weight: 650;
-            margin-top: 5px;
+        .rest-input {
+            border: none;
+            outline: none;
+            background: #f2f2f7;
+            border-radius: 12px;
+            padding: 11px 13px;
+            font-size: 18px;
+            width: 100%;
         }
+
+        /* ESTAT */
+
+        .save-status {
+            text-align: center;
+            color: #8e8e93;
+            font-size: 12px;
+            margin: 18px 0;
+            height: 16px;
+        }
+
+        /* NAVEGACIÓ */
 
         .tabbar {
             position: fixed;
@@ -199,6 +274,8 @@
         }
 
         .tab {
+            border: none;
+            background: transparent;
             text-align: center;
             color: #8e8e93;
             font-size: 11px;
@@ -238,178 +315,629 @@
 <div class="app">
 
     <header class="header">
-        <div class="date">Dimarts, 1 de setembre</div>
+        <div class="date" id="dateText"></div>
         <h1>Avui</h1>
     </header>
 
     <main class="content">
 
+        <!-- PES -->
+
         <div class="card weight-card">
-            <div class="weight-label">Pes corporal</div>
+
+            <div class="weight-label">
+                Pes corporal
+            </div>
 
             <div class="weight-row">
+
                 <div>
-                    <span class="weight">75,0</span>
+                    <input
+                        id="weightInput"
+                        class="weight-input"
+                        type="number"
+                        step="0.1"
+                        min="0"
+                        placeholder="—"
+                        inputmode="decimal"
+                    >
+
                     <span class="weight-unit">kg</span>
                 </div>
 
-                <div class="change">
-                    ↑ 0,2 kg
-                </div>
+                <div id="weightChange" class="change"></div>
+
             </div>
+
         </div>
 
 
-        <div class="section-title">Alimentació i suplements</div>
+        <!-- ALIMENTACIÓ -->
+
+        <div class="section-title">
+            Alimentació i suplements
+        </div>
 
         <div class="card">
 
-            <div class="row">
+            <button class="row meal" data-key="coffee">
                 <div class="icon">☕</div>
-
                 <div class="row-text">
                     <div class="row-title">Cafè</div>
                 </div>
+                <div class="check"></div>
+            </button>
 
-                <div class="check">✓</div>
-            </div>
-
-            <div class="row">
+            <button class="row meal" data-key="breakfast">
                 <div class="icon">🍳</div>
-
                 <div class="row-text">
                     <div class="row-title">Esmorzar</div>
                 </div>
+                <div class="check"></div>
+            </button>
 
-                <div class="check">✓</div>
-            </div>
-
-            <div class="row">
+            <button class="row meal" data-key="rice">
                 <div class="icon">🥣</div>
-
                 <div class="row-text">
                     <div class="row-title">Crema d'arròs</div>
                     <div class="row-subtitle">Galetes i llet</div>
                 </div>
+                <div class="check"></div>
+            </button>
 
-                <div class="check">✓</div>
-            </div>
-
-            <div class="row">
+            <button class="row meal" data-key="lunch">
                 <div class="icon">🍽️</div>
-
                 <div class="row-text">
                     <div class="row-title">Dinar</div>
                 </div>
+                <div class="check"></div>
+            </button>
 
-                <div class="check">✓</div>
-            </div>
-
-            <div class="row">
+            <button class="row meal" data-key="snack">
                 <div class="icon">🥪</div>
-
                 <div class="row-text">
                     <div class="row-title">Berenar</div>
                 </div>
+                <div class="check"></div>
+            </button>
 
-                <div class="arrow">›</div>
-            </div>
-
-            <div class="row">
+            <button class="row meal" data-key="creatine">
                 <div class="icon">💊</div>
-
                 <div class="row-text">
                     <div class="row-title">Creatina</div>
                 </div>
+                <div class="check"></div>
+            </button>
 
-                <div class="check">✓</div>
-            </div>
-
-            <div class="row">
+            <button class="row meal" data-key="protein">
                 <div class="icon">🥤</div>
-
                 <div class="row-text">
                     <div class="row-title">Batut de proteïna</div>
                 </div>
+                <div class="check"></div>
+            </button>
 
-                <div class="check">✓</div>
-            </div>
-
-            <div class="row">
+            <button class="row meal" data-key="dinner">
                 <div class="icon">🍽️</div>
-
                 <div class="row-text">
                     <div class="row-title">Sopar</div>
                 </div>
-
-                <div class="arrow">›</div>
-            </div>
+                <div class="check"></div>
+            </button>
 
         </div>
 
 
-        <div class="section-title">Activitat</div>
+        <!-- ACTIVITAT -->
+
+        <div class="section-title">
+            Activitat
+        </div>
 
         <div class="card">
 
-            <div class="row">
-                <div class="icon">🏋️</div>
+            <div class="activity-row">
 
-                <div class="row-text">
-                    <div class="row-title">Força</div>
-                    <div class="row-subtitle">Entrenament complet</div>
-                </div>
+                <button class="activity-button" data-activity="hiit">
+                    <span class="activity-icon">🏃</span>
+                    HIIT
+                </button>
 
-                <div class="arrow">›</div>
+                <button class="activity-button" data-activity="strength">
+                    <span class="activity-icon">🏋️</span>
+                    Força
+                </button>
+
+                <button class="activity-button" data-activity="rest">
+                    <span class="activity-icon">😴</span>
+                    Descans
+                </button>
+
             </div>
 
         </div>
 
 
-        <div class="section-title">Avui</div>
+        <!-- DESCANS -->
 
-        <div class="card stats">
+        <div class="section-title">
+            Descans
+        </div>
 
-            <div class="stat">
-                <div class="stat-label">Descans</div>
-                <div class="stat-value">7 h 45 m</div>
+        <div class="card rest-card">
+
+            <div class="rest-label">
+                Hores de descans
             </div>
 
-            <div class="stat">
-                <div class="stat-label">Entrenament</div>
-                <div class="stat-value">Força</div>
-            </div>
+            <input
+                id="sleepInput"
+                class="rest-input"
+                type="number"
+                step="0.25"
+                min="0"
+                max="24"
+                placeholder="Ex. 7,5"
+                inputmode="decimal"
+            >
 
         </div>
+
+
+        <div id="saveStatus" class="save-status"></div>
 
     </main>
 
 
+    <!-- NAVEGACIÓ -->
+
     <nav class="tabbar">
 
-        <div class="tab active">
+        <button class="tab active">
             <div class="tab-icon">⌂</div>
             Avui
-        </div>
+        </button>
 
-        <div class="tab">
+        <button class="tab">
             <div class="tab-icon">↗</div>
             Progrés
-        </div>
+        </button>
 
-        <div class="tab">
+        <button class="tab">
             <div class="tab-icon">▣</div>
             Historial
-        </div>
+        </button>
 
-        <div class="tab">
+        <button class="tab">
             <div class="tab-icon">•••</div>
             Més
-        </div>
+        </button>
 
     </nav>
 
 </div>
+
+
+<script>
+
+    /*
+     * LLUC HEALTH
+     * Sistema de dades local
+     */
+
+    const STORAGE_KEY = "lluc-health-data-v1";
+
+    let allData = loadData();
+
+    const today = getTodayKey();
+
+    if (!allData[today]) {
+        allData[today] = createEmptyDay();
+        saveData();
+    }
+
+
+    /* -----------------------------
+       FUNCIONS DE DADES
+    ----------------------------- */
+
+    function createEmptyDay() {
+
+        return {
+            weight: null,
+
+            meals: {
+                coffee: false,
+                breakfast: false,
+                rice: false,
+                lunch: false,
+                snack: false,
+                creatine: false,
+                protein: false,
+                dinner: false
+            },
+
+            activity: null,
+
+            sleep: null
+        };
+    }
+
+
+    function loadData() {
+
+        try {
+
+            const saved = localStorage.getItem(STORAGE_KEY);
+
+            if (!saved) {
+                return {};
+            }
+
+            return JSON.parse(saved);
+
+        } catch (error) {
+
+            console.error("Error carregant dades:", error);
+
+            return {};
+        }
+    }
+
+
+    function saveData() {
+
+        try {
+
+            localStorage.setItem(
+                STORAGE_KEY,
+                JSON.stringify(allData)
+            );
+
+            showSaved();
+
+        } catch (error) {
+
+            console.error("Error guardant dades:", error);
+
+            document.getElementById("saveStatus").textContent =
+                "Error guardant les dades";
+        }
+    }
+
+
+    function showSaved() {
+
+        const status = document.getElementById("saveStatus");
+
+        status.textContent = "Guardat automàticament ✓";
+
+        setTimeout(() => {
+
+            status.textContent = "";
+
+        }, 1500);
+    }
+
+
+    function getTodayKey() {
+
+        const now = new Date();
+
+        const year = now.getFullYear();
+
+        const month = String(
+            now.getMonth() + 1
+        ).padStart(2, "0");
+
+        const day = String(
+            now.getDate()
+        ).padStart(2, "0");
+
+        return `${year}-${month}-${day}`;
+    }
+
+
+    /* -----------------------------
+       DATA
+    ----------------------------- */
+
+    function displayDate() {
+
+        const date = new Date();
+
+        const text = date.toLocaleDateString(
+            "ca-ES",
+            {
+                weekday: "long",
+                day: "numeric",
+                month: "long"
+            }
+        );
+
+        document.getElementById("dateText").textContent =
+            text.charAt(0).toUpperCase() + text.slice(1);
+    }
+
+
+    /* -----------------------------
+       CARREGAR EL DIA
+    ----------------------------- */
+
+    function renderDay() {
+
+        const day = allData[today];
+
+        /* PES */
+
+        const weightInput =
+            document.getElementById("weightInput");
+
+        if (day.weight !== null) {
+
+            weightInput.value = day.weight;
+
+        } else {
+
+            weightInput.value = "";
+        }
+
+
+        updateWeightChange();
+
+
+        /* ÀPATS */
+
+        document
+            .querySelectorAll(".meal")
+            .forEach(button => {
+
+                const key = button.dataset.key;
+
+                const check =
+                    button.querySelector(".check");
+
+                if (day.meals[key]) {
+
+                    check.classList.add("active");
+                    check.textContent = "✓";
+
+                } else {
+
+                    check.classList.remove("active");
+                    check.textContent = "";
+                }
+            });
+
+
+        /* ACTIVITAT */
+
+        document
+            .querySelectorAll(".activity-button")
+            .forEach(button => {
+
+                button.classList.remove("active");
+
+                if (
+                    button.dataset.activity ===
+                    day.activity
+                ) {
+
+                    button.classList.add("active");
+                }
+            });
+
+
+        /* SON */
+
+        const sleepInput =
+            document.getElementById("sleepInput");
+
+        sleepInput.value =
+            day.sleep !== null
+                ? day.sleep
+                : "";
+    }
+
+
+    /* -----------------------------
+       PES
+    ----------------------------- */
+
+    function updateWeightChange() {
+
+        const current =
+            allData[today].weight;
+
+        const changeElement =
+            document.getElementById("weightChange");
+
+        if (current === null) {
+
+            changeElement.textContent = "";
+
+            return;
+        }
+
+
+        const dates =
+            Object.keys(allData)
+            .sort()
+            .reverse();
+
+
+        let previousWeight = null;
+
+
+        for (const date of dates) {
+
+            if (date === today) {
+                continue;
+            }
+
+            const weight =
+                allData[date].weight;
+
+            if (
+                weight !== null &&
+                typeof weight === "number"
+            ) {
+
+                previousWeight = weight;
+
+                break;
+            }
+        }
+
+
+        if (previousWeight === null) {
+
+            changeElement.textContent = "";
+
+            return;
+        }
+
+
+        const difference =
+            current - previousWeight;
+
+
+        if (difference > 0) {
+
+            changeElement.textContent =
+                `↑ ${difference.toFixed(1).replace(".", ",")} kg`;
+
+        } else if (difference < 0) {
+
+            changeElement.style.color = "#ff3b30";
+
+            changeElement.textContent =
+                `↓ ${Math.abs(difference).toFixed(1).replace(".", ",")} kg`;
+
+        } else {
+
+            changeElement.style.color = "#8e8e93";
+
+            changeElement.textContent =
+                "Sense canvi";
+        }
+    }
+
+
+    document
+        .getElementById("weightInput")
+        .addEventListener("input", function () {
+
+            const value =
+                parseFloat(
+                    this.value.replace(",", ".")
+                );
+
+            if (isNaN(value)) {
+
+                allData[today].weight = null;
+
+            } else {
+
+                allData[today].weight = value;
+            }
+
+            updateWeightChange();
+
+            saveData();
+        });
+
+
+    /* -----------------------------
+       ÀPATS
+    ----------------------------- */
+
+    document
+        .querySelectorAll(".meal")
+        .forEach(button => {
+
+            button.addEventListener("click", () => {
+
+                const key =
+                    button.dataset.key;
+
+                allData[today].meals[key] =
+                    !allData[today].meals[key];
+
+                renderDay();
+
+                saveData();
+            });
+        });
+
+
+    /* -----------------------------
+       ACTIVITAT
+    ----------------------------- */
+
+    document
+        .querySelectorAll(".activity-button")
+        .forEach(button => {
+
+            button.addEventListener("click", () => {
+
+                const activity =
+                    button.dataset.activity;
+
+                if (
+                    allData[today].activity ===
+                    activity
+                ) {
+
+                    allData[today].activity = null;
+
+                } else {
+
+                    allData[today].activity = activity;
+                }
+
+                renderDay();
+
+                saveData();
+            });
+        });
+
+
+    /* -----------------------------
+       DESCANS
+    ----------------------------- */
+
+    document
+        .getElementById("sleepInput")
+        .addEventListener("input", function () {
+
+            const value =
+                parseFloat(
+                    this.value.replace(",", ".")
+                );
+
+            if (isNaN(value)) {
+
+                allData[today].sleep = null;
+
+            } else {
+
+                allData[today].sleep = value;
+            }
+
+            saveData();
+        });
+
+
+    /* -----------------------------
+       INICI
+    ----------------------------- */
+
+    displayDate();
+
+    renderDay();
+
+</script>
 
 </body>
 </html>

@@ -1,4249 +1,2773 @@
 <!DOCTYPE html>
 <html lang="ca">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="theme-color" content="#f2f2f7">
-  <title>Lluc Health</title>
-
-  <style>
-    * {
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    body {
-      margin: 0;
-      background: #f2f2f7;
-      color: #1c1c1e;
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
-        "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
-    }
-
-    button,
-    input {
-      font: inherit;
-    }
-
-    button {
-      -webkit-appearance: none;
-    }
-
-    .app {
-      min-height: 100vh;
-      padding-bottom: 90px;
-    }
-
-    .container {
-      width: 100%;
-      max-width: 680px;
-      margin: 0 auto;
-      padding: 20px 16px 30px;
-    }
-
-    .screen {
-      display: none;
-    }
-
-    .screen.active {
-      display: block;
-    }
-
-    .header {
-      padding: 12px 4px 20px;
-    }
-
-    .eyebrow {
-      font-size: 14px;
-      color: #8e8e93;
-      margin-bottom: 5px;
-    }
-
-    h1 {
-      margin: 0;
-      font-size: 34px;
-      line-height: 1.1;
-      letter-spacing: -1px;
-      font-weight: 700;
-    }
-
-    .subtitle {
-      margin-top: 7px;
-      color: #8e8e93;
-      font-size: 15px;
-      line-height: 1.35;
-    }
-
-    .card {
-      background: #ffffff;
-      border-radius: 22px;
-      padding: 18px;
-      margin-bottom: 14px;
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
-    }
-
-    .card-title {
-      font-size: 17px;
-      font-weight: 650;
-      margin-bottom: 14px;
-    }
-
-    .section-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin: 28px 4px 12px;
-    }
-
-    .section-header h3 {
-      margin: 0;
-      font-size: 20px;
-    }
-
-    .section-header span {
-      color: #8e8e93;
-      font-size: 14px;
-    }
-
-    /* PES */
-
-    .weight-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 15px;
-    }
-
-    .weight-info {
-      flex: 1;
-    }
-
-    .weight-value {
-      font-size: 32px;
-      font-weight: 700;
-      letter-spacing: -1px;
-    }
-
-    .weight-label {
-      color: #8e8e93;
-      font-size: 14px;
-      margin-top: 2px;
-    }
-
-    .weight-input {
-      width: 115px;
-      border: 0;
-      outline: none;
-      background: #f2f2f7;
-      border-radius: 14px;
-      padding: 12px;
-      text-align: center;
-      font-size: 18px;
-      font-weight: 600;
-    }
-
-    .weight-change {
-      font-size: 13px;
-      margin-top: 8px;
-    }
-
-    .positive {
-      color: #34c759;
-    }
-
-    .negative {
-      color: #ff3b30;
-    }
-
-    .neutral {
-      color: #8e8e93;
-    }
-
-    /* MENJARS */
-
-    .meal-list {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .meal-row {
-      display: flex;
-      align-items: center;
-      min-height: 50px;
-      border-bottom: 1px solid #f2f2f7;
-      cursor: pointer;
-      user-select: none;
-    }
-
-    .meal-row:last-child {
-      border-bottom: none;
-    }
-
-    .meal-name {
-      flex: 1;
-      font-size: 16px;
-    }
-
-    .check {
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      background: #e5e5ea;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: transparent;
-      font-size: 15px;
-      font-weight: 700;
-    }
-
-    .meal-row.checked .check {
-      background: #34c759;
-      color: white;
-    }
-
-    /* ACTIVITAT */
-
-    .activity-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 9px;
-    }
-
-    .activity-button {
-      border: none;
-      border-radius: 15px;
-      background: #f2f2f7;
-      padding: 14px 8px;
-      cursor: pointer;
-      font-size: 14px;
-      font-weight: 600;
-      color: #3a3a3c;
-    }
-
-    .activity-button.selected {
-      background: #1c1c1e;
-      color: white;
-    }
-
-    /* SON */
-
-    .sleep-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 15px;
-    }
-
-    .sleep-input {
-      width: 110px;
-      border: 0;
-      outline: none;
-      background: #f2f2f7;
-      border-radius: 14px;
-      padding: 12px;
-      text-align: center;
-      font-size: 17px;
-      font-weight: 600;
-    }
-
-    .saved {
-      text-align: center;
-      color: #34c759;
-      font-size: 13px;
-      margin: 18px 0;
-      min-height: 18px;
-    }
-
-    /* FORÇA */
-
-    .exercise-card {
-      background: #ffffff;
-      border-radius: 22px;
-      padding: 18px;
-      margin-bottom: 14px;
-    }
-
-    .exercise-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 14px;
-      gap: 10px;
-    }
-
-    .exercise-name {
-      font-size: 17px;
-      font-weight: 650;
-    }
-
-    .exercise-volume {
-      color: #8e8e93;
-      font-size: 13px;
-      white-space: nowrap;
-    }
-
-    .sets-header,
-    .set-row {
-      display: grid;
-      grid-template-columns: 35px 1fr 1fr 38px;
-      gap: 8px;
-      align-items: center;
-    }
-
-    .sets-header {
-      color: #8e8e93;
-      font-size: 12px;
-      padding: 0 4px 6px;
-    }
-
-    .set-row {
-      margin-bottom: 8px;
-    }
-
-    .set-number {
-      color: #8e8e93;
-      text-align: center;
-      font-size: 14px;
-    }
-
-    .set-input {
-      width: 100%;
-      border: none;
-      outline: none;
-      background: #f2f2f7;
-      border-radius: 11px;
-      padding: 10px 8px;
-      text-align: center;
-      font-size: 15px;
-    }
-
-    .set-input:focus {
-      background: #e5e5ea;
-    }
-
-    .delete-set {
-      border: none;
-      background: #f2f2f7;
-      color: #ff3b30;
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      cursor: pointer;
-      font-size: 18px;
-    }
-
-    .add-set {
-      width: 100%;
-      border: none;
-      background: #f2f2f7;
-      border-radius: 13px;
-      padding: 11px;
-      margin-top: 5px;
-      font-weight: 600;
-      cursor: pointer;
-    }
-
-    /* PROGRÉS */
-
-    .stat-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-
-    .stat-card {
-      background: #ffffff;
-      border-radius: 20px;
-      padding: 17px;
-    }
-
-    .stat-label {
-      color: #8e8e93;
-      font-size: 13px;
-      margin-bottom: 6px;
-    }
-
-    .stat-value {
-      font-size: 26px;
-      font-weight: 700;
-      letter-spacing: -0.5px;
-    }
-
-    .stat-small {
-      color: #8e8e93;
-      font-size: 12px;
-      margin-top: 4px;
-    }
-
-    .chart-card {
-      background: #ffffff;
-      border-radius: 22px;
-      padding: 18px;
-      margin-bottom: 14px;
-    }
-
-    .chart-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 10px;
-    }
-
-    .chart-title {
-      font-size: 17px;
-      font-weight: 650;
-    }
-
-    .chart-subtitle {
-      color: #8e8e93;
-      font-size: 13px;
-      margin-top: 3px;
-    }
-
-    .chart-current {
-      font-size: 20px;
-      font-weight: 700;
-    }
-
-    .chart {
-      height: 220px;
-      display: flex;
-      align-items: flex-end;
-      gap: 8px;
-      padding: 18px 4px 8px;
-      overflow-x: auto;
-    }
-
-    .bar-container {
-      min-width: 32px;
-      height: 185px;
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      flex-direction: column;
-    }
-
-    .bar {
-      width: 23px;
-      min-height: 5px;
-      background: #1c1c1e;
-      border-radius: 7px 7px 3px 3px;
-    }
-
-    .bar-label {
-      font-size: 9px;
-      color: #8e8e93;
-      margin-top: 6px;
-      white-space: nowrap;
-    }
-
-    .chart-value {
-      font-size: 9px;
-      color: #8e8e93;
-      margin-bottom: 4px;
-      white-space: nowrap;
-    }
-
-    /* GRÀFICS FORÇA */
-
-    .progress-exercise {
-      background: #ffffff;
-      border-radius: 20px;
-      padding: 17px;
-      margin-bottom: 12px;
-    }
-
-    .progress-exercise-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .progress-exercise-name {
-      font-size: 16px;
-      font-weight: 650;
-    }
-
-    .progress-exercise-best {
-      font-size: 16px;
-      font-weight: 700;
-    }
-
-    .progress-metrics {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      margin-top: 15px;
-      padding-top: 13px;
-      border-top: 1px solid #f2f2f7;
-    }
-
-    .progress-metric-label {
-      color: #8e8e93;
-      font-size: 11px;
-      margin-bottom: 3px;
-    }
-
-    .progress-metric-value {
-      font-size: 15px;
-      font-weight: 650;
-    }
-
-    .exercise-chart-wrapper {
-      margin-top: 17px;
-      padding-top: 15px;
-      border-top: 1px solid #f2f2f7;
-    }
-
-    .exercise-chart-title {
-      font-size: 13px;
-      color: #8e8e93;
-      margin-bottom: 10px;
-    }
-
-    .exercise-chart {
-      height: 150px;
-      width: 100%;
-      display: flex;
-      align-items: flex-end;
-      gap: 10px;
-      overflow-x: auto;
-      padding: 5px 3px 3px;
-    }
-
-    .exercise-bar-container {
-      flex: 0 0 38px;
-      height: 135px;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      align-items: center;
-    }
-
-    .exercise-bar-value {
-      font-size: 10px;
-      color: #1c1c1e;
-      font-weight: 600;
-      margin-bottom: 4px;
-      white-space: nowrap;
-    }
-
-    .exercise-bar {
-      width: 27px;
-      min-height: 8px;
-      background: #1c1c1e;
-      border-radius: 7px 7px 2px 2px;
-    }
-
-    .exercise-bar-date {
-      font-size: 9px;
-      color: #8e8e93;
-      margin-top: 6px;
-      white-space: nowrap;
-    }
-
-    .no-data {
-      color: #8e8e93;
-      font-size: 13px;
-      padding: 8px 0;
-    }
-
-    /* HISTORIAL */
-
-    .history-item {
-      background: white;
-      border-radius: 18px;
-      padding: 16px;
-      margin-bottom: 10px;
-      cursor: pointer;
-    }
-
-    .history-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .history-date {
-      font-weight: 650;
-    }
-
-    .history-weight {
-      font-weight: 600;
-      white-space: nowrap;
-    }
-
-    .history-details {
-      color: #8e8e93;
-      font-size: 13px;
-      margin-top: 7px;
-    }
-
-    .history-arrow {
-      color: #8e8e93;
-      font-size: 20px;
-      margin-left: 8px;
-    }
-
-    /* DETALL HISTORIAL */
-
-    .back-button {
-      border: none;
-      background: transparent;
-      padding: 8px 0;
-      color: #007aff;
-      font-size: 16px;
-      font-weight: 500;
-      cursor: pointer;
-      margin-bottom: 8px;
-    }
-
-    .detail-date {
-      font-size: 14px;
-      color: #8e8e93;
-      margin-bottom: 5px;
-    }
-
-    .detail-main-title {
-      font-size: 34px;
-      font-weight: 700;
-      letter-spacing: -1px;
-      margin: 0 0 20px;
-    }
-
-    .detail-stat-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-
-    .detail-stat {
-      background: white;
-      border-radius: 20px;
-      padding: 17px;
-    }
-
-    .detail-stat-label {
-      color: #8e8e93;
-      font-size: 13px;
-      margin-bottom: 5px;
-    }
-
-    .detail-stat-value {
-      font-size: 23px;
-      font-weight: 700;
-    }
-
-    .detail-meal-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      min-height: 45px;
-      border-bottom: 1px solid #f2f2f7;
-    }
-
-    .detail-meal-row:last-child {
-      border-bottom: none;
-    }
-
-    .detail-check {
-      font-size: 18px;
-      font-weight: 700;
-    }
-
-    .detail-check.done {
-      color: #34c759;
-    }
-
-    .detail-check.not-done {
-      color: #c7c7cc;
-    }
-
-    .detail-exercise {
-      background: white;
-      border-radius: 20px;
-      padding: 17px;
-      margin-bottom: 10px;
-    }
-
-    .detail-exercise-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 12px;
-    }
-
-    .detail-exercise-name {
-      font-size: 16px;
-      font-weight: 650;
-    }
-
-    .detail-exercise-volume {
-      color: #8e8e93;
-      font-size: 13px;
-    }
-
-    .detail-set {
-      display: grid;
-      grid-template-columns: 35px 1fr 1fr;
-      gap: 8px;
-      padding: 9px 0;
-      border-bottom: 1px solid #f2f2f7;
-      font-size: 14px;
-    }
-
-    .detail-set:last-child {
-      border-bottom: none;
-    }
-
-    .detail-set-number {
-      color: #8e8e93;
-      text-align: center;
-    }
-
-    .detail-empty {
-      color: #8e8e93;
-      font-size: 14px;
-      padding: 10px 0;
-    }
-
-    /* MÉS */
-
-    .settings-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 15px 0;
-      border-bottom: 1px solid #f2f2f7;
-      gap: 15px;
-    }
-
-    .settings-row:last-child {
-      border-bottom: none;
-    }
-
-    .settings-title {
-      font-size: 16px;
-    }
-
-    .settings-description {
-      font-size: 13px;
-      color: #8e8e93;
-      margin-top: 3px;
-    }
-
-    .secondary-button {
-      border: none;
-      background: #f2f2f7;
-      color: #8e8e93;
-      border-radius: 12px;
-      padding: 10px 13px;
-      font-weight: 600;
-    }
-
-    /* TAB BAR */
-
-    .tabbar {
-      position: fixed;
-      z-index: 100;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      height: calc(72px + env(safe-area-inset-bottom));
-      padding-bottom: env(safe-area-inset-bottom);
-      background: rgba(255, 255, 255, 0.94);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-top: 1px solid rgba(0, 0, 0, 0.08);
-      display: flex;
-      justify-content: center;
-    }
-
-    .tabbar-inner {
-      width: 100%;
-      max-width: 680px;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-    }
-
-    .tab {
-      border: none;
-      background: transparent;
-      color: #8e8e93;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-      cursor: pointer;
-      padding-top: 5px;
-    }
-
-    .tab span {
-      font-size: 22px;
-      line-height: 22px;
-      font-weight: 500;
-    }
-
-    .tab small {
-      font-size: 11px;
-    }
-
-    .tab.active {
-      color: #1c1c1e;
-    }
-
-    @media (max-width: 420px) {
-
-      .stat-grid {
-        gap: 9px;
-      }
-
-      .stat-card {
-        padding: 15px;
-      }
-
-      .stat-value {
-        font-size: 23px;
-      }
-
-      .progress-metrics {
-        gap: 6px;
-      }
-
-      .detail-stat-grid {
-        gap: 9px;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#f2f2f7">
+<title>Lluc Health</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  margin: 0;
+  background: #f2f2f7;
+  color: #111;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+    "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  border: none;
+  cursor: pointer;
+}
+
+.app {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 16px 100px;
+}
+
+.header {
+  padding: 28px 4px 18px;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 34px;
+  letter-spacing: -1.2px;
+  font-weight: 700;
+}
+
+.header p {
+  margin: 5px 0 0;
+  color: #8e8e93;
+  font-size: 15px;
+}
+
+.screen {
+  display: none;
+}
+
+.screen.active {
+  display: block;
+}
+
+.card {
+  background: white;
+  border-radius: 22px;
+  padding: 18px;
+  margin-bottom: 14px;
+  box-shadow: 0 1px 2px rgba(0,0,0,.03);
+}
+
+.section-title {
+  font-size: 21px;
+  font-weight: 700;
+  margin: 24px 4px 10px;
+  letter-spacing: -.4px;
+}
+
+.date-card {
+  text-align: center;
+  padding: 14px;
+  margin-bottom: 14px;
+}
+
+.date-main {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.date-sub {
+  color: #8e8e93;
+  font-size: 14px;
+  margin-top: 3px;
+}
+
+.weight-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.weight-left h2 {
+  margin: 0;
+  font-size: 17px;
+}
+
+.weight-left p {
+  margin: 4px 0 0;
+  color: #8e8e93;
+  font-size: 13px;
+}
+
+.weight-input {
+  width: 100px;
+  padding: 11px 10px;
+  border: none;
+  background: #f2f2f7;
+  border-radius: 13px;
+  text-align: right;
+  font-size: 18px;
+  outline: none;
+}
+
+.meal-row {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  min-height: 52px;
+  border-bottom: 1px solid #eeeef2;
+}
+
+.meal-row:last-child {
+  border-bottom: none;
+}
+
+.check {
+  width: 27px;
+  height: 27px;
+  border-radius: 50%;
+  background: #e5e5ea;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: transparent;
+  font-size: 15px;
+  font-weight: 700;
+  flex-shrink: 0;
+  transition: .2s ease;
+}
+
+.meal-row.checked .check {
+  background: #34c759;
+  color: white;
+}
+
+.meal-name {
+  font-size: 16px;
+}
+
+.activity-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 9px;
+}
+
+.activity-button {
+  padding: 14px 8px;
+  border-radius: 15px;
+  background: #f2f2f7;
+  color: #3a3a3c;
+  font-size: 14px;
+  font-weight: 600;
+  transition: .2s ease;
+}
+
+.activity-button.selected {
+  background: #007aff;
+  color: white;
+}
+
+.sleep-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sleep-row label {
+  font-size: 16px;
+}
+
+.sleep-input {
+  width: 90px;
+  padding: 11px;
+  background: #f2f2f7;
+  border: none;
+  border-radius: 13px;
+  text-align: right;
+  outline: none;
+}
+
+.saved {
+  text-align: center;
+  color: #34c759;
+  font-size: 13px;
+  margin: 12px 0 0;
+}
+
+.exercise-card {
+  padding: 17px;
+}
+
+.exercise-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 13px;
+}
+
+.exercise-title {
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.add-set {
+  background: #007aff;
+  color: white;
+  border-radius: 12px;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.set-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 36px;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.set-input {
+  width: 100%;
+  border: none;
+  background: #f2f2f7;
+  border-radius: 11px;
+  padding: 10px;
+  outline: none;
+  font-size: 15px;
+}
+
+.delete-set {
+  background: #f2f2f7;
+  color: #ff3b30;
+  border-radius: 11px;
+  font-size: 18px;
+}
+
+.volume {
+  margin-top: 8px;
+  color: #8e8e93;
+  font-size: 13px;
+}
+
+.empty {
+  color: #8e8e93;
+  text-align: center;
+  padding: 16px 0;
+  font-size: 14px;
+}
+
+/* PROGRESS */
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.stat-card {
+  background: white;
+  border-radius: 19px;
+  padding: 17px;
+}
+
+.stat-label {
+  color: #8e8e93;
+  font-size: 13px;
+}
+
+.stat-value {
+  margin-top: 6px;
+  font-size: 27px;
+  font-weight: 700;
+  letter-spacing: -.7px;
+}
+
+.stat-small {
+  font-size: 13px;
+  color: #8e8e93;
+  margin-top: 3px;
+}
+
+.chart-card {
+  background: white;
+  border-radius: 22px;
+  padding: 18px;
+  margin-bottom: 14px;
+}
+
+.chart-title {
+  font-size: 17px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.chart-subtitle {
+  color: #8e8e93;
+  font-size: 13px;
+  margin-bottom: 14px;
+}
+
+.chart-switcher {
+  display: flex;
+  background: #f2f2f7;
+  padding: 3px;
+  border-radius: 11px;
+  margin-bottom: 17px;
+}
+
+.chart-switch {
+  flex: 1;
+  padding: 7px 4px;
+  border-radius: 9px;
+  background: transparent;
+  color: #8e8e93;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.chart-switch.active {
+  background: white;
+  color: #111;
+  box-shadow: 0 1px 3px rgba(0,0,0,.08);
+}
+
+/* APPLE STYLE LINE CHART */
+
+.line-chart {
+  position: relative;
+  width: 100%;
+  height: 220px;
+  overflow: hidden;
+}
+
+.chart-y-label {
+  position: absolute;
+  left: 0;
+  color: #8e8e93;
+  font-size: 11px;
+}
+
+.chart-y-top {
+  top: 0;
+}
+
+.chart-y-middle {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.chart-y-bottom {
+  bottom: 24px;
+}
+
+.chart-area {
+  position: absolute;
+  left: 42px;
+  right: 5px;
+  top: 8px;
+  bottom: 27px;
+  border-top: 1px solid #e5e5ea;
+  border-bottom: 1px solid #e5e5ea;
+}
+
+.chart-grid-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  border-top: 1px solid #f0f0f3;
+}
+
+.chart-grid-1 {
+  top: 33.33%;
+}
+
+.chart-grid-2 {
+  top: 66.66%;
+}
+
+.chart-svg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.chart-point {
+  fill: white;
+  stroke: #007aff;
+  stroke-width: 2.5;
+}
+
+.chart-line {
+  fill: none;
+  stroke: #007aff;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.chart-area-fill {
+  fill: rgba(0,122,255,.10);
+}
+
+.chart-labels {
+  position: absolute;
+  left: 42px;
+  right: 5px;
+  bottom: 3px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.chart-label {
+  color: #8e8e93;
+  font-size: 10px;
+}
+
+.exercise-progress {
+  margin-bottom: 14px;
+}
+
+.exercise-progress:last-child {
+  margin-bottom: 0;
+}
+
+.exercise-progress-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.exercise-progress-name {
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.exercise-progress-best {
+  text-align: right;
+}
+
+.exercise-progress-best strong {
+  display: block;
+  font-size: 21px;
+}
+
+.exercise-progress-best span {
+  color: #8e8e93;
+  font-size: 11px;
+}
+
+.progress-mini-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 7px;
+  margin-bottom: 14px;
+}
+
+.mini-stat {
+  background: #f2f2f7;
+  border-radius: 12px;
+  padding: 9px;
+}
+
+.mini-stat-label {
+  color: #8e8e93;
+  font-size: 10px;
+}
+
+.mini-stat-value {
+  margin-top: 3px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.no-chart {
+  background: #f2f2f7;
+  border-radius: 14px;
+  padding: 18px;
+  text-align: center;
+  color: #8e8e93;
+  font-size: 13px;
+}
+
+/* HISTORY */
+
+.history-item {
+  background: white;
+  border-radius: 19px;
+  padding: 16px;
+  margin-bottom: 9px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.history-date {
+  font-weight: 600;
+}
+
+.history-summary {
+  color: #8e8e93;
+  font-size: 13px;
+  margin-top: 3px;
+}
+
+.history-arrow {
+  color: #c7c7cc;
+  font-size: 23px;
+}
+
+.back-button {
+  background: #f2f2f7;
+  border-radius: 12px;
+  padding: 9px 13px;
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+.detail-row {
+  padding: 12px 0;
+  border-bottom: 1px solid #eeeef2;
+}
+
+.detail-row:last-child {
+  border-bottom: none;
+}
+
+.detail-label {
+  color: #8e8e93;
+  font-size: 13px;
+}
+
+.detail-value {
+  margin-top: 4px;
+  font-size: 16px;
+}
+
+.detail-set {
+  display: flex;
+  justify-content: space-between;
+  padding: 7px 0;
+  font-size: 14px;
+}
+
+/* MORE */
+
+.more-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 0;
+  border-bottom: 1px solid #eeeef2;
+}
+
+.more-row:last-child {
+  border-bottom: none;
+}
+
+.more-title {
+  font-size: 16px;
+}
+
+.more-subtitle {
+  color: #8e8e93;
+  font-size: 13px;
+  margin-top: 3px;
+}
+
+.more-arrow {
+  color: #c7c7cc;
+  font-size: 22px;
+}
+
+/* NAV */
+
+.bottom-nav {
+  position: fixed;
+  z-index: 50;
+  left: 50%;
+  bottom: 12px;
+  transform: translateX(-50%);
+  width: min(720px, calc(100% - 24px));
+  height: 67px;
+  background: rgba(255,255,255,.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(0,0,0,.06);
+  border-radius: 22px;
+  box-shadow: 0 7px 30px rgba(0,0,0,.12);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  padding: 5px;
+}
+
+.nav-button {
+  background: transparent;
+  color: #8e8e93;
+  border-radius: 17px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}
+
+.nav-button.active {
+  color: #007aff;
+}
+
+.nav-icon {
+  font-size: 20px;
+  line-height: 20px;
+}
+
+.nav-label {
+  font-size: 10px;
+  font-weight: 600;
+}
+
+@media (max-width: 480px) {
+  .app {
+    padding-left: 13px;
+    padding-right: 13px;
+  }
+
+  .header {
+    padding-top: 23px;
+  }
+
+  .header h1 {
+    font-size: 32px;
+  }
+
+  .card {
+    border-radius: 20px;
+  }
+}
+</style>
 </head>
-
 
 <body>
 
 <div class="app">
 
-  <!-- AVUI -->
+  <div class="header">
+    <h1 id="pageTitle">Avui</h1>
+    <p id="pageSubtitle">La meva salut, alimentació i entrenament</p>
+  </div>
 
-  <main id="todayScreen" class="screen active">
+  <!-- ==================== AVUI ==================== -->
 
-    <div class="container">
+  <section id="todayScreen" class="screen active">
 
-      <div class="header">
+    <div class="date-card card">
+      <div class="date-main" id="todayDate"></div>
+      <div class="date-sub">Registre d'avui</div>
+    </div>
 
-        <div class="eyebrow" id="todayDate"></div>
-
-        <h1>Avui</h1>
-
-        <div class="subtitle">
-          La teva salut, alimentació i entrenament.
-        </div>
-
+    <div class="card weight-card">
+      <div class="weight-left">
+        <h2>Pes corporal</h2>
+        <p id="weightDifference">Encara no registrat</p>
       </div>
 
+      <input
+        id="weightInput"
+        class="weight-input"
+        type="number"
+        step="0.1"
+        placeholder="kg"
+      >
+    </div>
 
-      <div class="card">
+    <div class="section-title">Alimentació i suplements</div>
 
-        <div class="card-title">
-          Pes
-        </div>
+    <div class="card" id="meals"></div>
 
-        <div class="weight-row">
+    <div class="section-title">Activitat</div>
 
-          <div class="weight-info">
-
-            <div class="weight-value" id="weightDisplay">
-              — kg
-            </div>
-
-            <div class="weight-label">
-              Pes d'avui
-            </div>
-
-            <div id="weightChange" class="weight-change neutral"></div>
-
-          </div>
-
-          <input
-            id="weightInput"
-            class="weight-input"
-            type="number"
-            step="0.1"
-            inputmode="decimal"
-            placeholder="75.0 kg"
-          >
-
-        </div>
-
+    <div class="card">
+      <div class="activity-grid">
+        <button class="activity-button" data-activity="HIIT">HIIT</button>
+        <button class="activity-button" data-activity="strength">Força</button>
+        <button class="activity-button" data-activity="rest">Descans</button>
       </div>
+    </div>
 
+    <div id="strengthSection" style="display:none;">
 
-      <div class="section-header">
+      <div class="section-title">Entrenament de força</div>
 
-        <h3>Alimentació</h3>
-
-        <span>Avui</span>
-
-      </div>
-
-
-      <div class="card">
-
-        <div class="meal-list" id="mealList"></div>
-
-      </div>
-
-
-      <div class="section-header">
-
-        <h3>Activitat</h3>
-
-      </div>
-
-
-      <div class="card">
-
-        <div class="activity-grid">
-
-          <button class="activity-button" data-activity="hiit">
-            HIIT
-          </button>
-
-          <button class="activity-button" data-activity="strength">
-            Força
-          </button>
-
-          <button class="activity-button" data-activity="rest">
-            Descans
-          </button>
-
-        </div>
-
-      </div>
-
-
-      <div id="strengthSection" style="display:none;">
-
-        <div class="section-header">
-
-          <h3>Força</h3>
-
-          <span>Sèries</span>
-
-        </div>
-
-        <div id="exerciseList"></div>
-
-      </div>
-
-
-      <div class="section-header">
-
-        <h3>Descans</h3>
-
-      </div>
-
-
-      <div class="card">
-
-        <div class="sleep-row">
-
-          <div>
-
-            <div class="card-title" style="margin-bottom:3px;">
-              Hores de son
-            </div>
-
-            <div class="subtitle">
-              Quant has dormit?
-            </div>
-
-          </div>
-
-          <input
-            id="sleepInput"
-            class="sleep-input"
-            type="number"
-            min="0"
-            max="24"
-            step="0.5"
-            inputmode="decimal"
-            placeholder="7.5 h"
-          >
-
-        </div>
-
-      </div>
-
-
-      <div class="saved" id="savedMessage"></div>
+      <div id="strengthExercises"></div>
 
     </div>
 
-  </main>
+    <div class="section-title">Descans</div>
 
+    <div class="card">
+      <div class="sleep-row">
+        <label>Hores de son</label>
 
-  <!-- PROGRÉS -->
-
-  <main id="progressScreen" class="screen">
-
-    <div class="container">
-
-      <div class="header">
-
-        <div class="eyebrow">
-          La teva evolució
-        </div>
-
-        <h1>Progrés</h1>
-
-        <div class="subtitle">
-          Mira com avances amb el temps.
-        </div>
-
+        <input
+          id="sleepInput"
+          class="sleep-input"
+          type="number"
+          step="0.1"
+          min="0"
+          max="24"
+          placeholder="hores"
+        >
       </div>
-
-
-      <div class="stat-grid">
-
-        <div class="stat-card">
-
-          <div class="stat-label">
-            Pes actual
-          </div>
-
-          <div class="stat-value" id="progressCurrentWeight">
-            —
-          </div>
-
-          <div class="stat-small" id="progressWeightDate"></div>
-
-        </div>
-
-
-        <div class="stat-card">
-
-          <div class="stat-label">
-            Canvi total
-          </div>
-
-          <div class="stat-value" id="progressWeightChange">
-            —
-          </div>
-
-          <div class="stat-small">
-            Des del primer registre
-          </div>
-
-        </div>
-
-
-        <div class="stat-card">
-
-          <div class="stat-label">
-            Dies registrats
-          </div>
-
-          <div class="stat-value" id="progressDays">
-            0
-          </div>
-
-        </div>
-
-
-        <div class="stat-card">
-
-          <div class="stat-label">
-            Entrenaments
-          </div>
-
-          <div class="stat-value" id="progressWorkouts">
-            0
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <div class="section-header">
-
-        <h3>Pes</h3>
-
-      </div>
-
-
-      <div class="chart-card">
-
-        <div class="chart-top">
-
-          <div>
-
-            <div class="chart-title">
-              Evolució del pes
-            </div>
-
-            <div class="chart-subtitle">
-              Últims 14 registres
-            </div>
-
-          </div>
-
-          <div class="chart-current" id="chartCurrentWeight">
-            —
-          </div>
-
-        </div>
-
-        <div id="weightChart" class="chart"></div>
-
-      </div>
-
-
-      <div class="section-header">
-
-        <h3>Entrenament</h3>
-
-      </div>
-
-
-      <div class="stat-grid">
-
-        <div class="stat-card">
-
-          <div class="stat-label">
-            HIIT
-          </div>
-
-          <div class="stat-value" id="progressHiit">
-            0
-          </div>
-
-          <div class="stat-small">
-            sessions
-          </div>
-
-        </div>
-
-
-        <div class="stat-card">
-
-          <div class="stat-label">
-            Força
-          </div>
-
-          <div class="stat-value" id="progressStrength">
-            0
-          </div>
-
-          <div class="stat-small">
-            sessions
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <div class="section-header">
-
-        <h3>Força</h3>
-
-        <span>Evolució</span>
-
-      </div>
-
-
-      <div id="strengthProgress"></div>
-
     </div>
 
-  </main>
+    <div class="saved">Guardat automàticament ✓</div>
+
+  </section>
 
 
-  <!-- HISTORIAL -->
+  <!-- ==================== PROGRÉS ==================== -->
 
-  <main id="historyScreen" class="screen">
+  <section id="progressScreen" class="screen">
 
-    <div class="container">
+    <div class="section-title">Resum</div>
 
-      <div class="header">
+    <div class="stats-grid">
 
-        <div class="eyebrow">
-          Els teus registres
-        </div>
-
-        <h1>Historial</h1>
-
-        <div class="subtitle">
-          Consulta el que has fet cada dia.
-        </div>
-
+      <div class="stat-card">
+        <div class="stat-label">Pes actual</div>
+        <div class="stat-value" id="currentWeight">—</div>
+        <div class="stat-small">kg</div>
       </div>
 
+      <div class="stat-card">
+        <div class="stat-label">Evolució del pes</div>
+        <div class="stat-value" id="weightChange">—</div>
+        <div class="stat-small">des del primer registre</div>
+      </div>
 
-      <div id="historyList"></div>
+      <div class="stat-card">
+        <div class="stat-label">Dies registrats</div>
+        <div class="stat-value" id="recordedDays">0</div>
+        <div class="stat-small">dies</div>
+      </div>
 
-
-      <div id="historyDetail" style="display:none;">
-
-        <button
-          id="backToHistory"
-          class="back-button"
-          type="button">
-          ‹ Historial
-        </button>
-
-
-        <div class="detail-date" id="detailDate"></div>
-
-        <h1 class="detail-main-title" id="detailTitle">
-          —
-        </h1>
-
-
-        <div id="detailStats" class="detail-stat-grid"></div>
-
-
-        <div class="section-header">
-
-          <h3>Alimentació</h3>
-
-        </div>
-
-
-        <div class="card">
-
-          <div id="detailMeals"></div>
-
-        </div>
-
-
-        <div id="detailStrengthSection" style="display:none;">
-
-          <div class="section-header">
-
-            <h3>Força</h3>
-
-          </div>
-
-          <div id="detailStrength"></div>
-
-        </div>
-
+      <div class="stat-card">
+        <div class="stat-label">Entrenaments</div>
+        <div class="stat-value" id="totalWorkouts">0</div>
+        <div class="stat-small">sessions</div>
       </div>
 
     </div>
 
-  </main>
+    <div class="section-title">Pes corporal</div>
 
+    <div class="chart-card">
 
-  <!-- MÉS -->
+      <div class="chart-title">Evolució del pes</div>
+      <div class="chart-subtitle">El teu pes al llarg del temps</div>
 
-  <main id="moreScreen" class="screen">
-
-    <div class="container">
-
-      <div class="header">
-
-        <div class="eyebrow">
-          Configuració
-        </div>
-
-        <h1>Més</h1>
-
-        <div class="subtitle">
-          Opcions de Lluc Health.
-        </div>
-
+      <div class="chart-switcher">
+        <button class="chart-switch active" data-weight-range="7">7 dies</button>
+        <button class="chart-switch" data-weight-range="30">1 mes</button>
+        <button class="chart-switch" data-weight-range="90">3 mesos</button>
+        <button class="chart-switch" data-weight-range="all">Tot</button>
       </div>
 
+      <div id="weightChart"></div>
 
-      <div class="card">
+    </div>
 
-        <div class="settings-row">
+    <div class="section-title">Entrenament</div>
 
-          <div>
+    <div class="stats-grid">
 
-            <div class="settings-title">
-              Lluc Health
-            </div>
-
-            <div class="settings-description">
-              La teva aplicació personal de salut.
-            </div>
-
-          </div>
-
-        </div>
-
-
-        <div class="settings-row">
-
-          <div>
-
-            <div class="settings-title">
-              Dades
-            </div>
-
-            <div class="settings-description">
-              Les dades es guarden en aquest dispositiu.
-            </div>
-
-          </div>
-
-        </div>
-
-
-        <div class="settings-row">
-
-          <div>
-
-            <div class="settings-title">
-              Versió
-            </div>
-
-            <div class="settings-description">
-              Pas 12
-            </div>
-
-          </div>
-
-        </div>
-
+      <div class="stat-card">
+        <div class="stat-label">HIIT</div>
+        <div class="stat-value" id="hiitCount">0</div>
+        <div class="stat-small">sessions</div>
       </div>
 
-
-      <div class="card">
-
-        <div class="card-title">
-          Properament
-        </div>
-
-
-        <div class="settings-row">
-
-          <div>
-
-            <div class="settings-title">
-              Còpia de seguretat
-            </div>
-
-            <div class="settings-description">
-              Exportar i importar totes les teves dades.
-            </div>
-
-          </div>
-
-          <button class="secondary-button" type="button">
-            Aviat
-          </button>
-
-        </div>
-
-
-        <div class="settings-row">
-
-          <div>
-
-            <div class="settings-title">
-              Mode fosc
-            </div>
-
-            <div class="settings-description">
-              Una interfície adaptada a la nit.
-            </div>
-
-          </div>
-
-          <button class="secondary-button" type="button">
-            Aviat
-          </button>
-
-        </div>
-
+      <div class="stat-card">
+        <div class="stat-label">Força</div>
+        <div class="stat-value" id="strengthCount">0</div>
+        <div class="stat-small">sessions</div>
       </div>
 
     </div>
 
-  </main>
+    <div class="section-title">Progrés de força</div>
+
+    <div id="exerciseProgress"></div>
+
+  </section>
+
+
+  <!-- ==================== HISTORIAL ==================== -->
+
+  <section id="historyScreen" class="screen">
+
+    <div id="historyList"></div>
+
+    <div id="historyDetail" style="display:none;"></div>
+
+  </section>
+
+
+  <!-- ==================== MÉS ==================== -->
+
+  <section id="moreScreen" class="screen">
+
+    <div class="section-title">Aplicació</div>
+
+    <div class="card">
+
+      <div class="more-row">
+        <div>
+          <div class="more-title">Lluc Health</div>
+          <div class="more-subtitle">La meva salut personal</div>
+        </div>
+        <div class="more-arrow">›</div>
+      </div>
+
+      <div class="more-row">
+        <div>
+          <div class="more-title">Versió</div>
+          <div class="more-subtitle">Pas 13</div>
+        </div>
+      </div>
+
+      <div class="more-row">
+        <div>
+          <div class="more-title">Emmagatzematge</div>
+          <div class="more-subtitle">Les dades es guarden en aquest dispositiu</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="section-title">Properament</div>
+
+    <div class="card">
+
+      <div class="more-row">
+        <div>
+          <div class="more-title">Còpia de seguretat</div>
+          <div class="more-subtitle">Exportar i importar totes les dades</div>
+        </div>
+        <div class="more-arrow">›</div>
+      </div>
+
+      <div class="more-row">
+        <div>
+          <div class="more-title">Mode fosc</div>
+          <div class="more-subtitle">Aspecte fosc tipus Apple</div>
+        </div>
+        <div class="more-arrow">›</div>
+      </div>
+
+    </div>
+
+  </section>
 
 </div>
 
 
-<!-- TAB BAR -->
+<!-- ==================== NAVEGACIÓ ==================== -->
 
-<nav class="tabbar">
+<nav class="bottom-nav">
 
-  <div class="tabbar-inner">
+  <button class="nav-button active" data-tab="today">
+    <div class="nav-icon">●</div>
+    <div class="nav-label">Avui</div>
+  </button>
 
-    <button class="tab active" data-tab="today">
+  <button class="nav-button" data-tab="progress">
+    <div class="nav-icon">↗</div>
+    <div class="nav-label">Progrés</div>
+  </button>
 
-      <span>⌂</span>
+  <button class="nav-button" data-tab="history">
+    <div class="nav-icon">◷</div>
+    <div class="nav-label">Historial</div>
+  </button>
 
-      <small>
-        Avui
-      </small>
-
-    </button>
-
-
-    <button class="tab" data-tab="progress">
-
-      <span>↗</span>
-
-      <small>
-        Progrés
-      </small>
-
-    </button>
-
-
-    <button class="tab" data-tab="history">
-
-      <span>◷</span>
-
-      <small>
-        Historial
-      </small>
-
-    </button>
-
-
-    <button class="tab" data-tab="more">
-
-      <span>•••</span>
-
-      <small>
-        Més
-      </small>
-
-    </button>
-
-  </div>
+  <button class="nav-button" data-tab="more">
+    <div class="nav-icon">•••</div>
+    <div class="nav-label">Més</div>
+  </button>
 
 </nav>
 
 
 <script>
 
-  /* =========================================================
-     CONFIGURACIÓ
-  ========================================================= */
+/* =========================================================
+   CONFIGURACIÓ
+========================================================= */
 
-  const STORAGE_KEY =
-    "lluc-health-data-v1";
+const STORAGE_KEY = "lluc-health-data-v1";
 
+const mealDefinitions = [
+  ["coffee", "Cafè"],
+  ["breakfast", "Esmorzar"],
+  ["rice", "Crema d’arròs amb galetes i llet"],
+  ["lunch", "Dinar"],
+  ["snack", "Berenar"],
+  ["creatine", "Creatina"],
+  ["protein", "Batut proteïna"],
+  ["dinner", "Sopar"]
+];
 
-  const mealDefinitions = [
+const exercises = [
+  ["bench", "Press banca"],
+  ["row", "Rem amb barra"],
+  ["shoulder", "Press militar amb manuelles"],
+  ["lateral", "Elevacions laterals"],
+  ["biceps", "Curl de bíceps amb barra"],
+  ["triceps", "Extensió de tríceps"]
+];
 
-    {
-      key: "coffee",
-      name: "Cafè"
-    },
-
-    {
-      key: "breakfast",
-      name: "Esmorzar"
-    },
-
-    {
-      key: "riceCream",
-      name: "Crema d’arròs amb galetes i llet"
-    },
-
-    {
-      key: "lunch",
-      name: "Dinar"
-    },
-
-    {
-      key: "snack",
-      name: "Berenar"
-    },
-
-    {
-      key: "creatine",
-      name: "Creatina"
-    },
-
-    {
-      key: "protein",
-      name: "Batut proteïna"
-    },
-
-    {
-      key: "dinner",
-      name: "Sopar"
-    }
-
-  ];
+let selectedWeightRange = "7";
 
 
-  const exercises = [
+/* =========================================================
+   DADES
+========================================================= */
 
-    {
-      key: "bench",
-      name: "Press banca"
-    },
+function loadData() {
 
-    {
-      key: "row",
-      name: "Rem amb barra"
-    },
+  try {
 
-    {
-      key: "shoulder",
-      name: "Press militar amb manuelles"
-    },
+    const raw = localStorage.getItem(STORAGE_KEY);
 
-    {
-      key: "lateral",
-      name: "Elevacions laterals"
-    },
+    if (!raw) return {};
 
-    {
-      key: "biceps",
-      name: "Curl de bíceps amb barra"
-    },
+    const data = JSON.parse(raw);
 
-    {
-      key: "triceps",
-      name: "Extensió de tríceps"
-    }
+    for (const date in data) {
 
-  ];
-
-
-  /* =========================================================
-     DADES
-  ========================================================= */
-
-  function loadData() {
-
-    try {
-
-      const saved =
-        localStorage.getItem(
-          STORAGE_KEY
-        );
-
-
-      if (!saved) {
-        return {};
+      if (!data[date].meals) {
+        data[date].meals = {};
       }
 
+      if (!data[date].strength) {
+        data[date].strength = {};
+      }
 
-      return JSON.parse(
-        saved
-      ) || {};
+      exercises.forEach(([key]) => {
 
-    }
+        if (!Array.isArray(data[date].strength[key])) {
+          data[date].strength[key] = [];
+        }
 
-    catch (error) {
-
-      console.error(
-        "Error carregant dades:",
-        error
-      );
-
-      return {};
+      });
 
     }
+
+    return data;
+
+  } catch (error) {
+
+    console.error("Error carregant dades:", error);
+
+    return {};
 
   }
 
-
-  function saveData(
-    data
-  ) {
-
-    try {
-
-      localStorage.setItem(
-        STORAGE_KEY,
-        JSON.stringify(
-          data
-        )
-      );
-
-      return true;
-
-    }
-
-    catch (error) {
-
-      console.error(
-        "Error guardant dades:",
-        error
-      );
-
-      return false;
-
-    }
-
-  }
+}
 
 
-  function getTodayKey() {
-
-    const now =
-      new Date();
+let data = loadData();
 
 
-    const year =
-      now.getFullYear();
+function saveData() {
+
+  localStorage.setItem(
+    STORAGE_KEY,
+    JSON.stringify(data)
+  );
+
+}
 
 
-    const month =
-      String(
-        now.getMonth() + 1
-      ).padStart(
-        2,
-        "0"
-      );
+/* =========================================================
+   DATES
+========================================================= */
+
+function todayKey() {
+
+  const now = new Date();
+
+  const y = now.getFullYear();
+
+  const m = String(now.getMonth() + 1).padStart(2, "0");
+
+  const d = String(now.getDate()).padStart(2, "0");
+
+  return `${y}-${m}-${d}`;
+
+}
 
 
-    const day =
-      String(
-        now.getDate()
-      ).padStart(
-        2,
-        "0"
-      );
+function getToday() {
 
+  const key = todayKey();
 
-    return (
-      year +
-      "-" +
-      month +
-      "-" +
-      day
-    );
+  if (!data[key]) {
 
-  }
-
-
-  function createEmptyDay() {
-
-    const meals = {};
-
-
-    mealDefinitions.forEach(
-      meal => {
-
-        meals[
-          meal.key
-        ] = false;
-
-      }
-    );
-
-
-    const strength = {};
-
-
-    exercises.forEach(
-      exercise => {
-
-        strength[
-          exercise.key
-        ] = [];
-
-      }
-    );
-
-
-    return {
-
+    data[key] = {
       weight: null,
-
-      meals: meals,
-
+      meals: {},
       activity: null,
-
       sleep: null,
-
-      strength: strength
-
+      strength: {}
     };
 
+    mealDefinitions.forEach(([meal]) => {
+      data[key].meals[meal] = false;
+    });
+
+    exercises.forEach(([exercise]) => {
+      data[key].strength[exercise] = [];
+    });
+
+    saveData();
+
   }
 
+  if (!data[key].strength) {
+    data[key].strength = {};
+  }
 
-  function normalizeDay(
-    day
-  ) {
+  exercises.forEach(([exercise]) => {
 
-    if (
-      !day ||
-      typeof day !== "object"
-    ) {
-
-      return createEmptyDay();
-
+    if (!Array.isArray(data[key].strength[exercise])) {
+      data[key].strength[exercise] = [];
     }
 
+  });
 
-    if (!day.meals) {
-      day.meals = {};
-    }
+  return data[key];
 
+}
 
-    mealDefinitions.forEach(
-      meal => {
 
-        if (
-          typeof day.meals[
-            meal.key
-          ] !== "boolean"
-        ) {
+function formatDate(dateString) {
 
-          day.meals[
-            meal.key
-          ] = false;
+  const date = new Date(dateString + "T12:00:00");
 
-        }
-
-      }
-    );
-
-
-    if (!day.strength) {
-      day.strength = {};
-    }
-
-
-    exercises.forEach(
-      exercise => {
-
-        if (
-          !Array.isArray(
-            day.strength[
-              exercise.key
-            ]
-          )
-        ) {
-
-          day.strength[
-            exercise.key
-          ] = [];
-
-        }
-
-      }
-    );
-
-
-    return day;
-
-  }
-
-
-  function getDay(
-    dateKey
-  ) {
-
-    const data =
-      loadData();
-
-
-    if (!data[dateKey]) {
-
-      data[dateKey] =
-        createEmptyDay();
-
-
-      saveData(
-        data
-      );
-
-    }
-
-
-    data[dateKey] =
-      normalizeDay(
-        data[dateKey]
-      );
-
-
-    saveData(
-      data
-    );
-
-
-    return data[dateKey];
-
-  }
-
-
-  const todayKey =
-    getTodayKey();
-
-
-  let today =
-    getDay(
-      todayKey
-    );
-
-
-  /* =========================================================
-     DATES
-  ========================================================= */
-
-  function formatDate(
-    dateKey
-  ) {
-
-    const date =
-      new Date(
-        dateKey +
-        "T12:00:00"
-      );
-
-
-    return date.toLocaleDateString(
-      "ca-ES",
-      {
-        weekday: "long",
-        day: "numeric",
-        month: "long"
-      }
-    );
-
-  }
-
-
-  function formatShortDate(
-    dateKey
-  ) {
-
-    const date =
-      new Date(
-        dateKey +
-        "T12:00:00"
-      );
-
-
-    return date.toLocaleDateString(
-      "ca-ES",
-      {
-        day: "2-digit",
-        month: "2-digit"
-      }
-    );
-
-  }
-
-
-  document.getElementById(
-    "todayDate"
-  ).textContent =
-    formatDate(
-      todayKey
-    );
-
-
-  /* =========================================================
-     GUARDAR
-  ========================================================= */
-
-  function saveToday() {
-
-    const data =
-      loadData();
-
-
-    data[todayKey] =
-      normalizeDay(
-        today
-      );
-
-
-    saveData(
-      data
-    );
-
-
-    showSavedMessage();
-
-  }
-
-
-  function showSavedMessage() {
-
-    const message =
-      document.getElementById(
-        "savedMessage"
-      );
-
-
-    message.textContent =
-      "Guardat automàticament ✓";
-
-
-    clearTimeout(
-      window.savedTimeout
-    );
-
-
-    window.savedTimeout =
-      setTimeout(
-        () => {
-
-          message.textContent =
-            "";
-
-        },
-        1200
-      );
-
-  }
-
-
-  /* =========================================================
-     PES
-  ========================================================= */
-
-  function getRecordedWeights() {
-
-    const data =
-      loadData();
-
-
-    return Object.entries(
-      data
-    )
-
-      .filter(
-        ([date, day]) => {
-
-          return (
-            day &&
-            typeof day.weight ===
-              "number" &&
-            !isNaN(
-              day.weight
-            )
-          );
-
-        }
-      )
-
-      .sort(
-        ([dateA], [dateB]) =>
-          dateA.localeCompare(
-            dateB
-          )
-      );
-
-  }
-
-
-  function getPreviousWeight() {
-
-    const weights =
-      getRecordedWeights()
-        .filter(
-          ([date]) =>
-            date !== todayKey
-        );
-
-
-    if (
-      weights.length === 0
-    ) {
-
-      return null;
-
-    }
-
-
-    return weights[
-      weights.length - 1
-    ][1].weight;
-
-  }
-
-
-  function renderWeight() {
-
-    const display =
-      document.getElementById(
-        "weightDisplay"
-      );
-
-
-    const input =
-      document.getElementById(
-        "weightInput"
-      );
-
-
-    const change =
-      document.getElementById(
-        "weightChange"
-      );
-
-
-    if (
-      typeof today.weight ===
-      "number"
-    ) {
-
-      display.textContent =
-        today.weight.toFixed(
-          1
-        ) +
-        " kg";
-
-
-      input.value =
-        today.weight;
-
-
-      const previous =
-        getPreviousWeight();
-
-
-      if (
-        typeof previous ===
-        "number"
-      ) {
-
-        const difference =
-          today.weight -
-          previous;
-
-
-        if (
-          difference > 0
-        ) {
-
-          change.textContent =
-            "+" +
-            difference.toFixed(
-              1
-            ) +
-            " kg respecte l'últim registre";
-
-
-          change.className =
-            "weight-change positive";
-
-        }
-
-        else if (
-          difference < 0
-        ) {
-
-          change.textContent =
-            difference.toFixed(
-              1
-            ) +
-            " kg respecte l'últim registre";
-
-
-          change.className =
-            "weight-change negative";
-
-        }
-
-        else {
-
-          change.textContent =
-            "Mateix pes que l'últim registre";
-
-
-          change.className =
-            "weight-change neutral";
-
-        }
-
-      }
-
-      else {
-
-        change.textContent =
-          "Primer registre";
-
-
-        change.className =
-          "weight-change neutral";
-
-      }
-
-    }
-
-    else {
-
-      display.textContent =
-        "— kg";
-
-
-      input.value =
-        "";
-
-
-      change.textContent =
-        "";
-
-
-      change.className =
-        "weight-change neutral";
-
-    }
-
-  }
-
-
-  document.getElementById(
-    "weightInput"
-  ).addEventListener(
-    "input",
-    event => {
-
-      const value =
-        parseFloat(
-          event.target.value
-        );
-
-
-      today.weight =
-        isNaN(
-          value
-        )
-          ? null
-          : value;
-
-
-      saveToday();
-
-      renderWeight();
-
+  return date.toLocaleDateString(
+    "ca-ES",
+    {
+      weekday: "long",
+      day: "numeric",
+      month: "long",
+      year: "numeric"
     }
   );
 
-
-  /* =========================================================
-     MENJARS
-  ========================================================= */
-
-  function renderMeals() {
-
-    const list =
-      document.getElementById(
-        "mealList"
-      );
+}
 
 
-    list.innerHTML =
-      "";
+function shortDate(dateString) {
 
+  const date = new Date(dateString + "T12:00:00");
 
-    mealDefinitions.forEach(
-      meal => {
-
-        const row =
-          document.createElement(
-            "div"
-          );
-
-
-        row.className =
-          "meal-row" +
-          (
-            today.meals[
-              meal.key
-            ]
-              ? " checked"
-              : ""
-          );
-
-
-        row.innerHTML = `
-
-          <div class="meal-name">
-            ${meal.name}
-          </div>
-
-          <div class="check">
-            ✓
-          </div>
-
-        `;
-
-
-        row.addEventListener(
-          "click",
-          () => {
-
-            today.meals[
-              meal.key
-            ] =
-              !today.meals[
-                meal.key
-              ];
-
-
-            saveToday();
-
-            renderMeals();
-
-          }
-        );
-
-
-        list.appendChild(
-          row
-        );
-
-      }
-    );
-
-  }
-
-
-  /* =========================================================
-     ACTIVITAT
-  ========================================================= */
-
-  function renderActivity() {
-
-    document
-      .querySelectorAll(
-        ".activity-button"
-      )
-      .forEach(
-        button => {
-
-          button.classList.toggle(
-            "selected",
-            button.dataset.activity ===
-              today.activity
-          );
-
-        }
-      );
-
-
-    document.getElementById(
-      "strengthSection"
-    ).style.display =
-      today.activity ===
-      "strength"
-        ? "block"
-        : "none";
-
-  }
-
-
-  document
-    .querySelectorAll(
-      ".activity-button"
-    )
-    .forEach(
-      button => {
-
-        button.addEventListener(
-          "click",
-          () => {
-
-            today.activity =
-              button.dataset.activity;
-
-
-            saveToday();
-
-            renderActivity();
-
-            renderExercises();
-
-          }
-        );
-
-      }
-    );
-
-
-  /* =========================================================
-     SON
-  ========================================================= */
-
-  const sleepInput =
-    document.getElementById(
-      "sleepInput"
-    );
-
-
-  function renderSleep() {
-
-    sleepInput.value =
-      typeof today.sleep ===
-      "number"
-        ? today.sleep
-        : "";
-
-  }
-
-
-  sleepInput.addEventListener(
-    "input",
-    event => {
-
-      const value =
-        parseFloat(
-          event.target.value
-        );
-
-
-      today.sleep =
-        isNaN(
-          value
-        )
-          ? null
-          : value;
-
-
-      saveToday();
-
+  return date.toLocaleDateString(
+    "ca-ES",
+    {
+      day: "numeric",
+      month: "short"
     }
   );
 
+}
 
-  /* =========================================================
-     FORÇA
-  ========================================================= */
 
-  function calculateVolume(
-    sets
-  ) {
+/* =========================================================
+   AVUI
+========================================================= */
 
-    return sets.reduce(
-      (
-        total,
-        set
-      ) => {
+function renderToday() {
 
-        const reps =
-          Number(
-            set.reps
-          ) || 0;
+  const day = getToday();
 
+  document.getElementById("todayDate").textContent =
+    formatDate(todayKey());
 
-        const kg =
-          Number(
-            set.kg
-          ) || 0;
+  const weightInput =
+    document.getElementById("weightInput");
 
+  weightInput.value =
+    day.weight !== null && day.weight !== undefined
+      ? day.weight
+      : "";
 
-        return (
-          total +
-          reps *
-          kg
-        );
-
-      },
-      0
-    );
-
-  }
-
-
-  function renderExercises() {
-
-    const list =
-      document.getElementById(
-        "exerciseList"
-      );
-
-
-    list.innerHTML =
-      "";
-
-
-    exercises.forEach(
-      exercise => {
-
-        renderExercise(
-          exercise
-        );
-
-      }
-    );
-
-  }
-
-
-  function renderExercise(
-    exercise
-  ) {
-
-    const sets =
-      today.strength[
-        exercise.key
-      ] || [];
-
-
-    const card =
-      document.createElement(
-        "div"
-      );
-
-
-    card.className =
-      "exercise-card";
-
-
-    const volume =
-      calculateVolume(
-        sets
-      );
-
-
-    card.innerHTML = `
-
-      <div class="exercise-header">
-
-        <div class="exercise-name">
-          ${exercise.name}
-        </div>
-
-        <div class="exercise-volume">
-          ${volume.toFixed(0)} kg
-        </div>
-
-      </div>
-
-
-      <div class="sets-header">
-
-        <div>#</div>
-        <div>Reps</div>
-        <div>Kg</div>
-        <div></div>
-
-      </div>
-
-
-      <div class="sets-container"></div>
-
-
-      <button
-        class="add-set"
-        type="button">
-        + Afegir sèrie
-      </button>
-
-    `;
-
-
-    const setsContainer =
-      card.querySelector(
-        ".sets-container"
-      );
-
-
-    sets.forEach(
-      (
-        set,
-        index
-      ) => {
-
-        const row =
-          document.createElement(
-            "div"
-          );
-
-
-        row.className =
-          "set-row";
-
-
-        row.innerHTML = `
-
-          <div class="set-number">
-            ${index + 1}
-          </div>
-
-          <input
-            class="set-input reps-input"
-            type="number"
-            min="0"
-            inputmode="numeric"
-            placeholder="Reps"
-            value="${set.reps ?? ""}"
-          >
-
-          <input
-            class="set-input kg-input"
-            type="number"
-            min="0"
-            step="0.5"
-            inputmode="decimal"
-            placeholder="Kg"
-            value="${set.kg ?? ""}"
-          >
-
-          <button
-            class="delete-set"
-            type="button">
-            ×
-          </button>
-
-        `;
-
-
-        const repsInput =
-          row.querySelector(
-            ".reps-input"
-          );
-
-
-        const kgInput =
-          row.querySelector(
-            ".kg-input"
-          );
-
-
-        repsInput.addEventListener(
-          "input",
-          () => {
-
-            set.reps =
-              repsInput.value ===
-              ""
-                ? ""
-                : Number(
-                    repsInput.value
-                  );
-
-
-            saveToday();
-
-
-            updateExerciseVolume(
-              card,
-              sets
-            );
-
-          }
-        );
-
-
-        kgInput.addEventListener(
-          "input",
-          () => {
-
-            set.kg =
-              kgInput.value ===
-              ""
-                ? ""
-                : Number(
-                    kgInput.value
-                  );
-
-
-            saveToday();
-
-
-            updateExerciseVolume(
-              card,
-              sets
-            );
-
-          }
-        );
-
-
-        row.querySelector(
-          ".delete-set"
-        ).addEventListener(
-          "click",
-          () => {
-
-            today.strength[
-              exercise.key
-            ].splice(
-              index,
-              1
-            );
-
-
-            saveToday();
-
-            renderExercises();
-
-          }
-        );
-
-
-        setsContainer.appendChild(
-          row
-        );
-
-      }
-    );
-
-
-    card.querySelector(
-      ".add-set"
-    ).addEventListener(
-      "click",
-      () => {
-
-        today.strength[
-          exercise.key
-        ].push({
-          reps: "",
-          kg: ""
-        });
-
-
-        saveToday();
-
-        renderExercises();
-
-      }
-    );
-
-
-    document.getElementById(
-      "exerciseList"
-    ).appendChild(
-      card
-    );
-
-  }
-
-
-  function updateExerciseVolume(
-    card,
-    sets
-  ) {
-
-    const volume =
-      calculateVolume(
-        sets
-      );
-
-
-    const element =
-      card.querySelector(
-        ".exercise-volume"
-      );
-
-
-    if (element) {
-
-      element.textContent =
-        volume.toFixed(
-          0
-        ) +
-        " kg";
-
-    }
-
-  }
-
-
-  /* =========================================================
-     NAVEGACIÓ
-  ========================================================= */
-
-  const screens = {
-
-    today:
-      document.getElementById(
-        "todayScreen"
-      ),
-
-    progress:
-      document.getElementById(
-        "progressScreen"
-      ),
-
-    history:
-      document.getElementById(
-        "historyScreen"
-      ),
-
-    more:
-      document.getElementById(
-        "moreScreen"
-      )
-
-  };
-
-
-  document
-    .querySelectorAll(
-      ".tab"
-    )
-    .forEach(
-      tab => {
-
-        tab.addEventListener(
-          "click",
-          () => {
-
-            const destination =
-              tab.dataset.tab;
-
-
-            document
-              .querySelectorAll(
-                ".tab"
-              )
-              .forEach(
-                button => {
-
-                  button.classList.remove(
-                    "active"
-                  );
-
-                }
-              );
-
-
-            tab.classList.add(
-              "active"
-            );
-
-
-            Object.values(
-              screens
-            ).forEach(
-              screen => {
-
-                screen.classList.remove(
-                  "active"
-                );
-
-              }
-            );
-
-
-            screens[
-              destination
-            ].classList.add(
-              "active"
-            );
-
-
-            if (
-              destination ===
-              "progress"
-            ) {
-
-              renderProgress();
-
-            }
-
-
-            if (
-              destination ===
-              "history"
-            ) {
-
-              showHistoryList();
-
-            }
-
-          }
-        );
-
-      }
-    );
-
-
-  /* =========================================================
-     PROGRÉS
-  ========================================================= */
-
-  function renderProgress() {
-
-    const data =
-      loadData();
-
-
-    const weights =
-      getRecordedWeights();
-
-
-    const currentWeight =
-      weights.length > 0
-        ? weights[
-            weights.length - 1
-          ][1].weight
-        : null;
-
-
-    const firstWeight =
-      weights.length > 0
-        ? weights[0][1].weight
-        : null;
-
-
-    document.getElementById(
-      "progressCurrentWeight"
-    ).textContent =
-      currentWeight !== null
-        ? currentWeight.toFixed(
-            1
-          ) +
-          " kg"
-        : "—";
-
-
-    document.getElementById(
-      "chartCurrentWeight"
-    ).textContent =
-      currentWeight !== null
-        ? currentWeight.toFixed(
-            1
-          ) +
-          " kg"
-        : "—";
-
-
-    if (
-      weights.length > 0
-    ) {
-
-      document.getElementById(
-        "progressWeightDate"
-      ).textContent =
-        formatDate(
-          weights[
-            weights.length - 1
-          ][0]
-        );
-
-    }
-
-
-    if (
-      currentWeight !== null &&
-      firstWeight !== null &&
-      weights.length > 1
-    ) {
-
-      const difference =
-        currentWeight -
-        firstWeight;
-
-
-      const element =
-        document.getElementById(
-          "progressWeightChange"
-        );
-
-
-      element.textContent =
-        (
-          difference >= 0
-            ? "+"
-            : ""
-        ) +
-        difference.toFixed(
-          1
-        ) +
-        " kg";
-
-
-      element.className =
-        "stat-value " +
-        (
-          difference > 0
-            ? "positive"
-            : difference < 0
-              ? "negative"
-              : "neutral"
-        );
-
-    }
-
-    else {
-
-      document.getElementById(
-        "progressWeightChange"
-      ).textContent =
-        "—";
-
-    }
-
-
-    document.getElementById(
-      "progressDays"
-    ).textContent =
-      Object.keys(
-        data
-      ).length;
-
-
-    let hiit = 0;
-
-    let strength = 0;
-
-
-    Object.values(
-      data
-    ).forEach(
-      day => {
-
-        if (!day) {
-          return;
-        }
-
-
-        if (
-          day.activity ===
-          "hiit"
-        ) {
-
-          hiit++;
-
-        }
-
-
-        if (
-          day.activity ===
-          "strength"
-        ) {
-
-          strength++;
-
-        }
-
-      }
-    );
-
-
-    document.getElementById(
-      "progressHiit"
-    ).textContent =
-      hiit;
-
-
-    document.getElementById(
-      "progressStrength"
-    ).textContent =
-      strength;
-
-
-    document.getElementById(
-      "progressWorkouts"
-    ).textContent =
-      hiit +
-      strength;
-
-
-    renderWeightChart(
-      weights
-    );
-
-
-    renderStrengthProgress(
-      data
-    );
-
-  }
-
-
-  /* =========================================================
-     GRÀFIC DE PES
-  ========================================================= */
-
-  function renderWeightChart(
-    weights
-  ) {
-
-    const chart =
-      document.getElementById(
-        "weightChart"
-      );
-
-
-    chart.innerHTML =
-      "";
-
-
-    if (
-      weights.length === 0
-    ) {
-
-      chart.innerHTML = `
-
-        <div class="no-data">
-          Encara no tens registres de pes.
-        </div>
-
-      `;
-
-      return;
-
-    }
-
-
-    const recent =
-      weights.slice(
-        -14
-      );
-
-
-    const values =
-      recent.map(
-        item =>
-          item[1].weight
-      );
-
-
-    const min =
-      Math.min(
-        ...values
-      );
-
-
-    const max =
-      Math.max(
-        ...values
-      );
-
-
-    const range =
-      max -
-      min ||
-      1;
-
-
-    recent.forEach(
-      (
-        [date, day]
-      ) => {
-
-        const container =
-          document.createElement(
-            "div"
-          );
-
-
-        container.className =
-          "bar-container";
-
-
-        const value =
-          document.createElement(
-            "div"
-          );
-
-
-        value.className =
-          "chart-value";
-
-
-        value.textContent =
-          day.weight.toFixed(
-            1
-          );
-
-
-        const bar =
-          document.createElement(
-            "div"
-          );
-
-
-        bar.className =
-          "bar";
-
-
-        const height =
-          25 +
-          (
-            (
-              day.weight -
-              min
-            ) /
-            range
-          ) *
-          125;
-
-
-        bar.style.height =
-          height +
-          "px";
-
-
-        const label =
-          document.createElement(
-            "div"
-          );
-
-
-        label.className =
-          "bar-label";
-
-
-        label.textContent =
-          formatShortDate(
-            date
-          );
-
-
-        container.appendChild(
-          value
-        );
-
-
-        container.appendChild(
-          bar
-        );
-
-
-        container.appendChild(
-          label
-        );
-
-
-        chart.appendChild(
-          container
-        );
-
-      }
-    );
-
-  }
-
-
-  /* =========================================================
-     GRÀFICS INDIVIDUALS DE FORÇA
-  ========================================================= */
-
-  function renderStrengthProgress(
-    data
-  ) {
-
-    const container =
-      document.getElementById(
-        "strengthProgress"
-      );
-
-
-    container.innerHTML =
-      "";
-
-
-    exercises.forEach(
-      exercise => {
-
-        let bestKg = 0;
-
-        let bestReps = 0;
-
-        let totalVolume = 0;
-
-        let totalSets = 0;
-
-        let sessions = 0;
-
-
-        const sessionData = [];
-
-
-        Object.entries(
-          data
-        )
-          .sort(
-            (
-              [dateA],
-              [dateB]
-            ) =>
-              dateA.localeCompare(
-                dateB
-              )
-          )
-          .forEach(
-            (
-              [date, day]
-            ) => {
-
-              if (
-                !day ||
-                !day.strength ||
-                !Array.isArray(
-                  day.strength[
-                    exercise.key
-                  ]
-                )
-              ) {
-
-                return;
-
-              }
-
-
-              const sets =
-                day.strength[
-                  exercise.key
-                ];
-
-
-              if (
-                sets.length === 0
-              ) {
-
-                return;
-
-              }
-
-
-              let sessionBestKg =
-                0;
-
-
-              let hasValidData =
-                false;
-
-
-              sets.forEach(
-                set => {
-
-                  const kg =
-                    Number(
-                      set.kg
-                    ) || 0;
-
-
-                  const reps =
-                    Number(
-                      set.reps
-                    ) || 0;
-
-
-                  if (
-                    kg > 0
-                  ) {
-
-                    hasValidData =
-                      true;
-
-                  }
-
-
-                  if (
-                    kg > bestKg
-                  ) {
-
-                    bestKg =
-                      kg;
-
-                    bestReps =
-                      reps;
-
-                  }
-
-                  else if (
-                    kg === bestKg &&
-                    reps > bestReps
-                  ) {
-
-                    bestReps =
-                      reps;
-
-                  }
-
-
-                  if (
-                    kg > sessionBestKg
-                  ) {
-
-                    sessionBestKg =
-                      kg;
-
-                  }
-
-
-                  totalVolume +=
-                    kg *
-                    reps;
-
-
-                  if (
-                    kg ||
-                    reps
-                  ) {
-
-                    totalSets++;
-
-                  }
-
-                }
-              );
-
-
-              /*
-                IMPORTANT:
-                Afegim la sessió si té kg.
-                Això fa que el gràfic aparegui
-                encara que només hi hagi
-                UNA sessió.
-              */
-
-              if (
-                hasValidData
-              ) {
-
-                sessions++;
-
-
-                sessionData.push({
-
-                  date:
-                    date,
-
-                  kg:
-                    sessionBestKg
-
-                });
-
-              }
-
-            }
-          );
-
-
-        const card =
-          document.createElement(
-            "div"
-          );
-
-
-        card.className =
-          "progress-exercise";
-
-
-        card.innerHTML = `
-
-          <div class="progress-exercise-header">
-
-            <div class="progress-exercise-name">
-              ${exercise.name}
-            </div>
-
-            <div class="progress-exercise-best">
-
-              ${
-                bestKg > 0
-                  ? bestKg.toFixed(
-                      1
-                    ) +
-                    " kg"
-                  : "—"
-              }
-
-            </div>
-
-          </div>
-
-
-          <div class="progress-metrics">
-
-            <div>
-
-              <div class="progress-metric-label">
-                Millor sèrie
-              </div>
-
-              <div class="progress-metric-value">
-
-                ${
-                  bestKg > 0
-                    ? bestReps +
-                      " × " +
-                      bestKg.toFixed(
-                        1
-                      )
-                    : "—"
-                }
-
-              </div>
-
-            </div>
-
-
-            <div>
-
-              <div class="progress-metric-label">
-                Volum
-              </div>
-
-              <div class="progress-metric-value">
-
-                ${
-                  totalVolume > 0
-                    ? Math.round(
-                        totalVolume
-                      ) +
-                      " kg"
-                    : "—"
-                }
-
-              </div>
-
-            </div>
-
-
-            <div>
-
-              <div class="progress-metric-label">
-                Sessions
-              </div>
-
-              <div class="progress-metric-value">
-                ${sessions}
-              </div>
-
-            </div>
-
-          </div>
-
-
-          <div class="exercise-chart-wrapper">
-
-            <div class="exercise-chart-title">
-              Evolució del kg màxim per sessió
-            </div>
-
-            <div class="exercise-chart"></div>
-
-          </div>
-
-        `;
-
-
-        const chart =
-          card.querySelector(
-            ".exercise-chart"
-          );
-
-
-        if (
-          sessionData.length === 0
-        ) {
-
-          chart.innerHTML = `
-
-            <div class="no-data">
-              Encara no hi ha dades d'aquest exercici.
-            </div>
-
-          `;
-
-        }
-
-        else {
-
-          /*
-            Agafem les últimes 12 sessions.
-          */
-
-          const recent =
-            sessionData.slice(
-              -12
-            );
-
-
-          const chartValues =
-            recent.map(
-              item =>
-                item.kg
-            );
-
-
-          /*
-            Per una sola sessió,
-            la barra tindrà una alçada
-            mínima visible.
-          */
-
-          const min =
-            Math.min(
-              ...chartValues
-            );
-
-
-          const max =
-            Math.max(
-              ...chartValues
-            );
-
-
-          const range =
-            max -
-            min;
-
-
-          recent.forEach(
-            item => {
-
-              const wrapper =
-                document.createElement(
-                  "div"
-                );
-
-
-              wrapper.className =
-                "exercise-bar-container";
-
-
-              const value =
-                document.createElement(
-                  "div"
-                );
-
-
-              value.className =
-                "exercise-bar-value";
-
-
-              value.textContent =
-                item.kg.toFixed(
-                  1
-                ) +
-                " kg";
-
-
-              const bar =
-                document.createElement(
-                  "div"
-                );
-
-
-              bar.className =
-                "exercise-bar";
-
-
-              let height;
-
-
-              if (
-                range === 0
-              ) {
-
-                /*
-                  Si només tenim un valor,
-                  la barra és gran i visible.
-                */
-
-                height =
-                  80;
-
-              }
-
-              else {
-
-                height =
-                  25 +
-                  (
-                    (
-                      item.kg -
-                      min
-                    ) /
-                    range
-                  ) *
-                  75;
-
-              }
-
-
-              bar.style.height =
-                height +
-                "px";
-
-
-              const date =
-                document.createElement(
-                  "div"
-                );
-
-
-              date.className =
-                "exercise-bar-date";
-
-
-              date.textContent =
-                formatShortDate(
-                  item.date
-                );
-
-
-              wrapper.appendChild(
-                value
-              );
-
-
-              wrapper.appendChild(
-                bar
-              );
-
-
-              wrapper.appendChild(
-                date
-              );
-
-
-              chart.appendChild(
-                wrapper
-              );
-
-            }
-          );
-
-        }
-
-
-        container.appendChild(
-          card
-        );
-
-      }
-    );
-
-  }
-
-
-  /* =========================================================
-     HISTORIAL
-  ========================================================= */
-
-  function showHistoryList() {
-
-    document.getElementById(
-      "historyList"
-    ).style.display =
-      "block";
-
-
-    document.getElementById(
-      "historyDetail"
-    ).style.display =
-      "none";
-
-
-    const list =
-      document.getElementById(
-        "historyList"
-      );
-
-
-    list.innerHTML =
-      "";
-
-
-    const data =
-      loadData();
-
-
-    const dates =
-      Object.keys(
-        data
-      )
-        .sort()
-        .reverse();
-
-
-    if (
-      dates.length === 0
-    ) {
-
-      list.innerHTML = `
-
-        <div class="card">
-
-          <div class="detail-empty">
-            Encara no tens cap dia registrat.
-          </div>
-
-        </div>
-
-      `;
-
-      return;
-
-    }
-
-
-    dates.forEach(
-      dateKey => {
-
-        const day =
-          normalizeDay(
-            data[
-              dateKey
-            ]
-          );
-
-
-        let activityText =
-          "Sense activitat";
-
-
-        if (
-          day.activity ===
-          "hiit"
-        ) {
-
-          activityText =
-            "HIIT";
-
-        }
-
-
-        if (
-          day.activity ===
-          "strength"
-        ) {
-
-          activityText =
-            "Força";
-
-        }
-
-
-        if (
-          day.activity ===
-          "rest"
-        ) {
-
-          activityText =
-            "Descans";
-
-        }
-
-
-        const mealCount =
-          Object.values(
-            day.meals
-          ).filter(
-            Boolean
-          ).length;
-
-
-        const item =
-          document.createElement(
-            "div"
-          );
-
-
-        item.className =
-          "history-item";
-
-
-        item.innerHTML = `
-
-          <div class="history-top">
-
-            <div class="history-date">
-              ${formatDate(
-                dateKey
-              )}
-            </div>
-
-            <div class="history-weight">
-
-              ${
-                typeof day.weight ===
-                "number"
-                  ? day.weight.toFixed(
-                      1
-                    ) +
-                    " kg"
-                  : "—"
-              }
-
-              <span class="history-arrow">
-                ›
-              </span>
-
-            </div>
-
-          </div>
-
-
-          <div class="history-details">
-
-            ${activityText}
-
-            ·
-
-            ${mealCount}/8 hàbits
-
-            ${
-              typeof day.sleep ===
-              "number"
-                ? " · " +
-                  day.sleep +
-                  " h son"
-                : ""
-            }
-
-          </div>
-
-        `;
-
-
-        item.addEventListener(
-          "click",
-          () => {
-
-            showHistoryDetail(
-              dateKey
-            );
-
-          }
-        );
-
-
-        list.appendChild(
-          item
-        );
-
-      }
-    );
-
-  }
-
-
-  /* =========================================================
-     DETALL HISTORIAL
-  ========================================================= */
-
-  function showHistoryDetail(
-    dateKey
-  ) {
-
-    const data =
-      loadData();
-
-
-    const day =
-      normalizeDay(
-        data[
-          dateKey
-        ]
-      );
-
-
-    document.getElementById(
-      "historyList"
-    ).style.display =
-      "none";
-
-
-    document.getElementById(
-      "historyDetail"
-    ).style.display =
-      "block";
-
-
-    document.getElementById(
-      "detailDate"
-    ).textContent =
-      formatDate(
-        dateKey
-      );
-
-
-    document.getElementById(
-      "detailTitle"
-    ).textContent =
-      "Resum del dia";
-
-
-    let activityText =
-      "Sense activitat";
-
-
-    if (
-      day.activity ===
-      "hiit"
-    ) {
-
-      activityText =
-        "HIIT";
-
-    }
-
-
-    if (
-      day.activity ===
-      "strength"
-    ) {
-
-      activityText =
-        "Força";
-
-    }
-
-
-    if (
-      day.activity ===
-      "rest"
-    ) {
-
-      activityText =
-        "Descans";
-
-    }
-
-
-    const mealCount =
-      Object.values(
-        day.meals
-      ).filter(
-        Boolean
-      ).length;
-
-
-    document.getElementById(
-      "detailStats"
-    ).innerHTML = `
-
-      <div class="detail-stat">
-
-        <div class="detail-stat-label">
-          Pes
-        </div>
-
-        <div class="detail-stat-value">
-
-          ${
-            typeof day.weight ===
-            "number"
-              ? day.weight.toFixed(
-                  1
-                ) +
-                " kg"
-              : "—"
-          }
-
-        </div>
-
-      </div>
-
-
-      <div class="detail-stat">
-
-        <div class="detail-stat-label">
-          Activitat
-        </div>
-
-        <div class="detail-stat-value">
-          ${activityText}
-        </div>
-
-      </div>
-
-
-      <div class="detail-stat">
-
-        <div class="detail-stat-label">
-          Alimentació
-        </div>
-
-        <div class="detail-stat-value">
-          ${mealCount}/8
-        </div>
-
-      </div>
-
-
-      <div class="detail-stat">
-
-        <div class="detail-stat-label">
-          Son
-        </div>
-
-        <div class="detail-stat-value">
-
-          ${
-            typeof day.sleep ===
-            "number"
-              ? day.sleep +
-                " h"
-              : "—"
-          }
-
-        </div>
-
-      </div>
-
-    `;
-
-
-    const meals =
-      document.getElementById(
-        "detailMeals"
-      );
-
-
-    meals.innerHTML =
-      "";
-
-
-    mealDefinitions.forEach(
-      meal => {
-
-        const row =
-          document.createElement(
-            "div"
-          );
-
-
-        row.className =
-          "detail-meal-row";
-
-
-        const done =
-          Boolean(
-            day.meals[
-              meal.key
-            ]
-          );
-
-
-        row.innerHTML = `
-
-          <div>
-            ${meal.name}
-          </div>
-
-          <div
-            class="detail-check ${
-              done
-                ? "done"
-                : "not-done"
-            }">
-
-            ${
-              done
-                ? "✓"
-                : "—"
-            }
-
-          </div>
-
-        `;
-
-
-        meals.appendChild(
-          row
-        );
-
-      }
-    );
-
-
-    const strengthSection =
-      document.getElementById(
-        "detailStrengthSection"
-      );
-
-
-    const strengthContainer =
-      document.getElementById(
-        "detailStrength"
-      );
-
-
-    strengthContainer.innerHTML =
-      "";
-
-
-    const hasStrength =
-      day.activity ===
-      "strength" &&
-      exercises.some(
-        exercise =>
-          Array.isArray(
-            day.strength[
-              exercise.key
-            ]
-          ) &&
-          day.strength[
-            exercise.key
-          ].length > 0
-      );
-
-
-    if (
-      hasStrength
-    ) {
-
-      strengthSection.style.display =
-        "block";
-
-
-      exercises.forEach(
-        exercise => {
-
-          const sets =
-            day.strength[
-              exercise.key
-            ] || [];
-
-
-          if (
-            sets.length === 0
-          ) {
-
-            return;
-
-          }
-
-
-          const card =
-            document.createElement(
-              "div"
-            );
-
-
-          card.className =
-            "detail-exercise";
-
-
-          const volume =
-            calculateVolume(
-              sets
-            );
-
-
-          card.innerHTML = `
-
-            <div class="detail-exercise-header">
-
-              <div class="detail-exercise-name">
-                ${exercise.name}
-              </div>
-
-              <div class="detail-exercise-volume">
-                ${volume.toFixed(0)} kg
-              </div>
-
-            </div>
-
-
-            <div class="detail-sets"></div>
-
-          `;
-
-
-          const setsContainer =
-            card.querySelector(
-              ".detail-sets"
-            );
-
-
-          sets.forEach(
-            (
-              set,
-              index
-            ) => {
-
-              const row =
-                document.createElement(
-                  "div"
-                );
-
-
-              row.className =
-                "detail-set";
-
-
-              row.innerHTML = `
-
-                <div class="detail-set-number">
-                  ${index + 1}
-                </div>
-
-                <div>
-                  ${
-                    set.reps !== ""
-                      ? set.reps +
-                        " repeticions"
-                      : "—"
-                  }
-                </div>
-
-                <div>
-                  ${
-                    set.kg !== ""
-                      ? set.kg +
-                        " kg"
-                      : "—"
-                  }
-                </div>
-
-              `;
-
-
-              setsContainer.appendChild(
-                row
-              );
-
-            }
-          );
-
-
-          strengthContainer.appendChild(
-            card
-          );
-
-        }
-      );
-
-    }
-
-    else {
-
-      strengthSection.style.display =
-        "none";
-
-    }
-
-  }
-
-
-  document.getElementById(
-    "backToHistory"
-  ).addEventListener(
-    "click",
-    () => {
-
-      showHistoryList();
-
-    }
-  );
-
-
-  /* =========================================================
-     INICIALITZACIÓ
-  ========================================================= */
-
-  renderWeight();
+  renderWeightDifference();
 
   renderMeals();
 
   renderActivity();
 
-  renderSleep();
+  renderStrength();
 
-  renderExercises();
+  const sleepInput =
+    document.getElementById("sleepInput");
+
+  sleepInput.value =
+    day.sleep !== null && day.sleep !== undefined
+      ? day.sleep
+      : "";
+
+}
+
+
+function renderWeightDifference() {
+
+  const day = getToday();
+
+  const element =
+    document.getElementById("weightDifference");
+
+  if (
+    day.weight === null ||
+    day.weight === undefined ||
+    day.weight === ""
+  ) {
+
+    element.textContent =
+      "Encara no registrat";
+
+    return;
+
+  }
+
+  const dates = Object.keys(data)
+    .filter(date =>
+      data[date].weight !== null &&
+      data[date].weight !== undefined &&
+      data[date].weight !== ""
+    )
+    .sort();
+
+  if (dates.length < 2) {
+
+    element.textContent =
+      "Primer registre";
+
+    return;
+
+  }
+
+  const currentIndex =
+    dates.indexOf(todayKey());
+
+  if (currentIndex <= 0) {
+
+    element.textContent =
+      "Primer registre";
+
+    return;
+
+  }
+
+  const previousDate =
+    dates[currentIndex - 1];
+
+  const previousWeight =
+    Number(data[previousDate].weight);
+
+  const difference =
+    Number(day.weight) - previousWeight;
+
+  if (difference > 0) {
+
+    element.textContent =
+      `+${difference.toFixed(1)} kg respecte l'anterior`;
+
+  } else if (difference < 0) {
+
+    element.textContent =
+      `${difference.toFixed(1)} kg respecte l'anterior`;
+
+  } else {
+
+    element.textContent =
+      "Sense canvi respecte l'anterior";
+
+  }
+
+}
+
+
+function renderMeals() {
+
+  const day = getToday();
+
+  const container =
+    document.getElementById("meals");
+
+  container.innerHTML = "";
+
+  mealDefinitions.forEach(([key, label]) => {
+
+    const row =
+      document.createElement("div");
+
+    row.className =
+      "meal-row" +
+      (day.meals[key] ? " checked" : "");
+
+    row.innerHTML = `
+      <div class="check">✓</div>
+      <div class="meal-name">${label}</div>
+    `;
+
+    row.addEventListener("click", () => {
+
+      day.meals[key] =
+        !day.meals[key];
+
+      saveData();
+
+      renderMeals();
+
+    });
+
+    container.appendChild(row);
+
+  });
+
+}
+
+
+function renderActivity() {
+
+  const day = getToday();
+
+  document
+    .querySelectorAll(".activity-button")
+    .forEach(button => {
+
+      button.classList.toggle(
+        "selected",
+        button.dataset.activity === day.activity
+      );
+
+    });
+
+}
+
+
+function renderStrength() {
+
+  const day = getToday();
+
+  const section =
+    document.getElementById("strengthSection");
+
+  if (day.activity !== "strength") {
+
+    section.style.display = "none";
+
+    return;
+
+  }
+
+  section.style.display = "block";
+
+  const container =
+    document.getElementById("strengthExercises");
+
+  container.innerHTML = "";
+
+  exercises.forEach(([key, name]) => {
+
+    const card =
+      document.createElement("div");
+
+    card.className =
+      "card exercise-card";
+
+    const sets =
+      day.strength[key] || [];
+
+    let setsHTML = "";
+
+    sets.forEach((set, index) => {
+
+      setsHTML += `
+        <div class="set-row">
+
+          <input
+            class="set-input reps-input"
+            data-exercise="${key}"
+            data-index="${index}"
+            data-field="reps"
+            type="number"
+            min="0"
+            placeholder="Repeticions"
+            value="${set.reps ?? ""}"
+          >
+
+          <input
+            class="set-input kg-input"
+            data-exercise="${key}"
+            data-index="${index}"
+            data-field="kg"
+            type="number"
+            min="0"
+            step="0.5"
+            placeholder="kg"
+            value="${set.kg ?? ""}"
+          >
+
+          <button
+            class="delete-set"
+            data-exercise="${key}"
+            data-index="${index}"
+          >×</button>
+
+        </div>
+      `;
+
+    });
+
+    const volume =
+      sets.reduce(
+        (total, set) =>
+          total +
+          (Number(set.reps) || 0) *
+          (Number(set.kg) || 0),
+        0
+      );
+
+    card.innerHTML = `
+
+      <div class="exercise-header">
+
+        <div class="exercise-title">
+          ${name}
+        </div>
+
+        <button
+          class="add-set"
+          data-add="${key}"
+        >
+          + Sèrie
+        </button>
+
+      </div>
+
+      ${setsHTML || '<div class="empty">Encara no hi ha sèries</div>'}
+
+      <div class="volume">
+        Volum: <strong>${volume.toFixed(0)} kg</strong>
+      </div>
+
+    `;
+
+    container.appendChild(card);
+
+  });
+
+  attachStrengthEvents();
+
+}
+
+
+function attachStrengthEvents() {
+
+  document
+    .querySelectorAll("[data-add]")
+    .forEach(button => {
+
+      button.addEventListener("click", () => {
+
+        const exercise =
+          button.dataset.add;
+
+        const day = getToday();
+
+        day.strength[exercise].push({
+          reps: "",
+          kg: ""
+        });
+
+        saveData();
+
+        renderStrength();
+
+      });
+
+    });
+
+
+  document
+    .querySelectorAll(".delete-set")
+    .forEach(button => {
+
+      button.addEventListener("click", () => {
+
+        const exercise =
+          button.dataset.exercise;
+
+        const index =
+          Number(button.dataset.index);
+
+        const day = getToday();
+
+        day.strength[exercise].splice(
+          index,
+          1
+        );
+
+        saveData();
+
+        renderStrength();
+
+      });
+
+    });
+
+
+  document
+    .querySelectorAll(".set-input")
+    .forEach(input => {
+
+      input.addEventListener("input", () => {
+
+        const exercise =
+          input.dataset.exercise;
+
+        const index =
+          Number(input.dataset.index);
+
+        const field =
+          input.dataset.field;
+
+        const day =
+          getToday();
+
+        day.strength[exercise][index][field] =
+          input.value;
+
+        saveData();
+
+        updateExerciseVolume(
+          input.closest(".exercise-card"),
+          day.strength[exercise]
+        );
+
+      });
+
+    });
+
+}
+
+
+function updateExerciseVolume(card, sets) {
+
+  const volume =
+    sets.reduce(
+      (total, set) =>
+        total +
+        (Number(set.reps) || 0) *
+        (Number(set.kg) || 0),
+      0
+    );
+
+  const element =
+    card.querySelector(".volume strong");
+
+  if (element) {
+
+    element.textContent =
+      `${volume.toFixed(0)} kg`;
+
+  }
+
+}
+
+
+/* =========================================================
+   INPUTS
+========================================================= */
+
+document
+  .getElementById("weightInput")
+  .addEventListener("input", event => {
+
+    const value =
+      event.target.value;
+
+    const day =
+      getToday();
+
+    day.weight =
+      value === ""
+        ? null
+        : Number(value);
+
+    saveData();
+
+    renderWeightDifference();
+
+  });
+
+
+document
+  .getElementById("sleepInput")
+  .addEventListener("input", event => {
+
+    const value =
+      event.target.value;
+
+    const day =
+      getToday();
+
+    day.sleep =
+      value === ""
+        ? null
+        : Number(value);
+
+    saveData();
+
+  });
+
+
+document
+  .querySelectorAll(".activity-button")
+  .forEach(button => {
+
+    button.addEventListener("click", () => {
+
+      const day =
+        getToday();
+
+      day.activity =
+        button.dataset.activity;
+
+      saveData();
+
+      renderActivity();
+
+      renderStrength();
+
+    });
+
+  });
+
+
+/* =========================================================
+   PROGRÉS
+========================================================= */
+
+function getWeightRecords() {
+
+  return Object.keys(data)
+
+    .filter(date =>
+      data[date].weight !== null &&
+      data[date].weight !== undefined &&
+      data[date].weight !== ""
+    )
+
+    .map(date => ({
+      date,
+      weight: Number(data[date].weight)
+    }))
+
+    .filter(item =>
+      Number.isFinite(item.weight)
+    )
+
+    .sort((a, b) =>
+      a.date.localeCompare(b.date)
+    );
+
+}
+
+
+function renderProgress() {
+
+  const records =
+    getWeightRecords();
+
+  const days =
+    Object.keys(data);
+
+  document.getElementById("recordedDays")
+    .textContent =
+    days.length;
+
+  const currentWeight =
+    records.length
+      ? records[records.length - 1].weight
+      : null;
+
+  document.getElementById("currentWeight")
+    .textContent =
+    currentWeight !== null
+      ? currentWeight.toFixed(1)
+      : "—";
+
+  if (records.length >= 2) {
+
+    const change =
+      records[records.length - 1].weight -
+      records[0].weight;
+
+    document.getElementById("weightChange")
+      .textContent =
+      `${change >= 0 ? "+" : ""}${change.toFixed(1)}`;
+
+  } else {
+
+    document.getElementById("weightChange")
+      .textContent =
+      "—";
+
+  }
+
+
+  let hiit = 0;
+  let strength = 0;
+
+  Object.values(data).forEach(day => {
+
+    if (day.activity === "HIIT") {
+      hiit++;
+    }
+
+    if (day.activity === "strength") {
+      strength++;
+    }
+
+  });
+
+  document.getElementById("hiitCount")
+    .textContent = hiit;
+
+  document.getElementById("strengthCount")
+    .textContent = strength;
+
+  document.getElementById("totalWorkouts")
+    .textContent =
+    hiit + strength;
+
+
+  renderWeightChart(records);
+
+  renderExerciseProgress();
+
+}
+
+
+document
+  .querySelectorAll("[data-weight-range]")
+  .forEach(button => {
+
+    button.addEventListener("click", () => {
+
+      document
+        .querySelectorAll("[data-weight-range]")
+        .forEach(item =>
+          item.classList.remove("active")
+        );
+
+      button.classList.add("active");
+
+      selectedWeightRange =
+        button.dataset.weightRange;
+
+      renderWeightChart(
+        getWeightRecords()
+      );
+
+    });
+
+  });
+
+
+function renderWeightChart(records) {
+
+  const container =
+    document.getElementById("weightChart");
+
+  if (!records.length) {
+
+    container.innerHTML = `
+      <div class="no-chart">
+        Encara no tens registres de pes.
+      </div>
+    `;
+
+    return;
+
+  }
+
+  let filtered =
+    [...records];
+
+  if (selectedWeightRange !== "all") {
+
+    const amount =
+      Number(selectedWeightRange);
+
+    filtered =
+      filtered.slice(-amount);
+
+  }
+
+  if (filtered.length === 1) {
+
+    const value =
+      filtered[0].weight;
+
+    container.innerHTML =
+      createLineChart(
+        filtered,
+        value - 1,
+        value + 1
+      );
+
+    return;
+
+  }
+
+  const values =
+    filtered.map(item => item.weight);
+
+  let min =
+    Math.min(...values);
+
+  let max =
+    Math.max(...values);
+
+  if (min === max) {
+
+    min -= 1;
+    max += 1;
+
+  } else {
+
+    const padding =
+      (max - min) * 0.15;
+
+    min -= padding;
+    max += padding;
+
+  }
+
+  container.innerHTML =
+    createLineChart(
+      filtered,
+      min,
+      max
+    );
+
+}
+
+
+function createLineChart(records, min, max) {
+
+  const width = 700;
+  const height = 170;
+
+  const paddingX = 5;
+
+  const usableWidth =
+    width - paddingX * 2;
+
+  const usableHeight =
+    height - 10;
+
+  const points =
+    records.map((item, index) => {
+
+      const x =
+        records.length === 1
+          ? width / 2
+          : paddingX +
+            (index /
+              (records.length - 1)) *
+            usableWidth;
+
+      const normalized =
+        (item.weight - min) /
+        (max - min);
+
+      const y =
+        height -
+        normalized * usableHeight -
+        5;
+
+      return {
+        x,
+        y,
+        value: item.weight,
+        date: item.date
+      };
+
+    });
+
+
+  const path =
+    points
+      .map((point, index) =>
+        `${index === 0 ? "M" : "L"} ${point.x} ${point.y}`
+      )
+      .join(" ");
+
+
+  const areaPath =
+    `${path} L ${points[points.length - 1].x} ${height} L ${points[0].x} ${height} Z`;
+
+
+  const first =
+    records[0];
+
+  const middle =
+    records[Math.floor(records.length / 2)];
+
+  const last =
+    records[records.length - 1];
+
+
+  const labels = `
+    <div class="chart-labels">
+      <div class="chart-label">${shortDate(first.date)}</div>
+      <div class="chart-label">${shortDate(middle.date)}</div>
+      <div class="chart-label">${shortDate(last.date)}</div>
+    </div>
+  `;
+
+
+  const pointsHTML =
+    points.map(point => `
+      <circle
+        class="chart-point"
+        cx="${point.x}"
+        cy="${point.y}"
+        r="4"
+      />
+    `).join("");
+
+
+  return `
+
+    <div class="line-chart">
+
+      <div class="chart-y-label chart-y-top">
+        ${max.toFixed(1)}
+      </div>
+
+      <div class="chart-y-label chart-y-middle">
+        ${((max + min) / 2).toFixed(1)}
+      </div>
+
+      <div class="chart-y-label chart-y-bottom">
+        ${min.toFixed(1)}
+      </div>
+
+      <div class="chart-area">
+
+        <div class="chart-grid-line chart-grid-1"></div>
+        <div class="chart-grid-line chart-grid-2"></div>
+
+        <svg
+          class="chart-svg"
+          viewBox="0 0 ${width} ${height}"
+          preserveAspectRatio="none"
+        >
+
+          <path
+            class="chart-area-fill"
+            d="${areaPath}"
+          />
+
+          <path
+            class="chart-line"
+            d="${path}"
+          />
+
+          ${pointsHTML}
+
+        </svg>
+
+      </div>
+
+      ${labels}
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================================================
+   PROGRÉS EXERCICIS
+========================================================= */
+
+function getExerciseSessions(exerciseKey) {
+
+  const sessions = [];
+
+  Object.keys(data)
+    .sort()
+    .forEach(date => {
+
+      const day =
+        data[date];
+
+      const sets =
+        day.strength?.[exerciseKey] || [];
+
+      const validSets =
+        sets.filter(set =>
+          Number(set.kg) > 0
+        );
+
+      if (!validSets.length) {
+        return;
+      }
+
+      const maxKg =
+        Math.max(
+          ...validSets.map(set =>
+            Number(set.kg)
+          )
+        );
+
+      const bestSet =
+        validSets.reduce(
+          (best, set) => {
+
+            const volume =
+              Number(set.reps || 0) *
+              Number(set.kg || 0);
+
+            const bestVolume =
+              Number(best.reps || 0) *
+              Number(best.kg || 0);
+
+            return volume > bestVolume
+              ? set
+              : best;
+
+          },
+          validSets[0]
+        );
+
+      const volume =
+        validSets.reduce(
+          (total, set) =>
+            total +
+            Number(set.reps || 0) *
+            Number(set.kg || 0),
+          0
+        );
+
+      sessions.push({
+        date,
+        maxKg,
+        bestReps: Number(bestSet.reps || 0),
+        bestKg: Number(bestSet.kg || 0),
+        volume,
+        sets: validSets.length
+      });
+
+    });
+
+  return sessions;
+
+}
+
+
+function renderExerciseProgress() {
+
+  const container =
+    document.getElementById("exerciseProgress");
+
+  container.innerHTML = "";
+
+  exercises.forEach(([key, name]) => {
+
+    const sessions =
+      getExerciseSessions(key);
+
+    const card =
+      document.createElement("div");
+
+    card.className =
+      "chart-card exercise-progress";
+
+
+    if (!sessions.length) {
+
+      card.innerHTML = `
+
+        <div class="exercise-progress-top">
+
+          <div class="exercise-progress-name">
+            ${name}
+          </div>
+
+        </div>
+
+        <div class="no-chart">
+          Encara no hi ha dades d'aquest exercici.
+        </div>
+
+      `;
+
+      container.appendChild(card);
+
+      return;
+
+    }
+
+
+    const bestKg =
+      Math.max(
+        ...sessions.map(session =>
+          session.maxKg
+        )
+      );
+
+    const totalVolume =
+      sessions.reduce(
+        (total, session) =>
+          total + session.volume,
+        0
+      );
+
+    const totalSets =
+      sessions.reduce(
+        (total, session) =>
+          total + session.sets,
+        0
+      );
+
+
+    const bestSession =
+      sessions.find(
+        session =>
+          session.maxKg === bestKg
+      );
+
+
+    const recent =
+      sessions.slice(-12);
+
+
+    let min =
+      Math.min(
+        ...recent.map(session =>
+          session.maxKg
+        )
+      );
+
+    let max =
+      Math.max(
+        ...recent.map(session =>
+          session.maxKg
+        )
+      );
+
+
+    if (min === max) {
+
+      min -= 1;
+      max += 1;
+
+    } else {
+
+      const padding =
+        (max - min) * 0.20;
+
+      min -= padding;
+      max += padding;
+
+    }
+
+
+    card.innerHTML = `
+
+      <div class="exercise-progress-top">
+
+        <div class="exercise-progress-name">
+          ${name}
+        </div>
+
+        <div class="exercise-progress-best">
+
+          <strong>${bestKg.toFixed(1)} kg</strong>
+
+          <span>
+            millor marca
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <div class="progress-mini-stats">
+
+        <div class="mini-stat">
+
+          <div class="mini-stat-label">
+            Millor sèrie
+          </div>
+
+          <div class="mini-stat-value">
+            ${bestSession.bestReps} × ${bestSession.bestKg} kg
+          </div>
+
+        </div>
+
+
+        <div class="mini-stat">
+
+          <div class="mini-stat-label">
+            Volum total
+          </div>
+
+          <div class="mini-stat-value">
+            ${totalVolume.toFixed(0)} kg
+          </div>
+
+        </div>
+
+
+        <div class="mini-stat">
+
+          <div class="mini-stat-label">
+            Sessions
+          </div>
+
+          <div class="mini-stat-value">
+            ${sessions.length}
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="chart-subtitle">
+        Evolució del pes màxim per sessió
+      </div>
+
+      ${createExerciseLineChart(
+        recent,
+        min,
+        max
+      )}
+
+    `;
+
+
+    container.appendChild(card);
+
+  });
+
+}
+
+
+function createExerciseLineChart(
+  sessions,
+  min,
+  max
+) {
+
+  const width = 700;
+  const height = 170;
+  const paddingX = 5;
+
+  const usableWidth =
+    width - paddingX * 2;
+
+  const usableHeight =
+    height - 10;
+
+
+  const points =
+    sessions.map((session, index) => {
+
+      const x =
+        sessions.length === 1
+          ? width / 2
+          : paddingX +
+            (index /
+              (sessions.length - 1)) *
+            usableWidth;
+
+      const normalized =
+        (session.maxKg - min) /
+        (max - min);
+
+      const y =
+        height -
+        normalized * usableHeight -
+        5;
+
+      return {
+        x,
+        y,
+        value: session.maxKg,
+        date: session.date
+      };
+
+    });
+
+
+  const path =
+    points
+      .map((point, index) =>
+        `${index === 0 ? "M" : "L"} ${point.x} ${point.y}`
+      )
+      .join(" ");
+
+
+  const areaPath =
+    `${path} L ${points[points.length - 1].x} ${height} L ${points[0].x} ${height} Z`;
+
+
+  const pointsHTML =
+    points.map(point => `
+      <circle
+        class="chart-point"
+        cx="${point.x}"
+        cy="${point.y}"
+        r="4"
+      />
+    `).join("");
+
+
+  const first =
+    sessions[0];
+
+  const middle =
+    sessions[Math.floor(sessions.length / 2)];
+
+  const last =
+    sessions[sessions.length - 1];
+
+
+  return `
+
+    <div class="line-chart">
+
+      <div class="chart-y-label chart-y-top">
+        ${max.toFixed(1)}
+      </div>
+
+      <div class="chart-y-label chart-y-middle">
+        ${((max + min) / 2).toFixed(1)}
+      </div>
+
+      <div class="chart-y-label chart-y-bottom">
+        ${min.toFixed(1)}
+      </div>
+
+
+      <div class="chart-area">
+
+        <div class="chart-grid-line chart-grid-1"></div>
+        <div class="chart-grid-line chart-grid-2"></div>
+
+
+        <svg
+          class="chart-svg"
+          viewBox="0 0 ${width} ${height}"
+          preserveAspectRatio="none"
+        >
+
+          <path
+            class="chart-area-fill"
+            d="${areaPath}"
+          />
+
+          <path
+            class="chart-line"
+            d="${path}"
+          />
+
+          ${pointsHTML}
+
+        </svg>
+
+      </div>
+
+
+      <div class="chart-labels">
+
+        <div class="chart-label">
+          ${shortDate(first.date)}
+        </div>
+
+        <div class="chart-label">
+          ${shortDate(middle.date)}
+        </div>
+
+        <div class="chart-label">
+          ${shortDate(last.date)}
+        </div>
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================================================
+   HISTORIAL
+========================================================= */
+
+function renderHistory() {
+
+  const list =
+    document.getElementById("historyList");
+
+  const detail =
+    document.getElementById("historyDetail");
+
+  detail.style.display =
+    "none";
+
+  list.style.display =
+    "block";
+
+  const dates =
+    Object.keys(data)
+      .sort()
+      .reverse();
+
+
+  if (!dates.length) {
+
+    list.innerHTML = `
+      <div class="card empty">
+        Encara no hi ha historial.
+      </div>
+    `;
+
+    return;
+
+  }
+
+
+  list.innerHTML = "";
+
+  dates.forEach(date => {
+
+    const day =
+      data[date];
+
+    const item =
+      document.createElement("div");
+
+    item.className =
+      "history-item";
+
+
+    let activity =
+      "Sense activitat";
+
+    if (day.activity === "HIIT") {
+      activity = "HIIT";
+    }
+
+    if (day.activity === "strength") {
+      activity = "Força";
+    }
+
+    if (day.activity === "rest") {
+      activity = "Descans";
+    }
+
+
+    const weight =
+      day.weight !== null &&
+      day.weight !== undefined &&
+      day.weight !== ""
+        ? `${Number(day.weight).toFixed(1)} kg`
+        : "Pes —";
+
+
+    item.innerHTML = `
+
+      <div>
+
+        <div class="history-date">
+          ${formatDate(date)}
+        </div>
+
+        <div class="history-summary">
+          ${weight} · ${activity}
+        </div>
+
+      </div>
+
+      <div class="history-arrow">
+        ›
+      </div>
+
+    `;
+
+
+    item.addEventListener(
+      "click",
+      () => showHistoryDetail(date)
+    );
+
+
+    list.appendChild(item);
+
+  });
+
+}
+
+
+function showHistoryDetail(date) {
+
+  const day =
+    data[date];
+
+  const list =
+    document.getElementById("historyList");
+
+  const detail =
+    document.getElementById("historyDetail");
+
+  list.style.display =
+    "none";
+
+  detail.style.display =
+    "block";
+
+
+  let activity =
+    "Sense activitat";
+
+  if (day.activity === "HIIT") {
+    activity = "HIIT";
+  }
+
+  if (day.activity === "strength") {
+    activity = "Força";
+  }
+
+  if (day.activity === "rest") {
+    activity = "Descans";
+  }
+
+
+  let mealsHTML = "";
+
+  mealDefinitions.forEach(([key, name]) => {
+
+    const done =
+      day.meals?.[key];
+
+    mealsHTML += `
+
+      <div class="detail-row">
+
+        <div class="detail-label">
+          ${name}
+        </div>
+
+        <div class="detail-value">
+          ${done ? "✓ Fet" : "— No registrat"}
+        </div>
+
+      </div>
+
+    `;
+
+  });
+
+
+  let strengthHTML = "";
+
+
+  if (day.activity === "strength") {
+
+    exercises.forEach(([key, name]) => {
+
+      const sets =
+        day.strength?.[key] || [];
+
+      if (!sets.length) {
+        return;
+      }
+
+      let setsRows = "";
+
+      sets.forEach((set, index) => {
+
+        setsRows += `
+
+          <div class="detail-set">
+
+            <span>
+              Sèrie ${index + 1}
+            </span>
+
+            <strong>
+              ${set.reps || "—"} × ${set.kg || "—"} kg
+            </strong>
+
+          </div>
+
+        `;
+
+      });
+
+
+      strengthHTML += `
+
+        <div class="detail-row">
+
+          <div class="detail-label">
+            ${name}
+          </div>
+
+          ${setsRows}
+
+        </div>
+
+      `;
+
+    });
+
+  }
+
+
+  detail.innerHTML = `
+
+    <button
+      class="back-button"
+      id="backHistory"
+    >
+      ‹ Historial
+    </button>
+
+
+    <div class="section-title">
+      ${formatDate(date)}
+    </div>
+
+
+    <div class="card">
+
+      <div class="detail-row">
+
+        <div class="detail-label">
+          Pes
+        </div>
+
+        <div class="detail-value">
+          ${
+            day.weight !== null &&
+            day.weight !== undefined
+              ? Number(day.weight).toFixed(1) + " kg"
+              : "No registrat"
+          }
+        </div>
+
+      </div>
+
+
+      <div class="detail-row">
+
+        <div class="detail-label">
+          Activitat
+        </div>
+
+        <div class="detail-value">
+          ${activity}
+        </div>
+
+      </div>
+
+
+      <div class="detail-row">
+
+        <div class="detail-label">
+          Hores de son
+        </div>
+
+        <div class="detail-value">
+          ${
+            day.sleep !== null &&
+            day.sleep !== undefined
+              ? day.sleep + " h"
+              : "No registrat"
+          }
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="section-title">
+      Alimentació i suplements
+    </div>
+
+    <div class="card">
+      ${mealsHTML}
+    </div>
+
+
+    ${
+      day.activity === "strength"
+        ? `
+          <div class="section-title">
+            Entrenament de força
+          </div>
+
+          <div class="card">
+            ${
+              strengthHTML ||
+              '<div class="empty">No hi ha sèries registrades.</div>'
+            }
+          </div>
+        `
+        : ""
+    }
+
+  `;
+
+
+  document
+    .getElementById("backHistory")
+    .addEventListener(
+      "click",
+      renderHistory
+    );
+
+}
+
+
+/* =========================================================
+   NAVEGACIÓ
+========================================================= */
+
+const screens = {
+  today: document.getElementById("todayScreen"),
+  progress: document.getElementById("progressScreen"),
+  history: document.getElementById("historyScreen"),
+  more: document.getElementById("moreScreen")
+};
+
+
+document
+  .querySelectorAll(".nav-button")
+  .forEach(button => {
+
+    button.addEventListener("click", () => {
+
+      const tab =
+        button.dataset.tab;
+
+
+      document
+        .querySelectorAll(".nav-button")
+        .forEach(item =>
+          item.classList.remove("active")
+        );
+
+      button.classList.add("active");
+
+
+      Object.values(screens)
+        .forEach(screen =>
+          screen.classList.remove("active")
+        );
+
+      screens[tab]
+        .classList.add("active");
+
+
+      const titles = {
+
+        today: [
+          "Avui",
+          "La meva salut, alimentació i entrenament"
+        ],
+
+        progress: [
+          "Progrés",
+          "La teva evolució"
+        ],
+
+        history: [
+          "Historial",
+          "Tot el que has registrat"
+        ],
+
+        more: [
+          "Més",
+          "Configuració i informació"
+        ]
+
+      };
+
+
+      document.getElementById("pageTitle")
+        .textContent =
+        titles[tab][0];
+
+
+      document.getElementById("pageSubtitle")
+        .textContent =
+        titles[tab][1];
+
+
+      if (tab === "today") {
+        renderToday();
+      }
+
+      if (tab === "progress") {
+        renderProgress();
+      }
+
+      if (tab === "history") {
+        renderHistory();
+      }
+
+    });
+
+  });
+
+
+/* =========================================================
+   INICIALITZACIÓ
+========================================================= */
+
+renderToday();
 
 </script>
 

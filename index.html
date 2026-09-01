@@ -276,10 +276,21 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      width: 100%;
       padding: 13px 0;
+      margin: 0;
+      border: 0;
       border-bottom: 1px solid var(--border);
+      background: transparent;
+      color: var(--text);
+      font: inherit;
+      text-align: left;
       cursor: pointer;
       user-select: none;
+      -webkit-user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      appearance: none;
+      -webkit-appearance: none;
     }
 
     .meal-row:last-child {
@@ -2011,7 +2022,9 @@ function renderMeals() {
     ([key, name]) => {
 
       const row =
-        document.createElement("div");
+        document.createElement("button");
+
+      row.type = "button";
 
       row.className =
         "meal-row" +
@@ -2019,26 +2032,46 @@ function renderMeals() {
           ? " checked"
           : "");
 
+      row.dataset.mealKey = key;
+
+      row.setAttribute(
+        "aria-pressed",
+        today.meals[key] ? "true" : "false"
+      );
+
       row.innerHTML = `
         <div class="meal-name">
           ${name}
         </div>
 
-        <div class="check"></div>
+        <div class="check" aria-hidden="true"></div>
       `;
 
       row.addEventListener(
         "click",
-        () => {
+        event => {
 
-          today.meals[key] =
-            !today.meals[key];
+          event.preventDefault();
+
+          const day =
+            getSelectedDay();
+
+          day.meals[key] =
+            !day.meals[key];
 
           saveAllData();
 
-          updateTodayUI();
+          row.classList.toggle(
+            "checked",
+            day.meals[key]
+          );
 
-          updateProgress();
+          row.setAttribute(
+            "aria-pressed",
+            day.meals[key] ? "true" : "false"
+          );
+
+          updateDailySummary();
 
         }
       );

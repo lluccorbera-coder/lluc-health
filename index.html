@@ -1,327 +1,777 @@
 <!DOCTYPE html>
 <html lang="ca">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
-    <meta name="theme-color" content="#f2f2f7">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    >
+
+    <meta
+        name="theme-color"
+        content="#f2f2f7"
+    >
 
     <title>Lluc Health</title>
 
+
     <style>
+
         * {
             box-sizing: border-box;
         }
 
+
         body {
+
             margin: 0;
+
             background: #f2f2f7;
+
             color: #1c1c1e;
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
-                         "SF Pro Text", Helvetica, Arial, sans-serif;
+
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "SF Pro Display",
+                "SF Pro Text",
+                Helvetica,
+                Arial,
+                sans-serif;
+
             -webkit-font-smoothing: antialiased;
         }
 
+
         button,
         input {
+
             font-family: inherit;
         }
 
+
         button {
+
             cursor: pointer;
         }
 
+
         .app {
+
             max-width: 500px;
+
             margin: 0 auto;
+
             min-height: 100vh;
-            padding-bottom: 100px;
+
+            padding-bottom: 110px;
         }
+
+
+        /* =========================
+           CAPÇALERA
+        ========================= */
 
         .header {
-            padding: 55px 22px 20px;
+
+            padding:
+                55px
+                22px
+                20px;
         }
 
+
         .date {
+
             font-size: 15px;
+
             color: #8e8e93;
+
             margin-bottom: 5px;
         }
 
+
         h1 {
+
             margin: 0;
+
             font-size: 34px;
+
             font-weight: 700;
+
             letter-spacing: -1px;
         }
 
+
         .content {
+
             padding: 0 16px;
         }
 
+
+        /* =========================
+           TARGETES
+        ========================= */
+
         .card {
-            background: #ffffff;
+
+            background: white;
+
             border-radius: 20px;
+
             margin-bottom: 14px;
+
             overflow: hidden;
         }
 
+
         .section-title {
+
             font-size: 13px;
+
             font-weight: 600;
+
             color: #8e8e93;
+
             text-transform: uppercase;
-            letter-spacing: 0.4px;
-            margin: 25px 6px 8px;
+
+            letter-spacing: .4px;
+
+            margin:
+                25px
+                6px
+                8px;
         }
 
-        /* PES */
+
+        /* =========================
+           PES
+        ========================= */
 
         .weight-card {
+
             padding: 20px;
         }
 
+
         .weight-label {
+
             color: #8e8e93;
+
             font-size: 15px;
         }
 
+
         .weight-row {
+
             display: flex;
+
             align-items: center;
+
             justify-content: space-between;
+
             margin-top: 4px;
         }
 
+
         .weight-input {
+
             border: none;
+
             outline: none;
+
             background: transparent;
+
             width: 130px;
+
             font-size: 38px;
+
             font-weight: 700;
+
             letter-spacing: -1.5px;
+
             padding: 0;
+
             color: #1c1c1e;
         }
 
+
         .weight-unit {
+
             font-size: 17px;
+
             color: #8e8e93;
+
             margin-left: -35px;
         }
 
+
         .change {
+
             font-size: 14px;
-            color: #34c759;
+
             font-weight: 500;
         }
 
-        /* FILES */
+
+        /* =========================
+           ÀPATS
+        ========================= */
 
         .row {
+
             width: 100%;
+
             display: flex;
+
             align-items: center;
+
             padding: 15px 18px;
+
             min-height: 64px;
+
             border: none;
-            border-bottom: 1px solid #e5e5ea;
+
+            border-bottom:
+                1px solid #e5e5ea;
+
             background: white;
+
             text-align: left;
+
             color: #1c1c1e;
         }
 
+
         .row:last-child {
+
             border-bottom: none;
         }
 
+
         .row:active {
+
             background: #f2f2f7;
         }
 
+
         .icon {
+
             width: 34px;
+
             height: 34px;
+
             display: flex;
+
             align-items: center;
+
             justify-content: center;
+
             margin-right: 13px;
+
             font-size: 21px;
         }
 
+
         .row-text {
+
             flex: 1;
         }
 
+
         .row-title {
+
             font-size: 17px;
+
             font-weight: 500;
         }
 
+
         .row-subtitle {
+
             font-size: 13px;
+
             color: #8e8e93;
+
             margin-top: 2px;
         }
 
+
         .check {
+
             width: 25px;
+
             height: 25px;
+
             border-radius: 50%;
+
             background: #e5e5ea;
+
             color: transparent;
+
             display: flex;
+
             align-items: center;
+
             justify-content: center;
+
             font-size: 14px;
+
             font-weight: 700;
-            transition: 0.15s;
+
+            transition: .15s;
         }
 
+
         .check.active {
+
             background: #34c759;
+
             color: white;
         }
 
-        .arrow {
-            color: #c7c7cc;
-            font-size: 24px;
-            margin-left: 10px;
-        }
 
-        /* ACTIVITAT */
+        /* =========================
+           ACTIVITAT
+        ========================= */
 
         .activity-row {
+
             display: flex;
+
             padding: 8px;
+
             gap: 5px;
         }
 
+
         .activity-button {
+
             flex: 1;
+
             border: none;
+
             background: white;
+
             border-radius: 14px;
+
             padding: 14px 5px;
+
             color: #8e8e93;
+
             font-size: 13px;
+
             font-weight: 500;
         }
 
+
         .activity-button .activity-icon {
+
             display: block;
+
             font-size: 22px;
+
             margin-bottom: 5px;
         }
 
+
         .activity-button.active {
+
             background: #007aff;
+
             color: white;
         }
 
-        /* DESCANS */
+
+        /* =========================
+           DESCANS
+        ========================= */
 
         .rest-card {
+
             padding: 18px;
         }
 
+
         .rest-label {
+
             color: #8e8e93;
+
             font-size: 15px;
+
             margin-bottom: 7px;
         }
 
+
         .rest-input {
+
             border: none;
+
             outline: none;
+
             background: #f2f2f7;
+
             border-radius: 12px;
+
             padding: 11px 13px;
+
             font-size: 18px;
+
             width: 100%;
         }
 
-        /* ESTAT */
+
+        /* =========================
+           FORÇA
+        ========================= */
+
+        #strengthSection {
+
+            display: none;
+        }
+
+
+        .exercise-card {
+
+            padding: 18px;
+
+            margin-bottom: 12px;
+        }
+
+
+        .exercise-header {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            margin-bottom: 15px;
+        }
+
+
+        .exercise-name {
+
+            font-size: 18px;
+
+            font-weight: 600;
+
+            letter-spacing: -.2px;
+        }
+
+
+        .exercise-volume {
+
+            font-size: 12px;
+
+            color: #8e8e93;
+        }
+
+
+        .series-header {
+
+            display: grid;
+
+            grid-template-columns:
+                50px
+                1fr
+                1fr
+                38px;
+
+            gap: 7px;
+
+            color: #8e8e93;
+
+            font-size: 12px;
+
+            padding:
+                0
+                4px
+                6px;
+        }
+
+
+        .series-row {
+
+            display: grid;
+
+            grid-template-columns:
+                50px
+                1fr
+                1fr
+                38px;
+
+            gap: 7px;
+
+            align-items: center;
+
+            margin-bottom: 7px;
+        }
+
+
+        .series-number {
+
+            font-size: 14px;
+
+            color: #8e8e93;
+
+            padding-left: 4px;
+        }
+
+
+        .series-input {
+
+            width: 100%;
+
+            border: none;
+
+            outline: none;
+
+            background: #f2f2f7;
+
+            border-radius: 10px;
+
+            padding:
+                10px
+                8px;
+
+            font-size: 16px;
+
+            text-align: center;
+        }
+
+
+        .delete-series {
+
+            border: none;
+
+            background: transparent;
+
+            color: #ff3b30;
+
+            font-size: 18px;
+
+            width: 32px;
+
+            height: 32px;
+
+            border-radius: 50%;
+        }
+
+
+        .delete-series:active {
+
+            background: #f2f2f7;
+        }
+
+
+        .add-series {
+
+            width: 100%;
+
+            border: none;
+
+            background: #f2f2f7;
+
+            color: #007aff;
+
+            border-radius: 12px;
+
+            padding: 11px;
+
+            margin-top: 5px;
+
+            font-size: 15px;
+
+            font-weight: 500;
+        }
+
+
+        .add-series:active {
+
+            background: #e5e5ea;
+        }
+
+
+        /* =========================
+           GUARDAT
+        ========================= */
 
         .save-status {
+
             text-align: center;
+
             color: #8e8e93;
+
             font-size: 12px;
-            margin: 18px 0;
+
+            margin:
+                18px
+                0;
+
             height: 16px;
         }
 
-        /* NAVEGACIÓ */
+
+        /* =========================
+           NAVEGACIÓ
+        ========================= */
 
         .tabbar {
+
             position: fixed;
+
             bottom: 0;
+
             left: 50%;
-            transform: translateX(-50%);
+
+            transform:
+                translateX(-50%);
+
             width: 100%;
+
             max-width: 500px;
+
             height: 82px;
-            background: rgba(249, 249, 249, 0.94);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-top: 1px solid rgba(0,0,0,0.08);
+
+            background:
+                rgba(
+                    249,
+                    249,
+                    249,
+                    .94
+                );
+
+            backdrop-filter:
+                blur(20px);
+
+            -webkit-backdrop-filter:
+                blur(20px);
+
+            border-top:
+                1px solid
+                rgba(0,0,0,.08);
+
             display: flex;
-            justify-content: space-around;
+
+            justify-content:
+                space-around;
+
             padding-top: 9px;
-            padding-bottom: env(safe-area-inset-bottom);
+
+            padding-bottom:
+                env(
+                    safe-area-inset-bottom
+                );
+
             z-index: 10;
         }
 
+
         .tab {
+
             border: none;
+
             background: transparent;
+
             text-align: center;
+
             color: #8e8e93;
+
             font-size: 11px;
+
             min-width: 70px;
         }
 
+
         .tab.active {
+
             color: #007aff;
         }
 
+
         .tab-icon {
+
             font-size: 22px;
+
             height: 30px;
         }
 
+
+        /* =========================
+           ORDINADOR
+        ========================= */
+
         @media (min-width: 600px) {
+
             body {
+
                 padding: 30px 0;
             }
 
+
             .app {
+
                 border-radius: 30px;
+
                 overflow: hidden;
-                min-height: calc(100vh - 60px);
+
+                min-height:
+                    calc(
+                        100vh - 60px
+                    );
             }
 
+
             .tabbar {
+
                 bottom: 30px;
-                border-radius: 0 0 30px 30px;
+
+                border-radius:
+                    0
+                    0
+                    30px
+                    30px;
             }
         }
+
     </style>
+
 </head>
+
 
 <body>
 
+
 <div class="app">
 
+
+    <!-- =========================
+         CAPÇALERA
+    ========================== -->
+
     <header class="header">
-        <div class="date" id="dateText"></div>
+
+        <div
+            class="date"
+            id="dateText"
+        ></div>
+
         <h1>Avui</h1>
+
     </header>
+
 
     <main class="content">
 
-        <!-- PES -->
+
+        <!-- =========================
+             PES
+        ========================== -->
 
         <div class="card weight-card">
 
@@ -329,9 +779,11 @@
                 Pes corporal
             </div>
 
+
             <div class="weight-row">
 
                 <div>
+
                     <input
                         id="weightInput"
                         class="weight-input"
@@ -342,133 +794,565 @@
                         inputmode="decimal"
                     >
 
-                    <span class="weight-unit">kg</span>
+                    <span class="weight-unit">
+                        kg
+                    </span>
+
                 </div>
 
-                <div id="weightChange" class="change"></div>
+
+                <div
+                    id="weightChange"
+                    class="change"
+                ></div>
 
             </div>
 
         </div>
 
 
-        <!-- ALIMENTACIÓ -->
+        <!-- =========================
+             ALIMENTACIÓ
+        ========================== -->
 
         <div class="section-title">
             Alimentació i suplements
         </div>
 
+
         <div class="card">
 
-            <button class="row meal" data-key="coffee">
+
+            <button
+                class="row meal"
+                data-key="coffee"
+            >
+
                 <div class="icon">☕</div>
+
                 <div class="row-text">
-                    <div class="row-title">Cafè</div>
+
+                    <div class="row-title">
+                        Cafè
+                    </div>
+
                 </div>
+
                 <div class="check"></div>
+
             </button>
 
-            <button class="row meal" data-key="breakfast">
+
+            <button
+                class="row meal"
+                data-key="breakfast"
+            >
+
                 <div class="icon">🍳</div>
+
                 <div class="row-text">
-                    <div class="row-title">Esmorzar</div>
+
+                    <div class="row-title">
+                        Esmorzar
+                    </div>
+
                 </div>
+
                 <div class="check"></div>
+
             </button>
 
-            <button class="row meal" data-key="rice">
+
+            <button
+                class="row meal"
+                data-key="rice"
+            >
+
                 <div class="icon">🥣</div>
+
                 <div class="row-text">
-                    <div class="row-title">Crema d'arròs</div>
-                    <div class="row-subtitle">Galetes i llet</div>
+
+                    <div class="row-title">
+                        Crema d'arròs
+                    </div>
+
+                    <div class="row-subtitle">
+                        Galetes i llet
+                    </div>
+
                 </div>
+
                 <div class="check"></div>
+
             </button>
 
-            <button class="row meal" data-key="lunch">
+
+            <button
+                class="row meal"
+                data-key="lunch"
+            >
+
                 <div class="icon">🍽️</div>
+
                 <div class="row-text">
-                    <div class="row-title">Dinar</div>
+
+                    <div class="row-title">
+                        Dinar
+                    </div>
+
                 </div>
+
                 <div class="check"></div>
+
             </button>
 
-            <button class="row meal" data-key="snack">
+
+            <button
+                class="row meal"
+                data-key="snack"
+            >
+
                 <div class="icon">🥪</div>
+
                 <div class="row-text">
-                    <div class="row-title">Berenar</div>
+
+                    <div class="row-title">
+                        Berenar
+                    </div>
+
                 </div>
+
                 <div class="check"></div>
+
             </button>
 
-            <button class="row meal" data-key="creatine">
+
+            <button
+                class="row meal"
+                data-key="creatine"
+            >
+
                 <div class="icon">💊</div>
+
                 <div class="row-text">
-                    <div class="row-title">Creatina</div>
+
+                    <div class="row-title">
+                        Creatina
+                    </div>
+
                 </div>
+
                 <div class="check"></div>
+
             </button>
 
-            <button class="row meal" data-key="protein">
+
+            <button
+                class="row meal"
+                data-key="protein"
+            >
+
                 <div class="icon">🥤</div>
+
                 <div class="row-text">
-                    <div class="row-title">Batut de proteïna</div>
+
+                    <div class="row-title">
+                        Batut de proteïna
+                    </div>
+
                 </div>
+
                 <div class="check"></div>
+
             </button>
 
-            <button class="row meal" data-key="dinner">
+
+            <button
+                class="row meal"
+                data-key="dinner"
+            >
+
                 <div class="icon">🍽️</div>
+
                 <div class="row-text">
-                    <div class="row-title">Sopar</div>
+
+                    <div class="row-title">
+                        Sopar
+                    </div>
+
                 </div>
+
                 <div class="check"></div>
+
             </button>
+
 
         </div>
 
 
-        <!-- ACTIVITAT -->
+        <!-- =========================
+             ACTIVITAT
+        ========================== -->
 
         <div class="section-title">
             Activitat
         </div>
 
+
         <div class="card">
 
             <div class="activity-row">
 
-                <button class="activity-button" data-activity="hiit">
-                    <span class="activity-icon">🏃</span>
+
+                <button
+                    class="activity-button"
+                    data-activity="hiit"
+                >
+
+                    <span
+                        class="activity-icon"
+                    >
+                        🏃
+                    </span>
+
                     HIIT
+
                 </button>
 
-                <button class="activity-button" data-activity="strength">
-                    <span class="activity-icon">🏋️</span>
+
+                <button
+                    class="activity-button"
+                    data-activity="strength"
+                >
+
+                    <span
+                        class="activity-icon"
+                    >
+                        🏋️
+                    </span>
+
                     Força
+
                 </button>
 
-                <button class="activity-button" data-activity="rest">
-                    <span class="activity-icon">😴</span>
+
+                <button
+                    class="activity-button"
+                    data-activity="rest"
+                >
+
+                    <span
+                        class="activity-icon"
+                    >
+                        😴
+                    </span>
+
                     Descans
+
                 </button>
+
 
             </div>
 
         </div>
 
 
-        <!-- DESCANS -->
+        <!-- =========================
+             ENTRENAMENT DE FORÇA
+        ========================== -->
+
+        <section id="strengthSection">
+
+
+            <div class="section-title">
+                Entrenament
+            </div>
+
+
+            <!-- PRESS BANCA -->
+
+            <div class="card exercise-card">
+
+                <div class="exercise-header">
+
+                    <div class="exercise-name">
+                        Press banca
+                    </div>
+
+                    <div
+                        class="exercise-volume"
+                        id="volume-bench"
+                    ></div>
+
+                </div>
+
+
+                <div class="series-header">
+
+                    <div>Sèrie</div>
+
+                    <div>Reps</div>
+
+                    <div>Kg</div>
+
+                    <div></div>
+
+                </div>
+
+
+                <div
+                    id="series-bench"
+                ></div>
+
+
+                <button
+                    class="add-series"
+                    data-exercise="bench"
+                >
+                    + Afegir sèrie
+                </button>
+
+            </div>
+
+
+            <!-- REM -->
+
+            <div class="card exercise-card">
+
+                <div class="exercise-header">
+
+                    <div class="exercise-name">
+                        Rem amb barra
+                    </div>
+
+                    <div
+                        class="exercise-volume"
+                        id="volume-row"
+                    ></div>
+
+                </div>
+
+
+                <div class="series-header">
+
+                    <div>Sèrie</div>
+
+                    <div>Reps</div>
+
+                    <div>Kg</div>
+
+                    <div></div>
+
+                </div>
+
+
+                <div id="series-row"></div>
+
+
+                <button
+                    class="add-series"
+                    data-exercise="row"
+                >
+                    + Afegir sèrie
+                </button>
+
+            </div>
+
+
+            <!-- PRESS MILITAR -->
+
+            <div class="card exercise-card">
+
+                <div class="exercise-header">
+
+                    <div class="exercise-name">
+                        Press militar amb manuelles
+                    </div>
+
+                    <div
+                        class="exercise-volume"
+                        id="volume-shoulder"
+                    ></div>
+
+                </div>
+
+
+                <div class="series-header">
+
+                    <div>Sèrie</div>
+
+                    <div>Reps</div>
+
+                    <div>Kg</div>
+
+                    <div></div>
+
+                </div>
+
+
+                <div id="series-shoulder"></div>
+
+
+                <button
+                    class="add-series"
+                    data-exercise="shoulder"
+                >
+                    + Afegir sèrie
+                </button>
+
+            </div>
+
+
+            <!-- ELEVACIONS -->
+
+            <div class="card exercise-card">
+
+                <div class="exercise-header">
+
+                    <div class="exercise-name">
+                        Elevacions laterals
+                    </div>
+
+                    <div
+                        class="exercise-volume"
+                        id="volume-lateral"
+                    ></div>
+
+                </div>
+
+
+                <div class="series-header">
+
+                    <div>Sèrie</div>
+
+                    <div>Reps</div>
+
+                    <div>Kg</div>
+
+                    <div></div>
+
+                </div>
+
+
+                <div id="series-lateral"></div>
+
+
+                <button
+                    class="add-series"
+                    data-exercise="lateral"
+                >
+                    + Afegir sèrie
+                </button>
+
+            </div>
+
+
+            <!-- BÍCEPS -->
+
+            <div class="card exercise-card">
+
+                <div class="exercise-header">
+
+                    <div class="exercise-name">
+                        Curl de bíceps amb barra
+                    </div>
+
+                    <div
+                        class="exercise-volume"
+                        id="volume-biceps"
+                    ></div>
+
+                </div>
+
+
+                <div class="series-header">
+
+                    <div>Sèrie</div>
+
+                    <div>Reps</div>
+
+                    <div>Kg</div>
+
+                    <div></div>
+
+                </div>
+
+
+                <div id="series-biceps"></div>
+
+
+                <button
+                    class="add-series"
+                    data-exercise="biceps"
+                >
+                    + Afegir sèrie
+                </button>
+
+            </div>
+
+
+            <!-- TRÍCEPS -->
+
+            <div class="card exercise-card">
+
+                <div class="exercise-header">
+
+                    <div class="exercise-name">
+                        Extensió de tríceps
+                    </div>
+
+                    <div
+                        class="exercise-volume"
+                        id="volume-triceps"
+                    ></div>
+
+                </div>
+
+
+                <div class="series-header">
+
+                    <div>Sèrie</div>
+
+                    <div>Reps</div>
+
+                    <div>Kg</div>
+
+                    <div></div>
+
+                </div>
+
+
+                <div id="series-triceps"></div>
+
+
+                <button
+                    class="add-series"
+                    data-exercise="triceps"
+                >
+                    + Afegir sèrie
+                </button>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- =========================
+             DESCANS
+        ========================== -->
 
         <div class="section-title">
             Descans
         </div>
+
 
         <div class="card rest-card">
 
             <div class="rest-label">
                 Hores de descans
             </div>
+
 
             <input
                 id="sleepInput"
@@ -484,83 +1368,181 @@
         </div>
 
 
-        <div id="saveStatus" class="save-status"></div>
+        <div
+            id="saveStatus"
+            class="save-status"
+        ></div>
+
 
     </main>
 
 
-    <!-- NAVEGACIÓ -->
+    <!-- =========================
+         NAVEGACIÓ
+    ========================== -->
 
     <nav class="tabbar">
 
+
         <button class="tab active">
-            <div class="tab-icon">⌂</div>
+
+            <div class="tab-icon">
+                ⌂
+            </div>
+
             Avui
+
         </button>
 
+
         <button class="tab">
-            <div class="tab-icon">↗</div>
+
+            <div class="tab-icon">
+                ↗
+            </div>
+
             Progrés
+
         </button>
 
+
         <button class="tab">
-            <div class="tab-icon">▣</div>
+
+            <div class="tab-icon">
+                ▣
+            </div>
+
             Historial
+
         </button>
 
+
         <button class="tab">
-            <div class="tab-icon">•••</div>
+
+            <div class="tab-icon">
+                •••
+            </div>
+
             Més
+
         </button>
+
 
     </nav>
+
 
 </div>
 
 
 <script>
 
-    /*
-     * LLUC HEALTH
-     * Sistema de dades local
-     */
 
-    const STORAGE_KEY = "lluc-health-data-v1";
+    /* =========================
+       CONFIGURACIÓ
+    ========================== */
 
-    let allData = loadData();
+    const STORAGE_KEY =
+        "lluc-health-data-v1";
 
-    const today = getTodayKey();
+
+    const EXERCISES = {
+
+        bench: {
+            name: "Press banca"
+        },
+
+        row: {
+            name: "Rem amb barra"
+        },
+
+        shoulder: {
+            name: "Press militar amb manuelles"
+        },
+
+        lateral: {
+            name: "Elevacions laterals"
+        },
+
+        biceps: {
+            name: "Curl de bíceps amb barra"
+        },
+
+        triceps: {
+            name: "Extensió de tríceps"
+        }
+
+    };
+
+
+    /* =========================
+       DADES
+    ========================== */
+
+    let allData =
+        loadData();
+
+
+    const today =
+        getTodayKey();
+
 
     if (!allData[today]) {
-        allData[today] = createEmptyDay();
+
+        allData[today] =
+            createEmptyDay();
+
         saveData();
     }
 
 
-    /* -----------------------------
-       FUNCIONS DE DADES
-    ----------------------------- */
-
     function createEmptyDay() {
 
         return {
+
             weight: null,
 
             meals: {
+
                 coffee: false,
+
                 breakfast: false,
+
                 rice: false,
+
                 lunch: false,
+
                 snack: false,
+
                 creatine: false,
+
                 protein: false,
+
                 dinner: false
+
             },
 
             activity: null,
 
-            sleep: null
+            sleep: null,
+
+            strength: {
+
+                bench: [],
+
+                row: [],
+
+                shoulder: [],
+
+                lateral: [],
+
+                biceps: [],
+
+                triceps: []
+
+            }
+
         };
+
     }
 
 
@@ -568,20 +1550,59 @@
 
         try {
 
-            const saved = localStorage.getItem(STORAGE_KEY);
+            const saved =
+                localStorage.getItem(
+                    STORAGE_KEY
+                );
 
             if (!saved) {
+
                 return {};
             }
 
-            return JSON.parse(saved);
+
+            const data =
+                JSON.parse(saved);
+
+
+            /*
+             * Compatibilitat amb
+             * la versió anterior.
+             */
+
+            Object.keys(data)
+                .forEach(date => {
+
+                    if (!data[date].strength) {
+
+                        data[date].strength = {
+
+                            bench: [],
+                            row: [],
+                            shoulder: [],
+                            lateral: [],
+                            biceps: [],
+                            triceps: []
+
+                        };
+
+                    }
+
+                });
+
+
+            return data;
 
         } catch (error) {
 
-            console.error("Error carregant dades:", error);
+            console.error(
+                "Error carregant dades:",
+                error
+            );
 
             return {};
         }
+
     }
 
 
@@ -590,171 +1611,142 @@
         try {
 
             localStorage.setItem(
+
                 STORAGE_KEY,
+
                 JSON.stringify(allData)
+
             );
 
             showSaved();
 
         } catch (error) {
 
-            console.error("Error guardant dades:", error);
+            console.error(
+                "Error guardant dades:",
+                error
+            );
 
-            document.getElementById("saveStatus").textContent =
+            document
+                .getElementById(
+                    "saveStatus"
+                )
+                .textContent =
                 "Error guardant les dades";
         }
+
     }
 
 
     function showSaved() {
 
-        const status = document.getElementById("saveStatus");
+        const status =
+            document.getElementById(
+                "saveStatus"
+            );
 
-        status.textContent = "Guardat automàticament ✓";
 
-        setTimeout(() => {
+        status.textContent =
+            "Guardat automàticament ✓";
 
-            status.textContent = "";
 
-        }, 1500);
+        clearTimeout(
+            window.saveTimer
+        );
+
+
+        window.saveTimer =
+            setTimeout(() => {
+
+                status.textContent = "";
+
+            }, 1500);
+
     }
 
 
     function getTodayKey() {
 
-        const now = new Date();
+        const now =
+            new Date();
 
-        const year = now.getFullYear();
 
-        const month = String(
-            now.getMonth() + 1
-        ).padStart(2, "0");
+        const year =
+            now.getFullYear();
 
-        const day = String(
-            now.getDate()
-        ).padStart(2, "0");
+
+        const month =
+            String(
+                now.getMonth() + 1
+            ).padStart(2, "0");
+
+
+        const day =
+            String(
+                now.getDate()
+            ).padStart(2, "0");
+
 
         return `${year}-${month}-${day}`;
+
     }
 
 
-    /* -----------------------------
+    /* =========================
        DATA
-    ----------------------------- */
+    ========================== */
 
     function displayDate() {
 
-        const date = new Date();
+        const date =
+            new Date();
 
-        const text = date.toLocaleDateString(
-            "ca-ES",
-            {
-                weekday: "long",
-                day: "numeric",
-                month: "long"
-            }
-        );
 
-        document.getElementById("dateText").textContent =
-            text.charAt(0).toUpperCase() + text.slice(1);
+        const text =
+            date.toLocaleDateString(
+                "ca-ES",
+                {
+                    weekday: "long",
+                    day: "numeric",
+                    month: "long"
+                }
+            );
+
+
+        document
+            .getElementById(
+                "dateText"
+            )
+            .textContent =
+            text.charAt(0).toUpperCase()
+            + text.slice(1);
+
     }
 
 
-    /* -----------------------------
-       CARREGAR EL DIA
-    ----------------------------- */
-
-    function renderDay() {
-
-        const day = allData[today];
-
-        /* PES */
-
-        const weightInput =
-            document.getElementById("weightInput");
-
-        if (day.weight !== null) {
-
-            weightInput.value = day.weight;
-
-        } else {
-
-            weightInput.value = "";
-        }
-
-
-        updateWeightChange();
-
-
-        /* ÀPATS */
-
-        document
-            .querySelectorAll(".meal")
-            .forEach(button => {
-
-                const key = button.dataset.key;
-
-                const check =
-                    button.querySelector(".check");
-
-                if (day.meals[key]) {
-
-                    check.classList.add("active");
-                    check.textContent = "✓";
-
-                } else {
-
-                    check.classList.remove("active");
-                    check.textContent = "";
-                }
-            });
-
-
-        /* ACTIVITAT */
-
-        document
-            .querySelectorAll(".activity-button")
-            .forEach(button => {
-
-                button.classList.remove("active");
-
-                if (
-                    button.dataset.activity ===
-                    day.activity
-                ) {
-
-                    button.classList.add("active");
-                }
-            });
-
-
-        /* SON */
-
-        const sleepInput =
-            document.getElementById("sleepInput");
-
-        sleepInput.value =
-            day.sleep !== null
-                ? day.sleep
-                : "";
-    }
-
-
-    /* -----------------------------
+    /* =========================
        PES
-    ----------------------------- */
+    ========================== */
 
     function updateWeightChange() {
 
         const current =
             allData[today].weight;
 
-        const changeElement =
-            document.getElementById("weightChange");
+
+        const element =
+            document.getElementById(
+                "weightChange"
+            );
+
+
+        element.style.color =
+            "#34c759";
+
 
         if (current === null) {
 
-            changeElement.textContent = "";
+            element.textContent = "";
 
             return;
         }
@@ -762,37 +1754,45 @@
 
         const dates =
             Object.keys(allData)
-            .sort()
-            .reverse();
+                .sort()
+                .reverse();
 
 
-        let previousWeight = null;
+        let previousWeight =
+            null;
 
 
-        for (const date of dates) {
+        for (
+            const date of dates
+        ) {
 
             if (date === today) {
+
                 continue;
             }
 
+
             const weight =
                 allData[date].weight;
+
 
             if (
                 weight !== null &&
                 typeof weight === "number"
             ) {
 
-                previousWeight = weight;
+                previousWeight =
+                    weight;
 
                 break;
             }
+
         }
 
 
         if (previousWeight === null) {
 
-            changeElement.textContent = "";
+            element.textContent = "";
 
             return;
         }
@@ -804,140 +1804,668 @@
 
         if (difference > 0) {
 
-            changeElement.textContent =
+            element.textContent =
                 `↑ ${difference.toFixed(1).replace(".", ",")} kg`;
 
-        } else if (difference < 0) {
+        }
 
-            changeElement.style.color = "#ff3b30";
+        else if (difference < 0) {
 
-            changeElement.textContent =
+            element.style.color =
+                "#ff3b30";
+
+            element.textContent =
                 `↓ ${Math.abs(difference).toFixed(1).replace(".", ",")} kg`;
 
-        } else {
-
-            changeElement.style.color = "#8e8e93";
-
-            changeElement.textContent =
-                "Sense canvi";
         }
+
+        else {
+
+            element.style.color =
+                "#8e8e93";
+
+            element.textContent =
+                "Sense canvi";
+
+        }
+
     }
 
 
     document
-        .getElementById("weightInput")
-        .addEventListener("input", function () {
+        .getElementById(
+            "weightInput"
+        )
+        .addEventListener(
+            "input",
+            function () {
 
-            const value =
-                parseFloat(
-                    this.value.replace(",", ".")
-                );
+                const value =
+                    parseFloat(
+                        this.value.replace(
+                            ",",
+                            "."
+                        )
+                    );
 
-            if (isNaN(value)) {
 
-                allData[today].weight = null;
+                if (isNaN(value)) {
 
-            } else {
+                    allData[today].weight =
+                        null;
 
-                allData[today].weight = value;
+                }
+
+                else {
+
+                    allData[today].weight =
+                        value;
+
+                }
+
+
+                updateWeightChange();
+
+                saveData();
+
             }
+        );
 
-            updateWeightChange();
 
-            saveData();
+    /* =========================
+       ÀPATS
+    ========================== */
+
+    document
+        .querySelectorAll(
+            ".meal"
+        )
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    const key =
+                        button.dataset.key;
+
+
+                    allData[today]
+                        .meals[key] =
+                        !allData[today]
+                            .meals[key];
+
+
+                    renderDay();
+
+                    saveData();
+
+                }
+            );
+
         });
 
 
-    /* -----------------------------
-       ÀPATS
-    ----------------------------- */
+    /* =========================
+       ACTIVITAT
+    ========================== */
 
     document
-        .querySelectorAll(".meal")
+        .querySelectorAll(
+            ".activity-button"
+        )
         .forEach(button => {
 
-            button.addEventListener("click", () => {
+            button.addEventListener(
+                "click",
+                () => {
+
+                    const activity =
+                        button.dataset.activity;
+
+
+                    if (
+                        allData[today]
+                            .activity ===
+                        activity
+                    ) {
+
+                        allData[today]
+                            .activity =
+                            null;
+
+                    }
+
+                    else {
+
+                        allData[today]
+                            .activity =
+                            activity;
+
+                    }
+
+
+                    renderDay();
+
+                    saveData();
+
+                }
+            );
+
+        });
+
+
+    /* =========================
+       DESCANS
+    ========================== */
+
+    document
+        .getElementById(
+            "sleepInput"
+        )
+        .addEventListener(
+            "input",
+            function () {
+
+                const value =
+                    parseFloat(
+                        this.value.replace(
+                            ",",
+                            "."
+                        )
+                    );
+
+
+                if (isNaN(value)) {
+
+                    allData[today].sleep =
+                        null;
+
+                }
+
+                else {
+
+                    allData[today].sleep =
+                        value;
+
+                }
+
+
+                saveData();
+
+            }
+        );
+
+
+    /* =========================
+       FORÇA
+    ========================== */
+
+    function renderStrength() {
+
+        const section =
+            document.getElementById(
+                "strengthSection"
+            );
+
+
+        if (
+            allData[today].activity !==
+            "strength"
+        ) {
+
+            section.style.display =
+                "none";
+
+            return;
+        }
+
+
+        section.style.display =
+            "block";
+
+
+        Object.keys(EXERCISES)
+            .forEach(
+                exercise => {
+
+                    renderExercise(
+                        exercise
+                    );
+
+                }
+            );
+
+    }
+
+
+    function renderExercise(
+        exercise
+    ) {
+
+        const container =
+            document.getElementById(
+                `series-${exercise}`
+            );
+
+
+        const volumeElement =
+            document.getElementById(
+                `volume-${exercise}`
+            );
+
+
+        const series =
+            allData[today]
+                .strength[exercise];
+
+
+        container.innerHTML = "";
+
+
+        let volume = 0;
+
+
+        series.forEach(
+            (set, index) => {
+
+                const reps =
+                    Number(set.reps)
+                    || 0;
+
+
+                const weight =
+                    Number(set.weight)
+                    || 0;
+
+
+                volume +=
+                    reps * weight;
+
+
+                const row =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                row.className =
+                    "series-row";
+
+
+                row.innerHTML = `
+
+                    <div class="series-number">
+                        ${index + 1}
+                    </div>
+
+                    <input
+                        class="series-input"
+                        type="number"
+                        min="0"
+                        step="1"
+                        placeholder="0"
+                        inputmode="numeric"
+                        value="${set.reps ?? ""}"
+                        data-exercise="${exercise}"
+                        data-index="${index}"
+                        data-field="reps"
+                    >
+
+                    <input
+                        class="series-input"
+                        type="number"
+                        min="0"
+                        step="0.5"
+                        placeholder="0"
+                        inputmode="decimal"
+                        value="${set.weight ?? ""}"
+                        data-exercise="${exercise}"
+                        data-index="${index}"
+                        data-field="weight"
+                    >
+
+                    <button
+                        class="delete-series"
+                        data-exercise="${exercise}"
+                        data-index="${index}"
+                        title="Eliminar sèrie"
+                    >
+                        ×
+                    </button>
+
+                `;
+
+
+                container.appendChild(
+                    row
+                );
+
+            }
+        );
+
+
+        if (volume > 0) {
+
+            volumeElement.textContent =
+                `${formatNumber(volume)} kg`;
+
+        }
+
+        else {
+
+            volumeElement.textContent =
+                "";
+
+        }
+
+
+        /*
+         * Inputs de les sèries
+         */
+
+        container
+            .querySelectorAll(
+                ".series-input"
+            )
+            .forEach(input => {
+
+                input.addEventListener(
+                    "input",
+                    () => {
+
+                        const exercise =
+                            input.dataset
+                                .exercise;
+
+
+                        const index =
+                            Number(
+                                input.dataset
+                                    .index
+                            );
+
+
+                        const field =
+                            input.dataset
+                                .field;
+
+
+                        allData[today]
+                            .strength
+                            [exercise]
+                            [index]
+                            [field] =
+                            input.value === ""
+                                ? null
+                                : Number(
+                                    input.value
+                                );
+
+
+                        saveData();
+
+
+                        renderExercise(
+                            exercise
+                        );
+
+                    }
+                );
+
+            });
+
+
+        /*
+         * Eliminar sèrie
+         */
+
+        container
+            .querySelectorAll(
+                ".delete-series"
+            )
+            .forEach(button => {
+
+                button.addEventListener(
+                    "click",
+                    () => {
+
+                        const exercise =
+                            button.dataset
+                                .exercise;
+
+
+                        const index =
+                            Number(
+                                button.dataset
+                                    .index
+                            );
+
+
+                        allData[today]
+                            .strength
+                            [exercise]
+                            .splice(
+                                index,
+                                1
+                            );
+
+
+                        renderExercise(
+                            exercise
+                        );
+
+
+                        saveData();
+
+                    }
+                );
+
+            });
+
+    }
+
+
+    function addSeries(
+        exercise
+    ) {
+
+        allData[today]
+            .strength[exercise]
+            .push({
+
+                reps: null,
+
+                weight: null
+
+            });
+
+
+        renderExercise(
+            exercise
+        );
+
+
+        saveData();
+
+    }
+
+
+    document
+        .querySelectorAll(
+            ".add-series"
+        )
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    addSeries(
+                        button.dataset
+                            .exercise
+                    );
+
+                }
+            );
+
+        });
+
+
+    /* =========================
+       RENDER GENERAL
+    ========================== */
+
+    function renderDay() {
+
+        const day =
+            allData[today];
+
+
+        /*
+         * PES
+         */
+
+        const weightInput =
+            document.getElementById(
+                "weightInput"
+            );
+
+
+        weightInput.value =
+            day.weight !== null
+                ? day.weight
+                : "";
+
+
+        updateWeightChange();
+
+
+        /*
+         * ÀPATS
+         */
+
+        document
+            .querySelectorAll(
+                ".meal"
+            )
+            .forEach(button => {
 
                 const key =
                     button.dataset.key;
 
-                allData[today].meals[key] =
-                    !allData[today].meals[key];
 
-                renderDay();
+                const check =
+                    button.querySelector(
+                        ".check"
+                    );
 
-                saveData();
-            });
-        });
-
-
-    /* -----------------------------
-       ACTIVITAT
-    ----------------------------- */
-
-    document
-        .querySelectorAll(".activity-button")
-        .forEach(button => {
-
-            button.addEventListener("click", () => {
-
-                const activity =
-                    button.dataset.activity;
 
                 if (
-                    allData[today].activity ===
-                    activity
+                    day.meals[key]
                 ) {
 
-                    allData[today].activity = null;
+                    check.classList
+                        .add("active");
 
-                } else {
+                    check.textContent =
+                        "✓";
 
-                    allData[today].activity = activity;
                 }
 
-                renderDay();
+                else {
 
-                saveData();
+                    check.classList
+                        .remove("active");
+
+                    check.textContent =
+                        "";
+
+                }
+
             });
-        });
 
 
-    /* -----------------------------
-       DESCANS
-    ----------------------------- */
+        /*
+         * ACTIVITAT
+         */
 
-    document
-        .getElementById("sleepInput")
-        .addEventListener("input", function () {
+        document
+            .querySelectorAll(
+                ".activity-button"
+            )
+            .forEach(button => {
 
-            const value =
-                parseFloat(
-                    this.value.replace(",", ".")
-                );
-
-            if (isNaN(value)) {
-
-                allData[today].sleep = null;
-
-            } else {
-
-                allData[today].sleep = value;
-            }
-
-            saveData();
-        });
+                button.classList
+                    .remove("active");
 
 
-    /* -----------------------------
-       INICI
-    ----------------------------- */
+                if (
+                    button.dataset
+                        .activity ===
+                    day.activity
+                ) {
+
+                    button.classList
+                        .add("active");
+
+                }
+
+            });
+
+
+        /*
+         * DESCANS
+         */
+
+        const sleepInput =
+            document.getElementById(
+                "sleepInput"
+            );
+
+
+        sleepInput.value =
+            day.sleep !== null
+                ? day.sleep
+                : "";
+
+
+        /*
+         * FORÇA
+         */
+
+        renderStrength();
+
+    }
+
+
+    function formatNumber(
+        number
+    ) {
+
+        return number
+            .toLocaleString(
+                "ca-ES",
+                {
+                    maximumFractionDigits: 1
+                }
+            );
+
+    }
+
+
+    /* =========================
+       INICIAR APP
+    ========================== */
 
     displayDate();
 
     renderDay();
 
+
 </script>
 
+
 </body>
+
 </html>

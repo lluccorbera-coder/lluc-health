@@ -49,8 +49,6 @@
       display: block;
     }
 
-    /* ================= HEADER ================= */
-
     .header {
       padding: 12px 4px 20px;
     }
@@ -75,8 +73,6 @@
       font-size: 15px;
       line-height: 1.35;
     }
-
-    /* ================= CARDS ================= */
 
     .card {
       background: #ffffff;
@@ -109,7 +105,7 @@
       font-size: 14px;
     }
 
-    /* ================= PES ================= */
+    /* PES */
 
     .weight-row {
       display: flex;
@@ -163,7 +159,7 @@
       color: #8e8e93;
     }
 
-    /* ================= MENJARS ================= */
+    /* MENJARS */
 
     .meal-list {
       display: flex;
@@ -199,7 +195,6 @@
       color: transparent;
       font-size: 15px;
       font-weight: 700;
-      transition: 0.15s ease;
     }
 
     .meal-row.checked .check {
@@ -207,7 +202,7 @@
       color: white;
     }
 
-    /* ================= ACTIVITAT ================= */
+    /* ACTIVITAT */
 
     .activity-grid {
       display: grid;
@@ -224,7 +219,6 @@
       font-size: 14px;
       font-weight: 600;
       color: #3a3a3c;
-      transition: 0.15s ease;
     }
 
     .activity-button.selected {
@@ -232,7 +226,7 @@
       color: white;
     }
 
-    /* ================= SON ================= */
+    /* SON */
 
     .sleep-row {
       display: flex;
@@ -261,7 +255,7 @@
       min-height: 18px;
     }
 
-    /* ================= FORÇA ================= */
+    /* FORÇA */
 
     .exercise-card {
       background: #ffffff;
@@ -350,7 +344,7 @@
       cursor: pointer;
     }
 
-    /* ================= PROGRÉS ================= */
+    /* PROGRÉS */
 
     .stat-grid {
       display: grid;
@@ -455,7 +449,7 @@
       background: #ffffff;
       border-radius: 20px;
       padding: 17px;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
 
     .progress-exercise-header {
@@ -495,7 +489,66 @@
       font-weight: 650;
     }
 
-    /* ================= HISTORIAL ================= */
+    /* GRÀFIC EXERCICI */
+
+    .exercise-chart-wrapper {
+      margin-top: 17px;
+      padding-top: 15px;
+      border-top: 1px solid #f2f2f7;
+    }
+
+    .exercise-chart-title {
+      font-size: 13px;
+      color: #8e8e93;
+      margin-bottom: 8px;
+    }
+
+    .exercise-chart {
+      height: 145px;
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 8px 3px 4px;
+    }
+
+    .exercise-bar-container {
+      min-width: 35px;
+      height: 125px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+    }
+
+    .exercise-bar-value {
+      font-size: 9px;
+      color: #8e8e93;
+      margin-bottom: 4px;
+      white-space: nowrap;
+    }
+
+    .exercise-bar {
+      width: 24px;
+      min-height: 4px;
+      background: #1c1c1e;
+      border-radius: 6px 6px 2px 2px;
+    }
+
+    .exercise-bar-date {
+      font-size: 9px;
+      color: #8e8e93;
+      margin-top: 5px;
+      white-space: nowrap;
+    }
+
+    .no-data {
+      color: #8e8e93;
+      font-size: 13px;
+      padding: 8px 0;
+    }
+
+    /* HISTORIAL */
 
     .history-item {
       background: white;
@@ -503,11 +556,6 @@
       padding: 16px;
       margin-bottom: 10px;
       cursor: pointer;
-      transition: transform 0.12s ease;
-    }
-
-    .history-item:active {
-      transform: scale(0.985);
     }
 
     .history-top {
@@ -538,7 +586,7 @@
       margin-left: 8px;
     }
 
-    /* ================= DETALL HISTORIAL ================= */
+    /* DETALL HISTORIAL */
 
     .back-button {
       border: none;
@@ -661,7 +709,7 @@
       padding: 10px 0;
     }
 
-    /* ================= MÉS ================= */
+    /* MÉS */
 
     .settings-row {
       display: flex;
@@ -695,7 +743,7 @@
       font-weight: 600;
     }
 
-    /* ================= TAB BAR ================= */
+    /* TAB BAR */
 
     .tabbar {
       position: fixed;
@@ -768,7 +816,6 @@
       .detail-stat-grid {
         gap: 9px;
       }
-
     }
   </style>
 </head>
@@ -778,10 +825,9 @@
 
 <div class="app">
 
-
-  <!-- =====================================================
+  <!-- =========================
        AVUI
-  ====================================================== -->
+  ========================== -->
 
   <main id="todayScreen" class="screen active">
 
@@ -789,10 +835,7 @@
 
       <div class="header">
 
-        <div
-          class="eyebrow"
-          id="todayDate">
-        </div>
+        <div class="eyebrow" id="todayDate"></div>
 
         <h1>Avui</h1>
 
@@ -813,9 +856,7 @@
 
           <div class="weight-info">
 
-            <div
-              class="weight-value"
-              id="weightDisplay">
+            <div class="weight-value" id="weightDisplay">
               — kg
             </div>
 
@@ -823,10 +864,7 @@
               Pes d'avui
             </div>
 
-            <div
-              id="weightChange"
-              class="weight-change neutral">
-            </div>
+            <div id="weightChange" class="weight-change neutral"></div>
 
           </div>
 
@@ -845,28 +883,20 @@
 
 
       <div class="section-header">
-
         <h3>Alimentació</h3>
-
         <span>Avui</span>
-
       </div>
 
 
       <div class="card">
 
-        <div
-          class="meal-list"
-          id="mealList">
-        </div>
+        <div class="meal-list" id="mealList"></div>
 
       </div>
 
 
       <div class="section-header">
-
         <h3>Activitat</h3>
-
       </div>
 
 
@@ -874,21 +904,15 @@
 
         <div class="activity-grid">
 
-          <button
-            class="activity-button"
-            data-activity="hiit">
+          <button class="activity-button" data-activity="hiit">
             HIIT
           </button>
 
-          <button
-            class="activity-button"
-            data-activity="strength">
+          <button class="activity-button" data-activity="strength">
             Força
           </button>
 
-          <button
-            class="activity-button"
-            data-activity="rest">
+          <button class="activity-button" data-activity="rest">
             Descans
           </button>
 
@@ -897,14 +921,11 @@
       </div>
 
 
-      <div
-        id="strengthSection"
-        style="display:none;">
+      <div id="strengthSection" style="display:none;">
 
         <div class="section-header">
 
           <h3>Força</h3>
-
           <span>Sèries</span>
 
         </div>
@@ -915,9 +936,7 @@
 
 
       <div class="section-header">
-
         <h3>Descans</h3>
-
       </div>
 
 
@@ -927,9 +946,7 @@
 
           <div>
 
-            <div
-              class="card-title"
-              style="margin-bottom:3px;">
+            <div class="card-title" style="margin-bottom:3px;">
               Hores de son
             </div>
 
@@ -955,23 +972,18 @@
       </div>
 
 
-      <div
-        class="saved"
-        id="savedMessage">
-      </div>
+      <div class="saved" id="savedMessage"></div>
 
     </div>
 
   </main>
 
 
-  <!-- =====================================================
+  <!-- =========================
        PROGRÉS
-  ====================================================== -->
+  ========================== -->
 
-  <main
-    id="progressScreen"
-    class="screen">
+  <main id="progressScreen" class="screen">
 
     <div class="container">
 
@@ -998,16 +1010,11 @@
             Pes actual
           </div>
 
-          <div
-            class="stat-value"
-            id="progressCurrentWeight">
+          <div class="stat-value" id="progressCurrentWeight">
             —
           </div>
 
-          <div
-            class="stat-small"
-            id="progressWeightDate">
-          </div>
+          <div class="stat-small" id="progressWeightDate"></div>
 
         </div>
 
@@ -1018,9 +1025,7 @@
             Canvi total
           </div>
 
-          <div
-            class="stat-value"
-            id="progressWeightChange">
+          <div class="stat-value" id="progressWeightChange">
             —
           </div>
 
@@ -1037,9 +1042,7 @@
             Dies registrats
           </div>
 
-          <div
-            class="stat-value"
-            id="progressDays">
+          <div class="stat-value" id="progressDays">
             0
           </div>
 
@@ -1052,9 +1055,7 @@
             Entrenaments
           </div>
 
-          <div
-            class="stat-value"
-            id="progressWorkouts">
+          <div class="stat-value" id="progressWorkouts">
             0
           </div>
 
@@ -1064,9 +1065,7 @@
 
 
       <div class="section-header">
-
         <h3>Pes</h3>
-
       </div>
 
 
@@ -1086,27 +1085,19 @@
 
           </div>
 
-          <div
-            class="chart-current"
-            id="chartCurrentWeight">
+          <div class="chart-current" id="chartCurrentWeight">
             —
           </div>
 
         </div>
 
-
-        <div
-          id="weightChart"
-          class="chart">
-        </div>
+        <div id="weightChart" class="chart"></div>
 
       </div>
 
 
       <div class="section-header">
-
         <h3>Entrenament</h3>
-
       </div>
 
 
@@ -1118,9 +1109,7 @@
             HIIT
           </div>
 
-          <div
-            class="stat-value"
-            id="progressHiit">
+          <div class="stat-value" id="progressHiit">
             0
           </div>
 
@@ -1137,9 +1126,7 @@
             Força
           </div>
 
-          <div
-            class="stat-value"
-            id="progressStrength">
+          <div class="stat-value" id="progressStrength">
             0
           </div>
 
@@ -1156,7 +1143,7 @@
 
         <h3>Força</h3>
 
-        <span>Millors registres</span>
+        <span>Evolució</span>
 
       </div>
 
@@ -1168,13 +1155,11 @@
   </main>
 
 
-  <!-- =====================================================
+  <!-- =========================
        HISTORIAL
-  ====================================================== -->
+  ========================== -->
 
-  <main
-    id="historyScreen"
-    class="screen">
+  <main id="historyScreen" class="screen">
 
     <div class="container">
 
@@ -1196,11 +1181,7 @@
       <div id="historyList"></div>
 
 
-      <!-- DETALL D'UN DIA -->
-
-      <div
-        id="historyDetail"
-        style="display:none;">
+      <div id="historyDetail" style="display:none;">
 
         <button
           id="backToHistory"
@@ -1210,23 +1191,14 @@
         </button>
 
 
-        <div
-          class="detail-date"
-          id="detailDate">
-        </div>
+        <div class="detail-date" id="detailDate"></div>
 
-
-        <h1
-          class="detail-main-title"
-          id="detailTitle">
+        <h1 class="detail-main-title" id="detailTitle">
           —
         </h1>
 
 
-        <div
-          id="detailStats"
-          class="detail-stat-grid">
-        </div>
+        <div id="detailStats" class="detail-stat-grid"></div>
 
 
         <div class="section-header">
@@ -1239,9 +1211,7 @@
         </div>
 
 
-        <div
-          id="detailStrengthSection"
-          style="display:none;">
+        <div id="detailStrengthSection" style="display:none;">
 
           <div class="section-header">
             <h3>Força</h3>
@@ -1258,13 +1228,11 @@
   </main>
 
 
-  <!-- =====================================================
+  <!-- =========================
        MÉS
-  ====================================================== -->
+  ========================== -->
 
-  <main
-    id="moreScreen"
-    class="screen">
+  <main id="moreScreen" class="screen">
 
     <div class="container">
 
@@ -1328,7 +1296,7 @@
             </div>
 
             <div class="settings-description">
-              Pas 11
+              Pas 12
             </div>
 
           </div>
@@ -1359,9 +1327,7 @@
 
           </div>
 
-          <button
-            class="secondary-button"
-            type="button">
+          <button class="secondary-button" type="button">
             Aviat
           </button>
 
@@ -1382,9 +1348,7 @@
 
           </div>
 
-          <button
-            class="secondary-button"
-            type="button">
+          <button class="secondary-button" type="button">
             Aviat
           </button>
 
@@ -1399,62 +1363,42 @@
 </div>
 
 
-<!-- =======================================================
-     BARRA INFERIOR
-======================================================== -->
+<!-- =========================
+     TAB BAR
+========================== -->
 
 <nav class="tabbar">
 
   <div class="tabbar-inner">
 
-    <button
-      class="tab active"
-      data-tab="today">
+    <button class="tab active" data-tab="today">
 
       <span>⌂</span>
-
-      <small>
-        Avui
-      </small>
+      <small>Avui</small>
 
     </button>
 
 
-    <button
-      class="tab"
-      data-tab="progress">
+    <button class="tab" data-tab="progress">
 
       <span>↗</span>
-
-      <small>
-        Progrés
-      </small>
+      <small>Progrés</small>
 
     </button>
 
 
-    <button
-      class="tab"
-      data-tab="history">
+    <button class="tab" data-tab="history">
 
       <span>◷</span>
-
-      <small>
-        Historial
-      </small>
+      <small>Historial</small>
 
     </button>
 
 
-    <button
-      class="tab"
-      data-tab="more">
+    <button class="tab" data-tab="more">
 
       <span>•••</span>
-
-      <small>
-        Més
-      </small>
+      <small>Més</small>
 
     </button>
 
@@ -1469,8 +1413,7 @@
      CONFIGURACIÓ
   ========================================================= */
 
-  const STORAGE_KEY =
-    "lluc-health-data-v1";
+  const STORAGE_KEY = "lluc-health-data-v1";
 
 
   const mealDefinitions = [
@@ -1568,23 +1511,18 @@
 
 
       if (!saved) {
-
         return {};
-
       }
 
 
       return JSON.parse(saved) || {};
 
-    }
-
-    catch (error) {
+    } catch (error) {
 
       console.error(
         "Error carregant dades:",
         error
       );
-
 
       return {};
 
@@ -1602,18 +1540,14 @@
         JSON.stringify(data)
       );
 
-
       return true;
 
-    }
-
-    catch (error) {
+    } catch (error) {
 
       console.error(
         "Error guardant dades:",
         error
       );
-
 
       return false;
 
@@ -1624,13 +1558,10 @@
 
   function getTodayKey() {
 
-    const now =
-      new Date();
-
+    const now = new Date();
 
     const year =
       now.getFullYear();
-
 
     const month =
       String(
@@ -1640,7 +1571,6 @@
         "0"
       );
 
-
     const day =
       String(
         now.getDate()
@@ -1648,7 +1578,6 @@
         2,
         "0"
       );
-
 
     return (
       year +
@@ -1721,9 +1650,7 @@
 
 
     if (!day.meals) {
-
       day.meals = {};
-
     }
 
 
@@ -1747,9 +1674,7 @@
 
 
     if (!day.strength) {
-
       day.strength = {};
-
     }
 
 
@@ -1789,7 +1714,6 @@
 
       data[dateKey] =
         createEmptyDay();
-
 
       saveData(data);
 
@@ -1889,9 +1813,7 @@
       );
 
 
-    saveData(
-      data
-    );
+    saveData(data);
 
 
     showSavedMessage();
@@ -1982,9 +1904,7 @@
     if (
       weights.length === 0
     ) {
-
       return null;
-
     }
 
 
@@ -2056,7 +1976,6 @@
             ) +
             " kg respecte l'últim registre";
 
-
           change.className =
             "weight-change positive";
 
@@ -2072,7 +1991,6 @@
             ) +
             " kg respecte l'últim registre";
 
-
           change.className =
             "weight-change negative";
 
@@ -2082,7 +2000,6 @@
 
           change.textContent =
             "Mateix pes que l'últim registre";
-
 
           change.className =
             "weight-change neutral";
@@ -2096,7 +2013,6 @@
         change.textContent =
           "Primer registre";
 
-
         change.className =
           "weight-change neutral";
 
@@ -2109,14 +2025,11 @@
       display.textContent =
         "— kg";
 
-
       input.value =
         "";
 
-
       change.textContent =
         "";
-
 
       change.className =
         "weight-change neutral";
@@ -2147,7 +2060,6 @@
 
 
       saveToday();
-
 
       renderWeight();
 
@@ -2218,7 +2130,6 @@
 
             saveToday();
 
-
             renderMeals();
 
           }
@@ -2258,13 +2169,9 @@
       );
 
 
-    const section =
-      document.getElementById(
-        "strengthSection"
-      );
-
-
-    section.style.display =
+    document.getElementById(
+      "strengthSection"
+    ).style.display =
       today.activity ===
       "strength"
         ? "block"
@@ -2290,9 +2197,7 @@
 
             saveToday();
 
-
             renderActivity();
-
 
             renderExercises();
 
@@ -2456,11 +2361,8 @@
       <div class="sets-header">
 
         <div>#</div>
-
         <div>Reps</div>
-
         <div>Kg</div>
-
         <div></div>
 
       </div>
@@ -2612,7 +2514,6 @@
 
             saveToday();
 
-
             renderExercises();
 
           }
@@ -2643,20 +2544,17 @@
 
         saveToday();
 
-
         renderExercises();
 
       }
     );
 
 
-    document
-      .getElementById(
-        "exerciseList"
-      )
-      .appendChild(
-        card
-      );
+    document.getElementById(
+      "exerciseList"
+    ).appendChild(
+      card
+    );
 
   }
 
@@ -2866,15 +2764,6 @@
 
     }
 
-    else {
-
-      document.getElementById(
-        "progressWeightDate"
-      ).textContent =
-        "";
-
-    }
-
 
     if (
       currentWeight !== null &&
@@ -2954,9 +2843,7 @@
           day.activity ===
           "hiit"
         ) {
-
           hiit++;
-
         }
 
 
@@ -2964,9 +2851,7 @@
           day.activity ===
           "strength"
         ) {
-
           strength++;
-
         }
 
       }
@@ -3004,6 +2889,10 @@
   }
 
 
+  /* =========================================================
+     GRÀFIC PES
+  ========================================================= */
+
   function renderWeightChart(
     weights
   ) {
@@ -3023,11 +2912,9 @@
     ) {
 
       chart.innerHTML = `
-
-        <div class="empty-state">
+        <div class="no-data">
           Encara no tens registres de pes.
         </div>
-
       `;
 
       return;
@@ -3144,11 +3031,9 @@
           value
         );
 
-
         container.appendChild(
           bar
         );
-
 
         container.appendChild(
           label
@@ -3164,6 +3049,10 @@
 
   }
 
+
+  /* =========================================================
+     PROGRÉS DE FORÇA
+  ========================================================= */
 
   function renderStrengthProgress(
     data
@@ -3190,86 +3079,146 @@
 
         let totalSets = 0;
 
+        let sessions = 0;
 
-        Object.values(
+        const sessionData = [];
+
+
+        Object.entries(
           data
-        ).forEach(
-          day => {
-
-            if (
-              !day ||
-              !day.strength ||
-              !Array.isArray(
-                day.strength[
-                  exercise.key
-                ]
+        )
+          .sort(
+            ([dateA], [dateB]) =>
+              dateA.localeCompare(
+                dateB
               )
-            ) {
+          )
+          .forEach(
+            (
+              [date, day]
+            ) => {
 
-              return;
+              if (
+                !day ||
+                !day.strength ||
+                !Array.isArray(
+                  day.strength[
+                    exercise.key
+                  ]
+                )
+              ) {
 
-            }
-
-
-            day.strength[
-              exercise.key
-            ].forEach(
-              set => {
-
-                const kg =
-                  Number(
-                    set.kg
-                  ) || 0;
-
-
-                const reps =
-                  Number(
-                    set.reps
-                  ) || 0;
-
-
-                if (
-                  kg > bestKg
-                ) {
-
-                  bestKg =
-                    kg;
-
-                  bestReps =
-                    reps;
-
-                }
-
-                else if (
-                  kg === bestKg &&
-                  reps > bestReps
-                ) {
-
-                  bestReps =
-                    reps;
-
-                }
-
-
-                totalVolume +=
-                  kg *
-                  reps;
-
-
-                if (
-                  kg ||
-                  reps
-                ) {
-
-                  totalSets++;
-
-                }
+                return;
 
               }
-            );
 
-          }
-        );
+
+              const sets =
+                day.strength[
+                  exercise.key
+                ];
+
+
+              if (
+                sets.length === 0
+              ) {
+
+                return;
+
+              }
+
+
+              let sessionBestKg =
+                0;
+
+
+              sets.forEach(
+                set => {
+
+                  const kg =
+                    Number(
+                      set.kg
+                    ) || 0;
+
+
+                  const reps =
+                    Number(
+                      set.reps
+                    ) || 0;
+
+
+                  if (
+                    kg > bestKg
+                  ) {
+
+                    bestKg =
+                      kg;
+
+                    bestReps =
+                      reps;
+
+                  }
+
+                  else if (
+                    kg === bestKg &&
+                    reps > bestReps
+                  ) {
+
+                    bestReps =
+                      reps;
+
+                  }
+
+
+                  if (
+                    kg > sessionBestKg
+                  ) {
+
+                    sessionBestKg =
+                      kg;
+
+                  }
+
+
+                  totalVolume +=
+                    kg *
+                    reps;
+
+
+                  if (
+                    kg ||
+                    reps
+                  ) {
+
+                    totalSets++;
+
+                  }
+
+                }
+              );
+
+
+              if (
+                sessionBestKg > 0
+              ) {
+
+                sessions++;
+
+
+                sessionData.push({
+
+                  date:
+                    date,
+
+                  kg:
+                    sessionBestKg
+
+                });
+
+              }
+
+            }
+          );
 
 
         const card =
@@ -3291,6 +3240,7 @@
             </div>
 
             <div class="progress-exercise-best">
+
               ${
                 bestKg
                   ? bestKg.toFixed(
@@ -3299,6 +3249,7 @@
                     " kg"
                   : "—"
               }
+
             </div>
 
           </div>
@@ -3313,6 +3264,7 @@
               </div>
 
               <div class="progress-metric-value">
+
                 ${
                   bestKg
                     ? bestReps +
@@ -3322,6 +3274,7 @@
                       )
                     : "—"
                 }
+
               </div>
 
             </div>
@@ -3334,6 +3287,7 @@
               </div>
 
               <div class="progress-metric-value">
+
                 ${
                   totalVolume
                     ? Math.round(
@@ -3342,6 +3296,7 @@
                       " kg"
                     : "—"
                 }
+
               </div>
 
             </div>
@@ -3350,18 +3305,180 @@
             <div>
 
               <div class="progress-metric-label">
-                Sèries
+                Sessions
               </div>
 
               <div class="progress-metric-value">
-                ${totalSets}
+                ${sessions}
               </div>
 
             </div>
 
           </div>
 
+
+          <div class="exercise-chart-wrapper">
+
+            <div class="exercise-chart-title">
+              Evolució del kg màxim per sessió
+            </div>
+
+            <div class="exercise-chart"></div>
+
+          </div>
+
         `;
+
+
+        const chart =
+          card.querySelector(
+            ".exercise-chart"
+          );
+
+
+        if (
+          sessionData.length ===
+          0
+        ) {
+
+          chart.innerHTML = `
+
+            <div class="no-data">
+              Encara no hi ha dades d'aquest exercici.
+            </div>
+
+          `;
+
+        }
+
+        else {
+
+          const recent =
+            sessionData.slice(
+              -12
+            );
+
+
+          const chartValues =
+            recent.map(
+              item =>
+                item.kg
+            );
+
+
+          const min =
+            Math.min(
+              ...chartValues
+            );
+
+
+          const max =
+            Math.max(
+              ...chartValues
+            );
+
+
+          const range =
+            max -
+            min ||
+            1;
+
+
+          recent.forEach(
+            item => {
+
+              const wrapper =
+                document.createElement(
+                  "div"
+                );
+
+
+              wrapper.className =
+                "exercise-bar-container";
+
+
+              const value =
+                document.createElement(
+                  "div"
+                );
+
+
+              value.className =
+                "exercise-bar-value";
+
+
+              value.textContent =
+                item.kg.toFixed(
+                  1
+                );
+
+
+              const bar =
+                document.createElement(
+                  "div"
+                );
+
+
+              bar.className =
+                "exercise-bar";
+
+
+              const height =
+                20 +
+                (
+                  (
+                    item.kg -
+                    min
+                  ) /
+                  range
+                ) *
+                80;
+
+
+              bar.style.height =
+                height +
+                "px";
+
+
+              const date =
+                document.createElement(
+                  "div"
+                );
+
+
+              date.className =
+                "exercise-bar-date";
+
+
+              date.textContent =
+                formatShortDate(
+                  item.date
+                );
+
+
+              wrapper.appendChild(
+                value
+              );
+
+
+              wrapper.appendChild(
+                bar
+              );
+
+
+              wrapper.appendChild(
+                date
+              );
+
+
+              chart.appendChild(
+                wrapper
+              );
+
+            }
+          );
+
+        }
 
 
         container.appendChild(
@@ -3375,7 +3492,7 @@
 
 
   /* =========================================================
-     HISTORIAL — LLISTA
+     HISTORIAL
   ========================================================= */
 
   function showHistoryList() {
@@ -3454,10 +3571,8 @@
           day.activity ===
           "hiit"
         ) {
-
           activityText =
             "HIIT";
-
         }
 
 
@@ -3465,10 +3580,8 @@
           day.activity ===
           "strength"
         ) {
-
           activityText =
             "Força";
-
         }
 
 
@@ -3476,21 +3589,17 @@
           day.activity ===
           "rest"
         ) {
-
           activityText =
             "Descans";
-
         }
 
 
         const mealCount =
-          day.meals
-            ? Object.values(
-                day.meals
-              ).filter(
-                Boolean
-              ).length
-            : 0;
+          Object.values(
+            day.meals
+          ).filter(
+            Boolean
+          ).length;
 
 
         const item =
@@ -3579,7 +3688,7 @@
 
 
   /* =========================================================
-     HISTORIAL — DETALL
+     DETALL HISTORIAL
   ========================================================= */
 
   function showHistoryDetail(
@@ -3632,10 +3741,8 @@
       day.activity ===
       "hiit"
     ) {
-
       activityText =
         "HIIT";
-
     }
 
 
@@ -3643,10 +3750,8 @@
       day.activity ===
       "strength"
     ) {
-
       activityText =
         "Força";
-
     }
 
 
@@ -3654,10 +3759,8 @@
       day.activity ===
       "rest"
     ) {
-
       activityText =
         "Descans";
-
     }
 
 
@@ -3669,13 +3772,9 @@
       ).length;
 
 
-    const stats =
-      document.getElementById(
-        "detailStats"
-      );
-
-
-    stats.innerHTML = `
+    document.getElementById(
+      "detailStats"
+    ).innerHTML = `
 
       <div class="detail-stat">
 
@@ -3684,6 +3783,7 @@
         </div>
 
         <div class="detail-stat-value">
+
           ${
             typeof day.weight ===
             "number"
@@ -3693,6 +3793,7 @@
                 " kg"
               : "—"
           }
+
         </div>
 
       </div>
@@ -3731,6 +3832,7 @@
         </div>
 
         <div class="detail-stat-value">
+
           ${
             typeof day.sleep ===
             "number"
@@ -3738,14 +3840,13 @@
                 " h"
               : "—"
           }
+
         </div>
 
       </div>
 
     `;
 
-
-    /* MENJARS */
 
     const meals =
       document.getElementById(
@@ -3810,8 +3911,6 @@
     );
 
 
-    /* FORÇA */
-
     const strengthSection =
       document.getElementById(
         "detailStrengthSection"
@@ -3864,9 +3963,7 @@
           if (
             sets.length === 0
           ) {
-
             return;
-
           }
 
 

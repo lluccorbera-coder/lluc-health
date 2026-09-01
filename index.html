@@ -2,19 +2,414 @@
 <html lang="ca">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+    <meta name="theme-color" content="#f2f2f7">
+
     <title>Lluc Health</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #f2f2f7;
+            color: #1c1c1e;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+                         "SF Pro Text", Helvetica, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .app {
+            max-width: 500px;
+            margin: 0 auto;
+            min-height: 100vh;
+            padding-bottom: 100px;
+        }
+
+        .header {
+            padding: 55px 22px 20px;
+        }
+
+        .date {
+            font-size: 15px;
+            color: #8e8e93;
+            margin-bottom: 5px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 34px;
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+
+        .content {
+            padding: 0 16px;
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 20px;
+            margin-bottom: 14px;
+            overflow: hidden;
+        }
+
+        .weight-card {
+            padding: 20px;
+        }
+
+        .section-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #8e8e93;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            margin: 25px 6px 8px;
+        }
+
+        .weight-label {
+            color: #8e8e93;
+            font-size: 15px;
+        }
+
+        .weight-row {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            margin-top: 5px;
+        }
+
+        .weight {
+            font-size: 38px;
+            font-weight: 700;
+            letter-spacing: -1.5px;
+        }
+
+        .weight-unit {
+            font-size: 17px;
+            color: #8e8e93;
+            margin-left: 4px;
+        }
+
+        .change {
+            font-size: 14px;
+            color: #34c759;
+            font-weight: 500;
+        }
+
+        .row {
+            display: flex;
+            align-items: center;
+            padding: 16px 18px;
+            min-height: 64px;
+            border-bottom: 1px solid #e5e5ea;
+        }
+
+        .row:last-child {
+            border-bottom: none;
+        }
+
+        .icon {
+            width: 34px;
+            height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 13px;
+            font-size: 21px;
+        }
+
+        .row-text {
+            flex: 1;
+        }
+
+        .row-title {
+            font-size: 17px;
+            font-weight: 500;
+        }
+
+        .row-subtitle {
+            font-size: 13px;
+            color: #8e8e93;
+            margin-top: 2px;
+        }
+
+        .check {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: #34c759;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .arrow {
+            color: #c7c7cc;
+            font-size: 24px;
+            margin-left: 10px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1px;
+            background: #e5e5ea;
+        }
+
+        .stat {
+            background: white;
+            padding: 18px;
+        }
+
+        .stat-label {
+            color: #8e8e93;
+            font-size: 13px;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 650;
+            margin-top: 5px;
+        }
+
+        .tabbar {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 500px;
+            height: 82px;
+            background: rgba(249, 249, 249, 0.94);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(0,0,0,0.08);
+            display: flex;
+            justify-content: space-around;
+            padding-top: 9px;
+            padding-bottom: env(safe-area-inset-bottom);
+            z-index: 10;
+        }
+
+        .tab {
+            text-align: center;
+            color: #8e8e93;
+            font-size: 11px;
+            min-width: 70px;
+        }
+
+        .tab.active {
+            color: #007aff;
+        }
+
+        .tab-icon {
+            font-size: 22px;
+            height: 30px;
+        }
+
+        @media (min-width: 600px) {
+            body {
+                padding: 30px 0;
+            }
+
+            .app {
+                border-radius: 30px;
+                overflow: hidden;
+                min-height: calc(100vh - 60px);
+            }
+
+            .tabbar {
+                bottom: 30px;
+                border-radius: 0 0 30px 30px;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-    <h1>Lluc Health</h1>
+<div class="app">
 
-    <p>La meva salut, alimentació i entrenament.</p>
+    <header class="header">
+        <div class="date">Dimarts, 1 de setembre</div>
+        <h1>Avui</h1>
+    </header>
 
-    <h2>Avui</h2>
+    <main class="content">
 
-    <p>La nostra aplicació està començant 🚀</p>
+        <div class="card weight-card">
+            <div class="weight-label">Pes corporal</div>
+
+            <div class="weight-row">
+                <div>
+                    <span class="weight">75,0</span>
+                    <span class="weight-unit">kg</span>
+                </div>
+
+                <div class="change">
+                    ↑ 0,2 kg
+                </div>
+            </div>
+        </div>
+
+
+        <div class="section-title">Alimentació i suplements</div>
+
+        <div class="card">
+
+            <div class="row">
+                <div class="icon">☕</div>
+
+                <div class="row-text">
+                    <div class="row-title">Cafè</div>
+                </div>
+
+                <div class="check">✓</div>
+            </div>
+
+            <div class="row">
+                <div class="icon">🍳</div>
+
+                <div class="row-text">
+                    <div class="row-title">Esmorzar</div>
+                </div>
+
+                <div class="check">✓</div>
+            </div>
+
+            <div class="row">
+                <div class="icon">🥣</div>
+
+                <div class="row-text">
+                    <div class="row-title">Crema d'arròs</div>
+                    <div class="row-subtitle">Galetes i llet</div>
+                </div>
+
+                <div class="check">✓</div>
+            </div>
+
+            <div class="row">
+                <div class="icon">🍽️</div>
+
+                <div class="row-text">
+                    <div class="row-title">Dinar</div>
+                </div>
+
+                <div class="check">✓</div>
+            </div>
+
+            <div class="row">
+                <div class="icon">🥪</div>
+
+                <div class="row-text">
+                    <div class="row-title">Berenar</div>
+                </div>
+
+                <div class="arrow">›</div>
+            </div>
+
+            <div class="row">
+                <div class="icon">💊</div>
+
+                <div class="row-text">
+                    <div class="row-title">Creatina</div>
+                </div>
+
+                <div class="check">✓</div>
+            </div>
+
+            <div class="row">
+                <div class="icon">🥤</div>
+
+                <div class="row-text">
+                    <div class="row-title">Batut de proteïna</div>
+                </div>
+
+                <div class="check">✓</div>
+            </div>
+
+            <div class="row">
+                <div class="icon">🍽️</div>
+
+                <div class="row-text">
+                    <div class="row-title">Sopar</div>
+                </div>
+
+                <div class="arrow">›</div>
+            </div>
+
+        </div>
+
+
+        <div class="section-title">Activitat</div>
+
+        <div class="card">
+
+            <div class="row">
+                <div class="icon">🏋️</div>
+
+                <div class="row-text">
+                    <div class="row-title">Força</div>
+                    <div class="row-subtitle">Entrenament complet</div>
+                </div>
+
+                <div class="arrow">›</div>
+            </div>
+
+        </div>
+
+
+        <div class="section-title">Avui</div>
+
+        <div class="card stats">
+
+            <div class="stat">
+                <div class="stat-label">Descans</div>
+                <div class="stat-value">7 h 45 m</div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-label">Entrenament</div>
+                <div class="stat-value">Força</div>
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <nav class="tabbar">
+
+        <div class="tab active">
+            <div class="tab-icon">⌂</div>
+            Avui
+        </div>
+
+        <div class="tab">
+            <div class="tab-icon">↗</div>
+            Progrés
+        </div>
+
+        <div class="tab">
+            <div class="tab-icon">▣</div>
+            Historial
+        </div>
+
+        <div class="tab">
+            <div class="tab-icon">•••</div>
+            Més
+        </div>
+
+    </nav>
+
+</div>
 
 </body>
 </html>

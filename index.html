@@ -100,6 +100,56 @@
       font-size: 16px;
     }
 
+    .date-selector {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .date-arrow {
+      width: 38px;
+      height: 38px;
+      border: 0;
+      border-radius: 12px;
+      background: var(--card);
+      color: var(--text);
+      box-shadow: var(--shadow);
+      font-size: 27px;
+      line-height: 1;
+      cursor: pointer;
+      transition: transform 0.15s ease, opacity 0.15s ease;
+    }
+
+    .date-arrow:active {
+      transform: scale(0.94);
+    }
+
+    .date-arrow:disabled {
+      opacity: 0.25;
+      cursor: default;
+    }
+
+    .selected-date {
+      flex: 1;
+      min-width: 0;
+      border: 0;
+      border-radius: 13px;
+      background: var(--card);
+      color: var(--text);
+      box-shadow: var(--shadow);
+      padding: 10px 12px;
+      font-size: 15px;
+      font-weight: 650;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .selected-date:active {
+      transform: scale(0.98);
+    }
+
     .card {
       background: var(--card);
       border-radius: 22px;
@@ -806,9 +856,45 @@
     <section id="screen-today" class="screen active">
 
       <div class="header">
+
         <h1>Avui</h1>
-        <p id="todayDate"></p>
+
+        <div class="date-selector">
+
+          <button
+            id="prevDay"
+            class="date-arrow"
+            aria-label="Dia anterior"
+          >
+            ‹
+          </button>
+
+          <button
+            id="datePickerButton"
+            class="selected-date"
+            type="button"
+          >
+            <span id="todayDate"></span>
+          </button>
+
+          <button
+            id="nextDay"
+            class="date-arrow"
+            aria-label="Dia següent"
+          >
+            ›
+          </button>
+
+        </div>
+
+        <input
+          id="datePicker"
+          type="date"
+          class="hidden"
+        />
+
       </div>
+
 
       <div class="card summary-card">
 
@@ -1369,7 +1455,7 @@
           </span>
 
           <span>
-            Pas 19
+            Pas 20
           </span>
 
         </div>
@@ -1479,6 +1565,8 @@ let goals = loadGoals();
 let selectedRange = 30;
 
 let currentHistoryDate = null;
+
+let selectedDate = todayKey();
 
 
 
@@ -1687,23 +1775,29 @@ function saveGoals() {
 
 
 
-function getToday() {
+function getSelectedDay() {
 
-  const key = todayKey();
+  if (!data[selectedDate]) {
 
-  if (!data[key]) {
-
-    data[key] =
+    data[selectedDate] =
       defaultDay();
 
     saveAllData();
 
   }
 
-  data[key] =
-    normalizeDay(data[key]);
+  data[selectedDate] =
+    normalizeDay(data[selectedDate]);
 
-  return data[key];
+  return data[selectedDate];
+
+}
+
+
+
+function getToday() {
+
+  return getSelectedDay();
 
 }
 
@@ -1838,7 +1932,7 @@ function getPreviousExerciseSession(
   const dates =
     Object.keys(data)
       .filter(
-        date => date !== todayKey()
+        date => date < selectedDate
       )
       .sort()
       .reverse();
@@ -1904,7 +1998,7 @@ function getAllExerciseSessions(
 function renderMeals() {
 
   const today =
-    getToday();
+    getSelectedDay();
 
   const container =
     document.getElementById(
@@ -1961,7 +2055,7 @@ function renderMeals() {
 function renderExercises() {
 
   const today =
-    getToday();
+    getSelectedDay();
 
   const container =
     document.getElementById(
@@ -2250,7 +2344,7 @@ function renderSets(
           () => {
 
             const today =
-              getToday();
+              getSelectedDay();
 
             today.strength[
               exerciseKey
@@ -2289,7 +2383,7 @@ function updateExerciseVolumes() {
         exercises[index];
 
       const today =
-        getToday();
+        getSelectedDay();
 
       const volume =
         getExerciseVolume(
@@ -2336,7 +2430,7 @@ function repeatLastSession(
     return;
 
   const today =
-    getToday();
+    getSelectedDay();
 
   today.strength[
     exerciseKey
@@ -2491,14 +2585,30 @@ function getPersonalBestHTML(
 function updateTodayUI() {
 
   const today =
-    getToday();
+    getSelectedDay();
+
+  const dateText =
+    document.getElementById(
+      "todayDate"
+    );
+
+  dateText.textContent =
+    formatDate(selectedDate);
+
 
   document
-    .getElementById(
-      "todayDate"
-    )
-    .textContent =
-    formatDate(todayKey());
+    .getElementById("prevDay")
+    .disabled =
+    selectedDate <=
+    Object.keys(data).sort()[0] &&
+    Object.keys(data).length === 0;
+
+
+  document
+    .getElementById("nextDay")
+    .disabled =
+    selectedDate >=
+    todayKey();
 
 
   const weightInput =
@@ -2584,7 +2694,7 @@ function updateTodayUI() {
 function updateWeightDifference() {
 
   const today =
-    getToday();
+    getSelectedDay();
 
   const element =
     document.getElementById(
@@ -2605,7 +2715,7 @@ function updateWeightDifference() {
   const previousDates =
     Object.keys(data)
       .filter(
-        date => date < todayKey()
+        date => date < selectedDate
       )
       .sort()
       .reverse();
@@ -2681,7 +2791,7 @@ function updateWeightDifference() {
 function updateDailySummary() {
 
   const today =
-    getToday();
+    getSelectedDay();
 
 
   document.getElementById(
@@ -4418,6 +4528,78 @@ function renderMilestones() {
 
 
 
+function changeSelectedDate(days) {
+
+  const current =
+    new Date(
+      selectedDate +
+      "T12:00:00"
+    );
+
+  current.setDate(
+    current.getDate() +
+    days
+  );
+
+  const next =
+    `${current.getFullYear()}-${String(current.getMonth() + 1).padStart(2, "0")}-${String(current.getDate()).padStart(2, "0")}`;
+
+  if (
+    next >
+    todayKey()
+  ) {
+
+    return;
+
+  }
+
+  selectedDate =
+    next;
+
+  updateTodayUI();
+
+  updateProgress();
+
+}
+
+
+
+function selectDate(date) {
+
+  if (
+    !date ||
+    date >
+    todayKey()
+  ) {
+
+    return;
+
+  }
+
+  selectedDate =
+    date;
+
+  updateTodayUI();
+
+  updateProgress();
+
+}
+
+
+
+function goToToday() {
+
+  selectedDate =
+    todayKey();
+
+  updateTodayUI();
+
+  updateProgress();
+
+}
+
+
+
 function navigate(tab) {
 
   document
@@ -4458,23 +4640,34 @@ function navigate(tab) {
     );
 
 
-  if (tab === "today") {
+  if (
+    tab ===
+    "today"
+  ) {
 
     updateTodayUI();
 
   }
 
 
-  if (tab === "progress") {
+  if (
+    tab ===
+    "progress"
+  ) {
 
     updateProgress();
 
   }
 
 
-  if (tab === "history") {
+  if (
+    tab ===
+    "history"
+  ) {
 
-    if (!currentHistoryDate) {
+    if (
+      !currentHistoryDate
+    ) {
 
       renderHistory();
 
@@ -4483,7 +4676,10 @@ function navigate(tab) {
   }
 
 
-  if (tab === "more") {
+  if (
+    tab ===
+    "more"
+  ) {
 
     renderGoals();
 
@@ -4536,13 +4732,20 @@ function loadTheme() {
     );
 
 
-  if (saved === "dark") {
+  if (
+    saved ===
+    "dark"
+  ) {
 
-    applyTheme("dark");
+    applyTheme(
+      "dark"
+    );
 
   } else {
 
-    applyTheme("light");
+    applyTheme(
+      "light"
+    );
 
   }
 
@@ -4558,7 +4761,7 @@ function exportData() {
       "Lluc Health",
 
     version:
-      "Pas 19",
+      "Pas 20",
 
     createdAt:
       new Date().toISOString(),
@@ -4609,21 +4812,26 @@ function exportData() {
       );
 
 
-  a.href = url;
+  a.href =
+    url;
 
 
   a.download =
     `lluc-health-backup-${date}.json`;
 
 
-  document.body.appendChild(a);
+  document.body.appendChild(
+    a
+  );
 
   a.click();
 
   a.remove();
 
 
-  URL.revokeObjectURL(url);
+  URL.revokeObjectURL(
+    url
+  );
 
 
   document.getElementById(
@@ -4703,7 +4911,9 @@ function importData(file) {
           );
 
 
-        if (parsed.goals) {
+        if (
+          parsed.goals
+        ) {
 
           goals =
             normalizeGoals(
@@ -4748,7 +4958,9 @@ function importData(file) {
     };
 
 
-  reader.readAsText(file);
+  reader.readAsText(
+    file
+  );
 
 }
 
@@ -4789,7 +5001,7 @@ document
         () => {
 
           const today =
-            getToday();
+            getSelectedDay();
 
           today.activity =
             button.dataset.activity;
@@ -4817,7 +5029,7 @@ document
     event => {
 
       const today =
-        getToday();
+        getSelectedDay();
 
       today.weight =
         event.target.value === ""
@@ -4848,7 +5060,7 @@ document
     event => {
 
       const today =
-        getToday();
+        getSelectedDay();
 
       today.sleep =
         event.target.value === ""
@@ -5016,12 +5228,107 @@ document
       const file =
         event.target.files[0];
 
-      importData(file);
+      importData(
+        file
+      );
 
       event.target.value =
         "";
 
     }
+  );
+
+
+
+document
+  .getElementById(
+    "prevDay"
+  )
+  .addEventListener(
+    "click",
+    () => {
+
+      changeSelectedDate(
+        -1
+      );
+
+    }
+  );
+
+
+
+document
+  .getElementById(
+    "nextDay"
+  )
+  .addEventListener(
+    "click",
+    () => {
+
+      changeSelectedDate(
+        1
+      );
+
+    }
+  );
+
+
+
+document
+  .getElementById(
+    "datePickerButton"
+  )
+  .addEventListener(
+    "click",
+    () => {
+
+      const picker =
+        document.getElementById(
+          "datePicker"
+        );
+
+      if (
+        typeof picker.showPicker ===
+        "function"
+      ) {
+
+        picker.showPicker();
+
+      } else {
+
+        picker.click();
+
+      }
+
+    }
+  );
+
+
+
+document
+  .getElementById(
+    "datePicker"
+  )
+  .addEventListener(
+    "change",
+    event => {
+
+      selectDate(
+        event.target.value
+      );
+
+    }
+  );
+
+
+
+document
+  .getElementById(
+    "todayDate"
+  )
+  .addEventListener(
+    "dblclick",
+    goToToday
   );
 
 

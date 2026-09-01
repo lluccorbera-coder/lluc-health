@@ -1,2471 +1,1833 @@
 <!DOCTYPE html>
 <html lang="ca">
-
 <head>
-
-    <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-    >
-
-    <meta
-        name="theme-color"
-        content="#f2f2f7"
-    >
-
-    <title>Lluc Health</title>
-
-
-    <style>
-
-        * {
-            box-sizing: border-box;
-        }
-
-
-        body {
-
-            margin: 0;
-
-            background: #f2f2f7;
-
-            color: #1c1c1e;
-
-            font-family:
-                -apple-system,
-                BlinkMacSystemFont,
-                "SF Pro Display",
-                "SF Pro Text",
-                Helvetica,
-                Arial,
-                sans-serif;
-
-            -webkit-font-smoothing: antialiased;
-        }
-
-
-        button,
-        input {
-
-            font-family: inherit;
-        }
-
-
-        button {
-
-            cursor: pointer;
-        }
-
-
-        .app {
-
-            max-width: 500px;
-
-            margin: 0 auto;
-
-            min-height: 100vh;
-
-            padding-bottom: 110px;
-        }
-
-
-        /* =========================
-           CAPÇALERA
-        ========================= */
-
-        .header {
-
-            padding:
-                55px
-                22px
-                20px;
-        }
-
-
-        .date {
-
-            font-size: 15px;
-
-            color: #8e8e93;
-
-            margin-bottom: 5px;
-        }
-
-
-        h1 {
-
-            margin: 0;
-
-            font-size: 34px;
-
-            font-weight: 700;
-
-            letter-spacing: -1px;
-        }
-
-
-        .content {
-
-            padding: 0 16px;
-        }
-
-
-        /* =========================
-           TARGETES
-        ========================= */
-
-        .card {
-
-            background: white;
-
-            border-radius: 20px;
-
-            margin-bottom: 14px;
-
-            overflow: hidden;
-        }
-
-
-        .section-title {
-
-            font-size: 13px;
-
-            font-weight: 600;
-
-            color: #8e8e93;
-
-            text-transform: uppercase;
-
-            letter-spacing: .4px;
-
-            margin:
-                25px
-                6px
-                8px;
-        }
-
-
-        /* =========================
-           PES
-        ========================= */
-
-        .weight-card {
-
-            padding: 20px;
-        }
-
-
-        .weight-label {
-
-            color: #8e8e93;
-
-            font-size: 15px;
-        }
-
-
-        .weight-row {
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: space-between;
-
-            margin-top: 4px;
-        }
-
-
-        .weight-input {
-
-            border: none;
-
-            outline: none;
-
-            background: transparent;
-
-            width: 130px;
-
-            font-size: 38px;
-
-            font-weight: 700;
-
-            letter-spacing: -1.5px;
-
-            padding: 0;
-
-            color: #1c1c1e;
-        }
-
-
-        .weight-unit {
-
-            font-size: 17px;
-
-            color: #8e8e93;
-
-            margin-left: -35px;
-        }
-
-
-        .change {
-
-            font-size: 14px;
-
-            font-weight: 500;
-        }
-
-
-        /* =========================
-           ÀPATS
-        ========================= */
-
-        .row {
-
-            width: 100%;
-
-            display: flex;
-
-            align-items: center;
-
-            padding: 15px 18px;
-
-            min-height: 64px;
-
-            border: none;
-
-            border-bottom:
-                1px solid #e5e5ea;
-
-            background: white;
-
-            text-align: left;
-
-            color: #1c1c1e;
-        }
-
-
-        .row:last-child {
-
-            border-bottom: none;
-        }
-
-
-        .row:active {
-
-            background: #f2f2f7;
-        }
-
-
-        .icon {
-
-            width: 34px;
-
-            height: 34px;
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            margin-right: 13px;
-
-            font-size: 21px;
-        }
-
-
-        .row-text {
-
-            flex: 1;
-        }
-
-
-        .row-title {
-
-            font-size: 17px;
-
-            font-weight: 500;
-        }
-
-
-        .row-subtitle {
-
-            font-size: 13px;
-
-            color: #8e8e93;
-
-            margin-top: 2px;
-        }
-
-
-        .check {
-
-            width: 25px;
-
-            height: 25px;
-
-            border-radius: 50%;
-
-            background: #e5e5ea;
-
-            color: transparent;
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            font-size: 14px;
-
-            font-weight: 700;
-
-            transition: .15s;
-        }
-
-
-        .check.active {
-
-            background: #34c759;
-
-            color: white;
-        }
-
-
-        /* =========================
-           ACTIVITAT
-        ========================= */
-
-        .activity-row {
-
-            display: flex;
-
-            padding: 8px;
-
-            gap: 5px;
-        }
-
-
-        .activity-button {
-
-            flex: 1;
-
-            border: none;
-
-            background: white;
-
-            border-radius: 14px;
-
-            padding: 14px 5px;
-
-            color: #8e8e93;
-
-            font-size: 13px;
-
-            font-weight: 500;
-        }
-
-
-        .activity-button .activity-icon {
-
-            display: block;
-
-            font-size: 22px;
-
-            margin-bottom: 5px;
-        }
-
-
-        .activity-button.active {
-
-            background: #007aff;
-
-            color: white;
-        }
-
-
-        /* =========================
-           DESCANS
-        ========================= */
-
-        .rest-card {
-
-            padding: 18px;
-        }
-
-
-        .rest-label {
-
-            color: #8e8e93;
-
-            font-size: 15px;
-
-            margin-bottom: 7px;
-        }
-
-
-        .rest-input {
-
-            border: none;
-
-            outline: none;
-
-            background: #f2f2f7;
-
-            border-radius: 12px;
-
-            padding: 11px 13px;
-
-            font-size: 18px;
-
-            width: 100%;
-        }
-
-
-        /* =========================
-           FORÇA
-        ========================= */
-
-        #strengthSection {
-
-            display: none;
-        }
-
-
-        .exercise-card {
-
-            padding: 18px;
-
-            margin-bottom: 12px;
-        }
-
-
-        .exercise-header {
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: space-between;
-
-            margin-bottom: 15px;
-        }
-
-
-        .exercise-name {
-
-            font-size: 18px;
-
-            font-weight: 600;
-
-            letter-spacing: -.2px;
-        }
-
-
-        .exercise-volume {
-
-            font-size: 12px;
-
-            color: #8e8e93;
-        }
-
-
-        .series-header {
-
-            display: grid;
-
-            grid-template-columns:
-                50px
-                1fr
-                1fr
-                38px;
-
-            gap: 7px;
-
-            color: #8e8e93;
-
-            font-size: 12px;
-
-            padding:
-                0
-                4px
-                6px;
-        }
-
-
-        .series-row {
-
-            display: grid;
-
-            grid-template-columns:
-                50px
-                1fr
-                1fr
-                38px;
-
-            gap: 7px;
-
-            align-items: center;
-
-            margin-bottom: 7px;
-        }
-
-
-        .series-number {
-
-            font-size: 14px;
-
-            color: #8e8e93;
-
-            padding-left: 4px;
-        }
-
-
-        .series-input {
-
-            width: 100%;
-
-            border: none;
-
-            outline: none;
-
-            background: #f2f2f7;
-
-            border-radius: 10px;
-
-            padding:
-                10px
-                8px;
-
-            font-size: 16px;
-
-            text-align: center;
-        }
-
-
-        .delete-series {
-
-            border: none;
-
-            background: transparent;
-
-            color: #ff3b30;
-
-            font-size: 18px;
-
-            width: 32px;
-
-            height: 32px;
-
-            border-radius: 50%;
-        }
-
-
-        .delete-series:active {
-
-            background: #f2f2f7;
-        }
-
-
-        .add-series {
-
-            width: 100%;
-
-            border: none;
-
-            background: #f2f2f7;
-
-            color: #007aff;
-
-            border-radius: 12px;
-
-            padding: 11px;
-
-            margin-top: 5px;
-
-            font-size: 15px;
-
-            font-weight: 500;
-        }
-
-
-        .add-series:active {
-
-            background: #e5e5ea;
-        }
-
-
-        /* =========================
-           GUARDAT
-        ========================= */
-
-        .save-status {
-
-            text-align: center;
-
-            color: #8e8e93;
-
-            font-size: 12px;
-
-            margin:
-                18px
-                0;
-
-            height: 16px;
-        }
-
-
-        /* =========================
-           NAVEGACIÓ
-        ========================= */
-
-        .tabbar {
-
-            position: fixed;
-
-            bottom: 0;
-
-            left: 50%;
-
-            transform:
-                translateX(-50%);
-
-            width: 100%;
-
-            max-width: 500px;
-
-            height: 82px;
-
-            background:
-                rgba(
-                    249,
-                    249,
-                    249,
-                    .94
-                );
-
-            backdrop-filter:
-                blur(20px);
-
-            -webkit-backdrop-filter:
-                blur(20px);
-
-            border-top:
-                1px solid
-                rgba(0,0,0,.08);
-
-            display: flex;
-
-            justify-content:
-                space-around;
-
-            padding-top: 9px;
-
-            padding-bottom:
-                env(
-                    safe-area-inset-bottom
-                );
-
-            z-index: 10;
-        }
-
-
-        .tab {
-
-            border: none;
-
-            background: transparent;
-
-            text-align: center;
-
-            color: #8e8e93;
-
-            font-size: 11px;
-
-            min-width: 70px;
-        }
-
-
-        .tab.active {
-
-            color: #007aff;
-        }
-
-
-        .tab-icon {
-
-            font-size: 22px;
-
-            height: 30px;
-        }
-
-
-        /* =========================
-           ORDINADOR
-        ========================= */
-
-        @media (min-width: 600px) {
-
-            body {
-
-                padding: 30px 0;
-            }
-
-
-            .app {
-
-                border-radius: 30px;
-
-                overflow: hidden;
-
-                min-height:
-                    calc(
-                        100vh - 60px
-                    );
-            }
-
-
-            .tabbar {
-
-                bottom: 30px;
-
-                border-radius:
-                    0
-                    0
-                    30px
-                    30px;
-            }
-        }
-
-    </style>
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#f2f2f7">
+  <title>Lluc Health</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      margin: 0;
+      background: #f2f2f7;
+      color: #1c1c1e;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+        "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    .app {
+      min-height: 100vh;
+      padding-bottom: 90px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 20px 16px 30px;
+    }
+
+    .screen {
+      display: none;
+    }
+
+    .screen.active {
+      display: block;
+    }
+
+    /* HEADER */
+
+    .header {
+      padding: 12px 4px 20px;
+    }
+
+    .eyebrow {
+      font-size: 14px;
+      color: #8e8e93;
+      margin-bottom: 5px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 34px;
+      line-height: 1.1;
+      letter-spacing: -1px;
+      font-weight: 700;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 28px;
+      letter-spacing: -0.7px;
+    }
+
+    .subtitle {
+      margin-top: 7px;
+      color: #8e8e93;
+      font-size: 15px;
+    }
+
+    /* CARDS */
+
+    .card {
+      background: #ffffff;
+      border-radius: 22px;
+      padding: 18px;
+      margin-bottom: 14px;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+    }
+
+    .card-title {
+      font-size: 17px;
+      font-weight: 650;
+      margin-bottom: 14px;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 28px 4px 12px;
+    }
+
+    .section-header h3 {
+      margin: 0;
+      font-size: 20px;
+    }
+
+    .section-header span {
+      color: #8e8e93;
+      font-size: 14px;
+    }
+
+    /* WEIGHT */
+
+    .weight-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+    }
+
+    .weight-info {
+      flex: 1;
+    }
+
+    .weight-value {
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: -1px;
+    }
+
+    .weight-label {
+      color: #8e8e93;
+      font-size: 14px;
+      margin-top: 2px;
+    }
+
+    .weight-input {
+      width: 115px;
+      border: 0;
+      outline: none;
+      background: #f2f2f7;
+      border-radius: 14px;
+      padding: 12px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .weight-change {
+      font-size: 13px;
+      margin-top: 8px;
+    }
+
+    .positive {
+      color: #34c759;
+    }
+
+    .negative {
+      color: #ff3b30;
+    }
+
+    .neutral {
+      color: #8e8e93;
+    }
+
+    /* MEALS */
+
+    .meal-list {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .meal-row {
+      display: flex;
+      align-items: center;
+      min-height: 50px;
+      border-bottom: 1px solid #f2f2f7;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .meal-row:last-child {
+      border-bottom: none;
+    }
+
+    .meal-name {
+      flex: 1;
+      font-size: 16px;
+    }
+
+    .check {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #e5e5ea;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: transparent;
+      font-size: 15px;
+      font-weight: 700;
+      transition: 0.15s ease;
+    }
+
+    .meal-row.checked .check {
+      background: #34c759;
+      color: white;
+    }
+
+    /* ACTIVITY */
+
+    .activity-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 9px;
+    }
+
+    .activity-button {
+      border: none;
+      border-radius: 15px;
+      background: #f2f2f7;
+      padding: 14px 8px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      color: #3a3a3c;
+      transition: 0.15s ease;
+    }
+
+    .activity-button.selected {
+      background: #1c1c1e;
+      color: white;
+    }
+
+    /* SLEEP */
+
+    .sleep-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+    }
+
+    .sleep-input {
+      width: 110px;
+      border: 0;
+      outline: none;
+      background: #f2f2f7;
+      border-radius: 14px;
+      padding: 12px;
+      text-align: center;
+      font-size: 17px;
+      font-weight: 600;
+    }
+
+    .saved {
+      text-align: center;
+      color: #34c759;
+      font-size: 13px;
+      margin: 18px 0;
+    }
+
+    /* STRENGTH */
+
+    .exercise-card {
+      background: #ffffff;
+      border-radius: 22px;
+      padding: 18px;
+      margin-bottom: 14px;
+    }
+
+    .exercise-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .exercise-name {
+      font-size: 17px;
+      font-weight: 650;
+    }
+
+    .exercise-volume {
+      color: #8e8e93;
+      font-size: 13px;
+    }
+
+    .sets-header,
+    .set-row {
+      display: grid;
+      grid-template-columns: 35px 1fr 1fr 38px;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .sets-header {
+      color: #8e8e93;
+      font-size: 12px;
+      padding: 0 4px 6px;
+    }
+
+    .set-row {
+      margin-bottom: 8px;
+    }
+
+    .set-number {
+      color: #8e8e93;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    .set-input {
+      width: 100%;
+      border: none;
+      outline: none;
+      background: #f2f2f7;
+      border-radius: 11px;
+      padding: 10px 8px;
+      text-align: center;
+      font-size: 15px;
+    }
+
+    .delete-set {
+      border: none;
+      background: #f2f2f7;
+      color: #ff3b30;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .add-set {
+      width: 100%;
+      border: none;
+      background: #f2f2f7;
+      border-radius: 13px;
+      padding: 11px;
+      margin-top: 5px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* PROGRESS */
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .stat-card {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 17px;
+    }
+
+    .stat-label {
+      color: #8e8e93;
+      font-size: 13px;
+      margin-bottom: 6px;
+    }
+
+    .stat-value {
+      font-size: 26px;
+      font-weight: 700;
+    }
+
+    .chart {
+      height: 220px;
+      display: flex;
+      align-items: flex-end;
+      gap: 7px;
+      padding: 20px 5px 10px;
+      overflow-x: auto;
+    }
+
+    .bar-container {
+      min-width: 30px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      flex-direction: column;
+    }
+
+    .bar {
+      width: 22px;
+      min-height: 3px;
+      background: #1c1c1e;
+      border-radius: 7px 7px 3px 3px;
+    }
+
+    .bar-label {
+      font-size: 9px;
+      color: #8e8e93;
+      margin-top: 5px;
+      white-space: nowrap;
+    }
+
+    .empty-state {
+      text-align: center;
+      color: #8e8e93;
+      padding: 35px 15px;
+      font-size: 15px;
+    }
+
+    /* HISTORY */
+
+    .history-item {
+      background: white;
+      border-radius: 18px;
+      padding: 16px;
+      margin-bottom: 10px;
+      cursor: pointer;
+    }
+
+    .history-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .history-date {
+      font-weight: 650;
+    }
+
+    .history-weight {
+      font-weight: 600;
+    }
+
+    .history-details {
+      color: #8e8e93;
+      font-size: 13px;
+      margin-top: 7px;
+    }
+
+    /* MORE */
+
+    .settings-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 0;
+      border-bottom: 1px solid #f2f2f7;
+    }
+
+    .settings-row:last-child {
+      border-bottom: none;
+    }
+
+    .settings-title {
+      font-size: 16px;
+    }
+
+    .settings-description {
+      font-size: 13px;
+      color: #8e8e93;
+      margin-top: 3px;
+    }
+
+    .secondary-button {
+      border: none;
+      background: #f2f2f7;
+      border-radius: 12px;
+      padding: 10px 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* TAB BAR */
+
+    .tabbar {
+      position: fixed;
+      z-index: 100;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: calc(72px + env(safe-area-inset-bottom));
+      padding-bottom: env(safe-area-inset-bottom);
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
+      display: flex;
+      justify-content: center;
+    }
+
+    .tabbar-inner {
+      width: 100%;
+      max-width: 680px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .tab {
+      border: none;
+      background: transparent;
+      color: #8e8e93;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      cursor: pointer;
+      padding-top: 5px;
+    }
+
+    .tab span {
+      font-size: 22px;
+      line-height: 22px;
+      font-weight: 500;
+    }
+
+    .tab small {
+      font-size: 11px;
+    }
+
+    .tab.active {
+      color: #1c1c1e;
+    }
+
+    @media (min-width: 700px) {
+      .container {
+        padding-top: 30px;
+      }
+    }
+  </style>
 </head>
-
 
 <body>
 
-
 <div class="app">
 
+  <!-- ==================== AVUI ==================== -->
 
-    <!-- =========================
-         CAPÇALERA
-    ========================== -->
+  <main id="todayScreen" class="screen active">
+    <div class="container">
 
-    <header class="header">
-
-        <div
-            class="date"
-            id="dateText"
-        ></div>
-
+      <div class="header">
+        <div class="eyebrow" id="todayDate"></div>
         <h1>Avui</h1>
+        <div class="subtitle">La teva salut, alimentació i entrenament.</div>
+      </div>
 
-    </header>
+      <!-- PES -->
 
+      <div class="card">
+        <div class="card-title">Pes</div>
 
-    <main class="content">
+        <div class="weight-row">
+          <div class="weight-info">
+            <div class="weight-value" id="weightDisplay">— kg</div>
+            <div class="weight-label">Pes d'avui</div>
+            <div id="weightChange" class="weight-change neutral"></div>
+          </div>
 
+          <input
+            id="weightInput"
+            class="weight-input"
+            type="number"
+            step="0.1"
+            inputmode="decimal"
+            placeholder="75.0 kg"
+          >
+        </div>
+      </div>
 
-        <!-- =========================
-             PES
-        ========================== -->
+      <!-- ALIMENTACIÓ -->
 
-        <div class="card weight-card">
+      <div class="section-header">
+        <h3>Alimentació</h3>
+        <span>Avui</span>
+      </div>
 
-            <div class="weight-label">
-                Pes corporal
-            </div>
+      <div class="card">
+        <div class="meal-list" id="mealList"></div>
+      </div>
 
+      <!-- ACTIVITAT -->
 
-            <div class="weight-row">
+      <div class="section-header">
+        <h3>Activitat</h3>
+      </div>
 
-                <div>
+      <div class="card">
+        <div class="activity-grid">
+          <button class="activity-button" data-activity="hiit">HIIT</button>
+          <button class="activity-button" data-activity="strength">Força</button>
+          <button class="activity-button" data-activity="rest">Descans</button>
+        </div>
+      </div>
 
-                    <input
-                        id="weightInput"
-                        class="weight-input"
-                        type="number"
-                        step="0.1"
-                        min="0"
-                        placeholder="—"
-                        inputmode="decimal"
-                    >
+      <!-- FORÇA -->
 
-                    <span class="weight-unit">
-                        kg
-                    </span>
+      <div id="strengthSection" style="display:none;">
 
-                </div>
-
-
-                <div
-                    id="weightChange"
-                    class="change"
-                ></div>
-
-            </div>
-
+        <div class="section-header">
+          <h3>Força</h3>
+          <span>Sèries</span>
         </div>
 
+        <div id="exerciseList"></div>
 
-        <!-- =========================
-             ALIMENTACIÓ
-        ========================== -->
+      </div>
 
-        <div class="section-title">
-            Alimentació i suplements
+      <!-- SON -->
+
+      <div class="section-header">
+        <h3>Descans</h3>
+      </div>
+
+      <div class="card">
+        <div class="sleep-row">
+          <div>
+            <div class="card-title" style="margin-bottom:3px;">Hores de son</div>
+            <div class="subtitle">Quant has dormit?</div>
+          </div>
+
+          <input
+            id="sleepInput"
+            class="sleep-input"
+            type="number"
+            min="0"
+            max="24"
+            step="0.5"
+            inputmode="decimal"
+            placeholder="7.5 h"
+          >
+        </div>
+      </div>
+
+      <div class="saved" id="savedMessage">
+        Guardat automàticament ✓
+      </div>
+
+    </div>
+  </main>
+
+
+  <!-- ==================== PROGRÉS ==================== -->
+
+  <main id="progressScreen" class="screen">
+    <div class="container">
+
+      <div class="header">
+        <div class="eyebrow">La teva evolució</div>
+        <h1>Progrés</h1>
+        <div class="subtitle">Com estàs avançant amb el temps.</div>
+      </div>
+
+      <div class="stat-grid">
+
+        <div class="stat-card">
+          <div class="stat-label">Pes actual</div>
+          <div class="stat-value" id="progressCurrentWeight">—</div>
         </div>
 
-
-        <div class="card">
-
-
-            <button
-                class="row meal"
-                data-key="coffee"
-            >
-
-                <div class="icon">☕</div>
-
-                <div class="row-text">
-
-                    <div class="row-title">
-                        Cafè
-                    </div>
-
-                </div>
-
-                <div class="check"></div>
-
-            </button>
-
-
-            <button
-                class="row meal"
-                data-key="breakfast"
-            >
-
-                <div class="icon">🍳</div>
-
-                <div class="row-text">
-
-                    <div class="row-title">
-                        Esmorzar
-                    </div>
-
-                </div>
-
-                <div class="check"></div>
-
-            </button>
-
-
-            <button
-                class="row meal"
-                data-key="rice"
-            >
-
-                <div class="icon">🥣</div>
-
-                <div class="row-text">
-
-                    <div class="row-title">
-                        Crema d'arròs
-                    </div>
-
-                    <div class="row-subtitle">
-                        Galetes i llet
-                    </div>
-
-                </div>
-
-                <div class="check"></div>
-
-            </button>
-
-
-            <button
-                class="row meal"
-                data-key="lunch"
-            >
-
-                <div class="icon">🍽️</div>
-
-                <div class="row-text">
-
-                    <div class="row-title">
-                        Dinar
-                    </div>
-
-                </div>
-
-                <div class="check"></div>
-
-            </button>
-
-
-            <button
-                class="row meal"
-                data-key="snack"
-            >
-
-                <div class="icon">🥪</div>
-
-                <div class="row-text">
-
-                    <div class="row-title">
-                        Berenar
-                    </div>
-
-                </div>
-
-                <div class="check"></div>
-
-            </button>
-
-
-            <button
-                class="row meal"
-                data-key="creatine"
-            >
-
-                <div class="icon">💊</div>
-
-                <div class="row-text">
-
-                    <div class="row-title">
-                        Creatina
-                    </div>
-
-                </div>
-
-                <div class="check"></div>
-
-            </button>
-
-
-            <button
-                class="row meal"
-                data-key="protein"
-            >
-
-                <div class="icon">🥤</div>
-
-                <div class="row-text">
-
-                    <div class="row-title">
-                        Batut de proteïna
-                    </div>
-
-                </div>
-
-                <div class="check"></div>
-
-            </button>
-
-
-            <button
-                class="row meal"
-                data-key="dinner"
-            >
-
-                <div class="icon">🍽️</div>
-
-                <div class="row-text">
-
-                    <div class="row-title">
-                        Sopar
-                    </div>
-
-                </div>
-
-                <div class="check"></div>
-
-            </button>
-
-
+        <div class="stat-card">
+          <div class="stat-label">Canvi de pes</div>
+          <div class="stat-value" id="progressWeightChange">—</div>
         </div>
 
-
-        <!-- =========================
-             ACTIVITAT
-        ========================== -->
-
-        <div class="section-title">
-            Activitat
+        <div class="stat-card">
+          <div class="stat-label">Dies registrats</div>
+          <div class="stat-value" id="progressDays">0</div>
         </div>
 
-
-        <div class="card">
-
-            <div class="activity-row">
-
-
-                <button
-                    class="activity-button"
-                    data-activity="hiit"
-                >
-
-                    <span
-                        class="activity-icon"
-                    >
-                        🏃
-                    </span>
-
-                    HIIT
-
-                </button>
-
-
-                <button
-                    class="activity-button"
-                    data-activity="strength"
-                >
-
-                    <span
-                        class="activity-icon"
-                    >
-                        🏋️
-                    </span>
-
-                    Força
-
-                </button>
-
-
-                <button
-                    class="activity-button"
-                    data-activity="rest"
-                >
-
-                    <span
-                        class="activity-icon"
-                    >
-                        😴
-                    </span>
-
-                    Descans
-
-                </button>
-
-
-            </div>
-
+        <div class="stat-card">
+          <div class="stat-label">Entrenaments</div>
+          <div class="stat-value" id="progressWorkouts">0</div>
         </div>
 
+      </div>
 
-        <!-- =========================
-             ENTRENAMENT DE FORÇA
-        ========================== -->
+      <div class="section-header">
+        <h3>Evolució del pes</h3>
+      </div>
 
-        <section id="strengthSection">
+      <div class="card">
+        <div id="weightChart" class="chart"></div>
+      </div>
+
+      <div class="section-header">
+        <h3>Força</h3>
+      </div>
+
+      <div id="strengthProgress"></div>
+
+    </div>
+  </main>
 
 
-            <div class="section-title">
-                Entrenament
+  <!-- ==================== HISTORIAL ==================== -->
+
+  <main id="historyScreen" class="screen">
+    <div class="container">
+
+      <div class="header">
+        <div class="eyebrow">Els teus registres</div>
+        <h1>Historial</h1>
+        <div class="subtitle">Consulta el que has fet cada dia.</div>
+      </div>
+
+      <div id="historyList"></div>
+
+    </div>
+  </main>
+
+
+  <!-- ==================== MÉS ==================== -->
+
+  <main id="moreScreen" class="screen">
+    <div class="container">
+
+      <div class="header">
+        <div class="eyebrow">Configuració</div>
+        <h1>Més</h1>
+        <div class="subtitle">Opcions de Lluc Health.</div>
+      </div>
+
+      <div class="card">
+
+        <div class="settings-row">
+          <div>
+            <div class="settings-title">Lluc Health</div>
+            <div class="settings-description">
+              La teva aplicació personal de salut.
             </div>
-
-
-            <!-- PRESS BANCA -->
-
-            <div class="card exercise-card">
-
-                <div class="exercise-header">
-
-                    <div class="exercise-name">
-                        Press banca
-                    </div>
-
-                    <div
-                        class="exercise-volume"
-                        id="volume-bench"
-                    ></div>
-
-                </div>
-
-
-                <div class="series-header">
-
-                    <div>Sèrie</div>
-
-                    <div>Reps</div>
-
-                    <div>Kg</div>
-
-                    <div></div>
-
-                </div>
-
-
-                <div
-                    id="series-bench"
-                ></div>
-
-
-                <button
-                    class="add-series"
-                    data-exercise="bench"
-                >
-                    + Afegir sèrie
-                </button>
-
-            </div>
-
-
-            <!-- REM -->
-
-            <div class="card exercise-card">
-
-                <div class="exercise-header">
-
-                    <div class="exercise-name">
-                        Rem amb barra
-                    </div>
-
-                    <div
-                        class="exercise-volume"
-                        id="volume-row"
-                    ></div>
-
-                </div>
-
-
-                <div class="series-header">
-
-                    <div>Sèrie</div>
-
-                    <div>Reps</div>
-
-                    <div>Kg</div>
-
-                    <div></div>
-
-                </div>
-
-
-                <div id="series-row"></div>
-
-
-                <button
-                    class="add-series"
-                    data-exercise="row"
-                >
-                    + Afegir sèrie
-                </button>
-
-            </div>
-
-
-            <!-- PRESS MILITAR -->
-
-            <div class="card exercise-card">
-
-                <div class="exercise-header">
-
-                    <div class="exercise-name">
-                        Press militar amb manuelles
-                    </div>
-
-                    <div
-                        class="exercise-volume"
-                        id="volume-shoulder"
-                    ></div>
-
-                </div>
-
-
-                <div class="series-header">
-
-                    <div>Sèrie</div>
-
-                    <div>Reps</div>
-
-                    <div>Kg</div>
-
-                    <div></div>
-
-                </div>
-
-
-                <div id="series-shoulder"></div>
-
-
-                <button
-                    class="add-series"
-                    data-exercise="shoulder"
-                >
-                    + Afegir sèrie
-                </button>
-
-            </div>
-
-
-            <!-- ELEVACIONS -->
-
-            <div class="card exercise-card">
-
-                <div class="exercise-header">
-
-                    <div class="exercise-name">
-                        Elevacions laterals
-                    </div>
-
-                    <div
-                        class="exercise-volume"
-                        id="volume-lateral"
-                    ></div>
-
-                </div>
-
-
-                <div class="series-header">
-
-                    <div>Sèrie</div>
-
-                    <div>Reps</div>
-
-                    <div>Kg</div>
-
-                    <div></div>
-
-                </div>
-
-
-                <div id="series-lateral"></div>
-
-
-                <button
-                    class="add-series"
-                    data-exercise="lateral"
-                >
-                    + Afegir sèrie
-                </button>
-
-            </div>
-
-
-            <!-- BÍCEPS -->
-
-            <div class="card exercise-card">
-
-                <div class="exercise-header">
-
-                    <div class="exercise-name">
-                        Curl de bíceps amb barra
-                    </div>
-
-                    <div
-                        class="exercise-volume"
-                        id="volume-biceps"
-                    ></div>
-
-                </div>
-
-
-                <div class="series-header">
-
-                    <div>Sèrie</div>
-
-                    <div>Reps</div>
-
-                    <div>Kg</div>
-
-                    <div></div>
-
-                </div>
-
-
-                <div id="series-biceps"></div>
-
-
-                <button
-                    class="add-series"
-                    data-exercise="biceps"
-                >
-                    + Afegir sèrie
-                </button>
-
-            </div>
-
-
-            <!-- TRÍCEPS -->
-
-            <div class="card exercise-card">
-
-                <div class="exercise-header">
-
-                    <div class="exercise-name">
-                        Extensió de tríceps
-                    </div>
-
-                    <div
-                        class="exercise-volume"
-                        id="volume-triceps"
-                    ></div>
-
-                </div>
-
-
-                <div class="series-header">
-
-                    <div>Sèrie</div>
-
-                    <div>Reps</div>
-
-                    <div>Kg</div>
-
-                    <div></div>
-
-                </div>
-
-
-                <div id="series-triceps"></div>
-
-
-                <button
-                    class="add-series"
-                    data-exercise="triceps"
-                >
-                    + Afegir sèrie
-                </button>
-
-            </div>
-
-
-        </section>
-
-
-        <!-- =========================
-             DESCANS
-        ========================== -->
-
-        <div class="section-title">
-            Descans
+          </div>
         </div>
 
-
-        <div class="card rest-card">
-
-            <div class="rest-label">
-                Hores de descans
+        <div class="settings-row">
+          <div>
+            <div class="settings-title">Dades</div>
+            <div class="settings-description">
+              Les dades es guarden en aquest dispositiu.
             </div>
-
-
-            <input
-                id="sleepInput"
-                class="rest-input"
-                type="number"
-                step="0.25"
-                min="0"
-                max="24"
-                placeholder="Ex. 7,5"
-                inputmode="decimal"
-            >
-
+          </div>
         </div>
 
-
-        <div
-            id="saveStatus"
-            class="save-status"
-        ></div>
-
-
-    </main>
-
-
-    <!-- =========================
-         NAVEGACIÓ
-    ========================== -->
-
-    <nav class="tabbar">
-
-
-        <button class="tab active">
-
-            <div class="tab-icon">
-                ⌂
+        <div class="settings-row">
+          <div>
+            <div class="settings-title">Versió</div>
+            <div class="settings-description">
+              Pas 9
             </div>
+          </div>
+        </div>
 
-            Avui
+      </div>
 
-        </button>
+      <div class="card">
 
+        <div class="card-title">Properament</div>
 
-        <button class="tab">
-
-            <div class="tab-icon">
-                ↗
+        <div class="settings-row">
+          <div>
+            <div class="settings-title">Còpia de seguretat</div>
+            <div class="settings-description">
+              Exportar i importar totes les teves dades.
             </div>
+          </div>
 
-            Progrés
+          <button class="secondary-button" disabled>
+            Aviat
+          </button>
+        </div>
 
-        </button>
-
-
-        <button class="tab">
-
-            <div class="tab-icon">
-                ▣
+        <div class="settings-row">
+          <div>
+            <div class="settings-title">Mode fosc</div>
+            <div class="settings-description">
+              Una interfície adaptada a la nit.
             </div>
+          </div>
 
-            Historial
+          <button class="secondary-button" disabled>
+            Aviat
+          </button>
+        </div>
 
-        </button>
+      </div>
 
-
-        <button class="tab">
-
-            <div class="tab-icon">
-                •••
-            </div>
-
-            Més
-
-        </button>
-
-
-    </nav>
-
+    </div>
+  </main>
 
 </div>
 
 
+<!-- ==================== NAVEGACIÓ ==================== -->
+
+<nav class="tabbar">
+
+  <div class="tabbar-inner">
+
+    <button class="tab active" data-tab="today">
+      <span>⌂</span>
+      <small>Avui</small>
+    </button>
+
+    <button class="tab" data-tab="progress">
+      <span>↗</span>
+      <small>Progrés</small>
+    </button>
+
+    <button class="tab" data-tab="history">
+      <span>◷</span>
+      <small>Historial</small>
+    </button>
+
+    <button class="tab" data-tab="more">
+      <span>•••</span>
+      <small>Més</small>
+    </button>
+
+  </div>
+
+</nav>
+
+
 <script>
 
+  /* =========================================================
+     CONFIGURACIÓ
+  ========================================================= */
 
-    /* =========================
-       CONFIGURACIÓ
-    ========================== */
+  const STORAGE_KEY = "lluc-health-data-v1";
 
-    const STORAGE_KEY =
-        "lluc-health-data-v1";
+  const mealDefinitions = [
+    { key: "coffee", name: "Cafè" },
+    { key: "breakfast", name: "Esmorzar" },
+    { key: "riceCream", name: "Crema d’arròs amb galetes i llet" },
+    { key: "lunch", name: "Dinar" },
+    { key: "snack", name: "Berenar" },
+    { key: "creatine", name: "Creatina" },
+    { key: "protein", name: "Batut proteïna" },
+    { key: "dinner", name: "Sopar" }
+  ];
+
+  const exercises = [
+    { key: "bench", name: "Press banca" },
+    { key: "row", name: "Rem amb barra" },
+    { key: "shoulder", name: "Press militar amb manuelles" },
+    { key: "lateral", name: "Elevacions laterals" },
+    { key: "biceps", name: "Curl de bíceps amb barra" },
+    { key: "triceps", name: "Extensió de tríceps" }
+  ];
 
 
-    const EXERCISES = {
+  /* =========================================================
+     DATA
+  ========================================================= */
 
-        bench: {
-            name: "Press banca"
-        },
+  function loadData() {
+    try {
+      return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+    } catch (error) {
+      return {};
+    }
+  }
 
-        row: {
-            name: "Rem amb barra"
-        },
+  function saveData(data) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  }
 
-        shoulder: {
-            name: "Press militar amb manuelles"
-        },
+  function getTodayKey() {
+    const now = new Date();
 
-        lateral: {
-            name: "Elevacions laterals"
-        },
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, "0");
+    const day = String(now.getDate()).padStart(2, "0");
 
-        biceps: {
-            name: "Curl de bíceps amb barra"
-        },
+    return `${year}-${month}-${day}`;
+  }
 
-        triceps: {
-            name: "Extensió de tríceps"
-        }
+  function createEmptyDay() {
 
+    const meals = {};
+
+    mealDefinitions.forEach(meal => {
+      meals[meal.key] = false;
+    });
+
+    const strength = {};
+
+    exercises.forEach(exercise => {
+      strength[exercise.key] = [];
+    });
+
+    return {
+      weight: null,
+      meals: meals,
+      activity: null,
+      sleep: null,
+      strength: strength
     };
+  }
 
+  function getDay(dateKey) {
 
-    /* =========================
-       DADES
-    ========================== */
+    const data = loadData();
 
-    let allData =
-        loadData();
-
-
-    const today =
-        getTodayKey();
-
-
-    if (!allData[today]) {
-
-        allData[today] =
-            createEmptyDay();
-
-        saveData();
+    if (!data[dateKey]) {
+      data[dateKey] = createEmptyDay();
+      saveData(data);
     }
 
+    const day = data[dateKey];
 
-    function createEmptyDay() {
+    /* Compatibilitat amb versions anteriors */
 
-        return {
-
-            weight: null,
-
-            meals: {
-
-                coffee: false,
-
-                breakfast: false,
-
-                rice: false,
-
-                lunch: false,
-
-                snack: false,
-
-                creatine: false,
-
-                protein: false,
-
-                dinner: false
-
-            },
-
-            activity: null,
-
-            sleep: null,
-
-            strength: {
-
-                bench: [],
-
-                row: [],
-
-                shoulder: [],
-
-                lateral: [],
-
-                biceps: [],
-
-                triceps: []
-
-            }
-
-        };
-
+    if (!day.meals) {
+      day.meals = {};
     }
 
+    mealDefinitions.forEach(meal => {
+      if (typeof day.meals[meal.key] !== "boolean") {
+        day.meals[meal.key] = false;
+      }
+    });
 
-    function loadData() {
-
-        try {
-
-            const saved =
-                localStorage.getItem(
-                    STORAGE_KEY
-                );
-
-            if (!saved) {
-
-                return {};
-            }
-
-
-            const data =
-                JSON.parse(saved);
-
-
-            /*
-             * Compatibilitat amb
-             * la versió anterior.
-             */
-
-            Object.keys(data)
-                .forEach(date => {
-
-                    if (!data[date].strength) {
-
-                        data[date].strength = {
-
-                            bench: [],
-                            row: [],
-                            shoulder: [],
-                            lateral: [],
-                            biceps: [],
-                            triceps: []
-
-                        };
-
-                    }
-
-                });
-
-
-            return data;
-
-        } catch (error) {
-
-            console.error(
-                "Error carregant dades:",
-                error
-            );
-
-            return {};
-        }
-
+    if (!day.strength) {
+      day.strength = {};
     }
 
+    exercises.forEach(exercise => {
+      if (!Array.isArray(day.strength[exercise.key])) {
+        day.strength[exercise.key] = [];
+      }
+    });
 
-    function saveData() {
+    saveData(data);
 
-        try {
+    return day;
+  }
 
-            localStorage.setItem(
 
-                STORAGE_KEY,
+  /* =========================================================
+     DATA AVUI
+  ========================================================= */
 
-                JSON.stringify(allData)
+  const todayKey = getTodayKey();
+  let today = getDay(todayKey);
 
-            );
 
-            showSaved();
+  /* =========================================================
+     DATA FORMAT
+  ========================================================= */
 
-        } catch (error) {
+  function formatDate(dateKey) {
 
-            console.error(
-                "Error guardant dades:",
-                error
-            );
+    const date = new Date(dateKey + "T12:00:00");
 
-            document
-                .getElementById(
-                    "saveStatus"
-                )
-                .textContent =
-                "Error guardant les dades";
-        }
+    return date.toLocaleDateString("ca-ES", {
+      weekday: "long",
+      day: "numeric",
+      month: "long"
+    });
+  }
 
+  function formatShortDate(dateKey) {
+
+    const date = new Date(dateKey + "T12:00:00");
+
+    return date.toLocaleDateString("ca-ES", {
+      day: "2-digit",
+      month: "2-digit"
+    });
+  }
+
+
+  document.getElementById("todayDate").textContent =
+    formatDate(todayKey);
+
+
+  /* =========================================================
+     GUARDAR
+  ========================================================= */
+
+  function saveToday() {
+
+    const data = loadData();
+
+    data[todayKey] = today;
+
+    saveData(data);
+
+    showSavedMessage();
+  }
+
+  function showSavedMessage() {
+
+    const message = document.getElementById("savedMessage");
+
+    message.textContent = "Guardat automàticament ✓";
+
+    clearTimeout(window.savedTimeout);
+
+    window.savedTimeout = setTimeout(() => {
+      message.textContent = "";
+    }, 1800);
+  }
+
+
+  /* =========================================================
+     PES
+  ========================================================= */
+
+  function getRecordedWeights() {
+
+    const data = loadData();
+
+    return Object.entries(data)
+      .filter(([date, day]) =>
+        day &&
+        typeof day.weight === "number" &&
+        !isNaN(day.weight)
+      )
+      .sort(([dateA], [dateB]) =>
+        dateA.localeCompare(dateB)
+      );
+  }
+
+
+  function getPreviousWeight() {
+
+    const weights = getRecordedWeights()
+      .filter(([date]) => date !== todayKey);
+
+    if (weights.length === 0) {
+      return null;
     }
 
+    return weights[weights.length - 1][1].weight;
+  }
 
-    function showSaved() {
 
-        const status =
-            document.getElementById(
-                "saveStatus"
-            );
+  function renderWeight() {
 
+    const display = document.getElementById("weightDisplay");
+    const input = document.getElementById("weightInput");
+    const change = document.getElementById("weightChange");
 
-        status.textContent =
-            "Guardat automàticament ✓";
+    if (typeof today.weight === "number") {
 
+      display.textContent =
+        today.weight.toFixed(1) + " kg";
 
-        clearTimeout(
-            window.saveTimer
-        );
+      input.value = today.weight;
 
+      const previous = getPreviousWeight();
 
-        window.saveTimer =
-            setTimeout(() => {
+      if (typeof previous === "number") {
 
-                status.textContent = "";
-
-            }, 1500);
-
-    }
-
-
-    function getTodayKey() {
-
-        const now =
-            new Date();
-
-
-        const year =
-            now.getFullYear();
-
-
-        const month =
-            String(
-                now.getMonth() + 1
-            ).padStart(2, "0");
-
-
-        const day =
-            String(
-                now.getDate()
-            ).padStart(2, "0");
-
-
-        return `${year}-${month}-${day}`;
-
-    }
-
-
-    /* =========================
-       DATA
-    ========================== */
-
-    function displayDate() {
-
-        const date =
-            new Date();
-
-
-        const text =
-            date.toLocaleDateString(
-                "ca-ES",
-                {
-                    weekday: "long",
-                    day: "numeric",
-                    month: "long"
-                }
-            );
-
-
-        document
-            .getElementById(
-                "dateText"
-            )
-            .textContent =
-            text.charAt(0).toUpperCase()
-            + text.slice(1);
-
-    }
-
-
-    /* =========================
-       PES
-    ========================== */
-
-    function updateWeightChange() {
-
-        const current =
-            allData[today].weight;
-
-
-        const element =
-            document.getElementById(
-                "weightChange"
-            );
-
-
-        element.style.color =
-            "#34c759";
-
-
-        if (current === null) {
-
-            element.textContent = "";
-
-            return;
-        }
-
-
-        const dates =
-            Object.keys(allData)
-                .sort()
-                .reverse();
-
-
-        let previousWeight =
-            null;
-
-
-        for (
-            const date of dates
-        ) {
-
-            if (date === today) {
-
-                continue;
-            }
-
-
-            const weight =
-                allData[date].weight;
-
-
-            if (
-                weight !== null &&
-                typeof weight === "number"
-            ) {
-
-                previousWeight =
-                    weight;
-
-                break;
-            }
-
-        }
-
-
-        if (previousWeight === null) {
-
-            element.textContent = "";
-
-            return;
-        }
-
-
-        const difference =
-            current - previousWeight;
-
+        const difference = today.weight - previous;
 
         if (difference > 0) {
 
-            element.textContent =
-                `↑ ${difference.toFixed(1).replace(".", ",")} kg`;
+          change.textContent =
+            "+" + difference.toFixed(1) + " kg respecte l'últim registre";
 
+          change.className = "weight-change positive";
+
+        } else if (difference < 0) {
+
+          change.textContent =
+            difference.toFixed(1) + " kg respecte l'últim registre";
+
+          change.className = "weight-change negative";
+
+        } else {
+
+          change.textContent =
+            "Mateix pes que l'últim registre";
+
+          change.className = "weight-change neutral";
         }
 
-        else if (difference < 0) {
+      } else {
 
-            element.style.color =
-                "#ff3b30";
+        change.textContent = "Primer registre";
+        change.className = "weight-change neutral";
+      }
 
-            element.textContent =
-                `↓ ${Math.abs(difference).toFixed(1).replace(".", ",")} kg`;
+    } else {
 
+      display.textContent = "— kg";
+      input.value = "";
+      change.textContent = "";
+      change.className = "weight-change neutral";
+    }
+  }
+
+
+  document.getElementById("weightInput")
+    .addEventListener("input", event => {
+
+      const value = parseFloat(event.target.value);
+
+      if (isNaN(value)) {
+
+        today.weight = null;
+
+      } else {
+
+        today.weight = value;
+      }
+
+      saveToday();
+      renderWeight();
+    });
+
+
+  /* =========================================================
+     MENJARS
+  ========================================================= */
+
+  function renderMeals() {
+
+    const list = document.getElementById("mealList");
+
+    list.innerHTML = "";
+
+    mealDefinitions.forEach(meal => {
+
+      const row = document.createElement("div");
+
+      row.className =
+        "meal-row" +
+        (today.meals[meal.key] ? " checked" : "");
+
+      row.innerHTML = `
+        <div class="meal-name">${meal.name}</div>
+        <div class="check">✓</div>
+      `;
+
+      row.addEventListener("click", () => {
+
+        today.meals[meal.key] =
+          !today.meals[meal.key];
+
+        saveToday();
+        renderMeals();
+      });
+
+      list.appendChild(row);
+    });
+  }
+
+
+  /* =========================================================
+     ACTIVITAT
+  ========================================================= */
+
+  function renderActivity() {
+
+    document.querySelectorAll(".activity-button")
+      .forEach(button => {
+
+        button.classList.toggle(
+          "selected",
+          button.dataset.activity === today.activity
+        );
+      });
+
+    const section =
+      document.getElementById("strengthSection");
+
+    section.style.display =
+      today.activity === "strength"
+        ? "block"
+        : "none";
+  }
+
+
+  document.querySelectorAll(".activity-button")
+    .forEach(button => {
+
+      button.addEventListener("click", () => {
+
+        today.activity = button.dataset.activity;
+
+        saveToday();
+
+        renderActivity();
+        renderExercises();
+      });
+
+    });
+
+
+  /* =========================================================
+     SON
+  ========================================================= */
+
+  const sleepInput =
+    document.getElementById("sleepInput");
+
+  function renderSleep() {
+
+    sleepInput.value =
+      typeof today.sleep === "number"
+        ? today.sleep
+        : "";
+  }
+
+  sleepInput.addEventListener("input", event => {
+
+    const value = parseFloat(event.target.value);
+
+    today.sleep =
+      isNaN(value)
+        ? null
+        : value;
+
+    saveToday();
+  });
+
+
+  /* =========================================================
+     FORÇA
+  ========================================================= */
+
+  function calculateVolume(sets) {
+
+    return sets.reduce((total, set) => {
+
+      const reps = Number(set.reps) || 0;
+      const kg = Number(set.kg) || 0;
+
+      return total + reps * kg;
+
+    }, 0);
+  }
+
+
+  function renderExercises() {
+
+    const list =
+      document.getElementById("exerciseList");
+
+    list.innerHTML = "";
+
+    exercises.forEach(exercise => {
+
+      renderExercise(exercise);
+    });
+  }
+
+
+  function renderExercise(exercise) {
+
+    const sets =
+      today.strength[exercise.key] || [];
+
+    const card =
+      document.createElement("div");
+
+    card.className = "exercise-card";
+
+    const volume =
+      calculateVolume(sets);
+
+    card.innerHTML = `
+      <div class="exercise-header">
+
+        <div class="exercise-name">
+          ${exercise.name}
+        </div>
+
+        <div class="exercise-volume">
+          ${volume.toFixed(0)} kg
+        </div>
+
+      </div>
+
+      <div class="sets-header">
+        <div>#</div>
+        <div>Reps</div>
+        <div>Kg</div>
+        <div></div>
+      </div>
+
+      <div class="sets-container"></div>
+
+      <button class="add-set">
+        + Afegir sèrie
+      </button>
+    `;
+
+    const setsContainer =
+      card.querySelector(".sets-container");
+
+    sets.forEach((set, index) => {
+
+      const row =
+        document.createElement("div");
+
+      row.className = "set-row";
+
+      row.innerHTML = `
+        <div class="set-number">
+          ${index + 1}
+        </div>
+
+        <input
+          class="set-input reps-input"
+          type="number"
+          min="0"
+          inputmode="numeric"
+          placeholder="Reps"
+          value="${set.reps ?? ""}"
+        >
+
+        <input
+          class="set-input kg-input"
+          type="number"
+          min="0"
+          step="0.5"
+          inputmode="decimal"
+          placeholder="Kg"
+          value="${set.kg ?? ""}"
+        >
+
+        <button class="delete-set">
+          ×
+        </button>
+      `;
+
+      const repsInput =
+        row.querySelector(".reps-input");
+
+      const kgInput =
+        row.querySelector(".kg-input");
+
+      repsInput.addEventListener("input", () => {
+
+        set.reps =
+          repsInput.value === ""
+            ? ""
+            : Number(repsInput.value);
+
+        saveToday();
+        updateExerciseVolume(card, sets);
+      });
+
+      kgInput.addEventListener("input", () => {
+
+        set.kg =
+          kgInput.value === ""
+            ? ""
+            : Number(kgInput.value);
+
+        saveToday();
+        updateExerciseVolume(card, sets);
+      });
+
+      row.querySelector(".delete-set")
+        .addEventListener("click", () => {
+
+          today.strength[exercise.key]
+            .splice(index, 1);
+
+          saveToday();
+
+          renderExercise(exercise);
+        });
+
+      setsContainer.appendChild(row);
+    });
+
+
+    card.querySelector(".add-set")
+      .addEventListener("click", () => {
+
+        today.strength[exercise.key].push({
+          reps: "",
+          kg: ""
+        });
+
+        saveToday();
+
+        renderExercise(exercise);
+      });
+
+
+    document
+      .getElementById("exerciseList")
+      .appendChild(card);
+  }
+
+
+  function updateExerciseVolume(card, sets) {
+
+    const volume =
+      calculateVolume(sets);
+
+    const element =
+      card.querySelector(".exercise-volume");
+
+    if (element) {
+      element.textContent =
+        volume.toFixed(0) + " kg";
+    }
+  }
+
+
+  /* =========================================================
+     NAVEGACIÓ
+  ========================================================= */
+
+  const screens = {
+    today: document.getElementById("todayScreen"),
+    progress: document.getElementById("progressScreen"),
+    history: document.getElementById("historyScreen"),
+    more: document.getElementById("moreScreen")
+  };
+
+
+  document.querySelectorAll(".tab")
+    .forEach(tab => {
+
+      tab.addEventListener("click", () => {
+
+        const destination =
+          tab.dataset.tab;
+
+        document.querySelectorAll(".tab")
+          .forEach(button => {
+            button.classList.remove("active");
+          });
+
+        tab.classList.add("active");
+
+        Object.values(screens)
+          .forEach(screen => {
+            screen.classList.remove("active");
+          });
+
+        screens[destination]
+          .classList.add("active");
+
+
+        if (destination === "progress") {
+          renderProgress();
         }
 
-        else {
-
-            element.style.color =
-                "#8e8e93";
-
-            element.textContent =
-                "Sense canvi";
-
+        if (destination === "history") {
+          renderHistory();
         }
 
+      });
+
+    });
+
+
+  /* =========================================================
+     PROGRÉS
+  ========================================================= */
+
+  function renderProgress() {
+
+    const weights =
+      getRecordedWeights();
+
+    const currentWeight =
+      weights.length
+        ? weights[weights.length - 1][1].weight
+        : null;
+
+    const firstWeight =
+      weights.length
+        ? weights[0][1].weight
+        : null;
+
+
+    document.getElementById(
+      "progressCurrentWeight"
+    ).textContent =
+      currentWeight !== null
+        ? currentWeight.toFixed(1) + " kg"
+        : "—";
+
+
+    if (
+      currentWeight !== null &&
+      firstWeight !== null &&
+      weights.length > 1
+    ) {
+
+      const difference =
+        currentWeight - firstWeight;
+
+      document.getElementById(
+        "progressWeightChange"
+      ).textContent =
+        (difference >= 0 ? "+" : "") +
+        difference.toFixed(1) +
+        " kg";
+
+    } else {
+
+      document.getElementById(
+        "progressWeightChange"
+      ).textContent = "—";
     }
 
 
-    document
-        .getElementById(
-            "weightInput"
-        )
-        .addEventListener(
-            "input",
-            function () {
+    const data = loadData();
 
-                const value =
-                    parseFloat(
-                        this.value.replace(
-                            ",",
-                            "."
-                        )
-                    );
+    const dates =
+      Object.keys(data);
+
+    document.getElementById(
+      "progressDays"
+    ).textContent =
+      dates.length;
 
 
-                if (isNaN(value)) {
+    const workouts =
+      Object.values(data)
+        .filter(day =>
+          day &&
+          (
+            day.activity === "hiit" ||
+            day.activity === "strength"
+          )
+        ).length;
 
-                    allData[today].weight =
-                        null;
-
-                }
-
-                else {
-
-                    allData[today].weight =
-                        value;
-
-                }
-
-
-                updateWeightChange();
-
-                saveData();
-
-            }
-        );
+    document.getElementById(
+      "progressWorkouts"
+    ).textContent =
+      workouts;
 
 
-    /* =========================
-       ÀPATS
-    ========================== */
-
-    document
-        .querySelectorAll(
-            ".meal"
-        )
-        .forEach(button => {
-
-            button.addEventListener(
-                "click",
-                () => {
-
-                    const key =
-                        button.dataset.key;
+    renderWeightChart(weights);
+    renderStrengthProgress(data);
+  }
 
 
-                    allData[today]
-                        .meals[key] =
-                        !allData[today]
-                            .meals[key];
+  function renderWeightChart(weights) {
+
+    const chart =
+      document.getElementById("weightChart");
+
+    chart.innerHTML = "";
+
+    if (weights.length === 0) {
+
+      chart.innerHTML = `
+        <div class="empty-state">
+          Encara no tens registres de pes.
+        </div>
+      `;
+
+      return;
+    }
 
 
-                    renderDay();
+    const values =
+      weights.map(item => item[1].weight);
 
-                    saveData();
+    const min =
+      Math.min(...values);
 
-                }
-            );
+    const max =
+      Math.max(...values);
 
-        });
-
-
-    /* =========================
-       ACTIVITAT
-    ========================== */
-
-    document
-        .querySelectorAll(
-            ".activity-button"
-        )
-        .forEach(button => {
-
-            button.addEventListener(
-                "click",
-                () => {
-
-                    const activity =
-                        button.dataset.activity;
+    const range =
+      max - min || 1;
 
 
-                    if (
-                        allData[today]
-                            .activity ===
-                        activity
-                    ) {
+    weights.slice(-14).forEach(([date, day]) => {
 
-                        allData[today]
-                            .activity =
-                            null;
+      const container =
+        document.createElement("div");
 
-                    }
+      container.className =
+        "bar-container";
 
-                    else {
+      const bar =
+        document.createElement("div");
 
-                        allData[today]
-                            .activity =
-                            activity;
+      bar.className = "bar";
 
-                    }
+      const height =
+        25 +
+        ((day.weight - min) / range) * 140;
 
+      bar.style.height =
+        height + "px";
 
-                    renderDay();
+      const label =
+        document.createElement("div");
 
-                    saveData();
+      label.className =
+        "bar-label";
 
-                }
-            );
+      label.textContent =
+        formatShortDate(date);
 
-        });
+      container.appendChild(bar);
+      container.appendChild(label);
 
-
-    /* =========================
-       DESCANS
-    ========================== */
-
-    document
-        .getElementById(
-            "sleepInput"
-        )
-        .addEventListener(
-            "input",
-            function () {
-
-                const value =
-                    parseFloat(
-                        this.value.replace(
-                            ",",
-                            "."
-                        )
-                    );
+      chart.appendChild(container);
+    });
+  }
 
 
-                if (isNaN(value)) {
+  function renderStrengthProgress(data) {
 
-                    allData[today].sleep =
-                        null;
+    const container =
+      document.getElementById("strengthProgress");
 
-                }
-
-                else {
-
-                    allData[today].sleep =
-                        value;
-
-                }
+    container.innerHTML = "";
 
 
-                saveData();
+    exercises.forEach(exercise => {
 
-            }
-        );
+      let bestKg = 0;
+      let bestVolume = 0;
+      let totalSets = 0;
 
 
-    /* =========================
-       FORÇA
-    ========================== */
-
-    function renderStrength() {
-
-        const section =
-            document.getElementById(
-                "strengthSection"
-            );
-
+      Object.values(data).forEach(day => {
 
         if (
-            allData[today].activity !==
-            "strength"
+          !day ||
+          !day.strength ||
+          !Array.isArray(
+            day.strength[exercise.key]
+          )
         ) {
-
-            section.style.display =
-                "none";
-
-            return;
+          return;
         }
 
 
-        section.style.display =
-            "block";
+        day.strength[exercise.key]
+          .forEach(set => {
 
+            const kg =
+              Number(set.kg) || 0;
 
-        Object.keys(EXERCISES)
-            .forEach(
-                exercise => {
+            const reps =
+              Number(set.reps) || 0;
 
-                    renderExercise(
-                        exercise
-                    );
+            bestKg =
+              Math.max(bestKg, kg);
 
-                }
-            );
+            bestVolume +=
+              kg * reps;
 
-    }
-
-
-    function renderExercise(
-        exercise
-    ) {
-
-        const container =
-            document.getElementById(
-                `series-${exercise}`
-            );
-
-
-        const volumeElement =
-            document.getElementById(
-                `volume-${exercise}`
-            );
-
-
-        const series =
-            allData[today]
-                .strength[exercise];
-
-
-        container.innerHTML = "";
-
-
-        let volume = 0;
-
-
-        series.forEach(
-            (set, index) => {
-
-                const reps =
-                    Number(set.reps)
-                    || 0;
-
-
-                const weight =
-                    Number(set.weight)
-                    || 0;
-
-
-                volume +=
-                    reps * weight;
-
-
-                const row =
-                    document.createElement(
-                        "div"
-                    );
-
-
-                row.className =
-                    "series-row";
-
-
-                row.innerHTML = `
-
-                    <div class="series-number">
-                        ${index + 1}
-                    </div>
-
-                    <input
-                        class="series-input"
-                        type="number"
-                        min="0"
-                        step="1"
-                        placeholder="0"
-                        inputmode="numeric"
-                        value="${set.reps ?? ""}"
-                        data-exercise="${exercise}"
-                        data-index="${index}"
-                        data-field="reps"
-                    >
-
-                    <input
-                        class="series-input"
-                        type="number"
-                        min="0"
-                        step="0.5"
-                        placeholder="0"
-                        inputmode="decimal"
-                        value="${set.weight ?? ""}"
-                        data-exercise="${exercise}"
-                        data-index="${index}"
-                        data-field="weight"
-                    >
-
-                    <button
-                        class="delete-series"
-                        data-exercise="${exercise}"
-                        data-index="${index}"
-                        title="Eliminar sèrie"
-                    >
-                        ×
-                    </button>
-
-                `;
-
-
-                container.appendChild(
-                    row
-                );
-
+            if (kg || reps) {
+              totalSets++;
             }
-        );
+
+          });
+
+      });
 
 
-        if (volume > 0) {
+      const card =
+        document.createElement("div");
 
-            volumeElement.textContent =
-                `${formatNumber(volume)} kg`;
+      card.className = "stat-card";
 
-        }
+      card.style.marginBottom = "10px";
 
-        else {
+      card.innerHTML = `
+        <div class="stat-label">
+          ${exercise.name}
+        </div>
 
-            volumeElement.textContent =
-                "";
+        <div style="
+          display:grid;
+          grid-template-columns:1fr 1fr;
+          gap:10px;
+          margin-top:10px;
+        ">
 
-        }
+          <div>
+            <div class="stat-label">
+              Màxim kg
+            </div>
 
+            <div style="font-size:20px;font-weight:700;">
+              ${bestKg ? bestKg.toFixed(1) + " kg" : "—"}
+            </div>
+          </div>
 
-        /*
-         * Inputs de les sèries
-         */
+          <div>
+            <div class="stat-label">
+              Sèries
+            </div>
 
-        container
-            .querySelectorAll(
-                ".series-input"
-            )
-            .forEach(input => {
+            <div style="font-size:20px;font-weight:700;">
+              ${totalSets}
+            </div>
+          </div>
 
-                input.addEventListener(
-                    "input",
-                    () => {
+        </div>
+      `;
 
-                        const exercise =
-                            input.dataset
-                                .exercise;
+      container.appendChild(card);
 
-
-                        const index =
-                            Number(
-                                input.dataset
-                                    .index
-                            );
-
-
-                        const field =
-                            input.dataset
-                                .field;
-
-
-                        allData[today]
-                            .strength
-                            [exercise]
-                            [index]
-                            [field] =
-                            input.value === ""
-                                ? null
-                                : Number(
-                                    input.value
-                                );
+    });
+  }
 
 
-                        saveData();
+  /* =========================================================
+     HISTORIAL
+  ========================================================= */
+
+  function renderHistory() {
+
+    const list =
+      document.getElementById("historyList");
+
+    list.innerHTML = "";
+
+    const data =
+      loadData();
 
 
-                        renderExercise(
-                            exercise
-                        );
-
-                    }
-                );
-
-            });
+    const dates =
+      Object.keys(data)
+        .sort()
+        .reverse();
 
 
-        /*
-         * Eliminar sèrie
-         */
+    if (dates.length === 0) {
 
-        container
-            .querySelectorAll(
-                ".delete-series"
-            )
-            .forEach(button => {
+      list.innerHTML = `
+        <div class="card">
+          <div class="empty-state">
+            Encara no tens cap dia registrat.
+          </div>
+        </div>
+      `;
 
-                button.addEventListener(
-                    "click",
-                    () => {
-
-                        const exercise =
-                            button.dataset
-                                .exercise;
-
-
-                        const index =
-                            Number(
-                                button.dataset
-                                    .index
-                            );
-
-
-                        allData[today]
-                            .strength
-                            [exercise]
-                            .splice(
-                                index,
-                                1
-                            );
-
-
-                        renderExercise(
-                            exercise
-                        );
-
-
-                        saveData();
-
-                    }
-                );
-
-            });
-
+      return;
     }
 
 
-    function addSeries(
-        exercise
-    ) {
+    dates.forEach(dateKey => {
 
-        allData[today]
-            .strength[exercise]
-            .push({
+      const day =
+        data[dateKey];
 
-                reps: null,
 
-                weight: null
+      const item =
+        document.createElement("div");
 
-            });
+      item.className =
+        "history-item";
 
 
-        renderExercise(
-            exercise
-        );
+      let activityText =
+        "Sense activitat";
 
+      if (day.activity === "hiit") {
+        activityText = "HIIT";
+      }
 
-        saveData();
+      if (day.activity === "strength") {
+        activityText = "Força";
+      }
 
-    }
+      if (day.activity === "rest") {
+        activityText = "Descans";
+      }
 
 
-    document
-        .querySelectorAll(
-            ".add-series"
-        )
-        .forEach(button => {
+      const mealCount =
+        day.meals
+          ? Object.values(day.meals)
+              .filter(Boolean).length
+          : 0;
 
-            button.addEventListener(
-                "click",
-                () => {
 
-                    addSeries(
-                        button.dataset
-                            .exercise
-                    );
+      item.innerHTML = `
+        <div class="history-top">
 
-                }
-            );
+          <div class="history-date">
+            ${formatDate(dateKey)}
+          </div>
 
-        });
+          <div class="history-weight">
+            ${
+              typeof day.weight === "number"
+                ? day.weight.toFixed(1) + " kg"
+                : "—"
+            }
+          </div>
 
+        </div>
 
-    /* =========================
-       RENDER GENERAL
-    ========================== */
+        <div class="history-details">
+          ${activityText}
+          ·
+          ${mealCount}/8 hàbits
+          ${
+            typeof day.sleep === "number"
+              ? " · " + day.sleep + " h son"
+              : ""
+          }
+        </div>
+      `;
 
-    function renderDay() {
 
-        const day =
-            allData[today];
+      list.appendChild(item);
 
+    });
+  }
 
-        /*
-         * PES
-         */
 
-        const weightInput =
-            document.getElementById(
-                "weightInput"
-            );
+  /* =========================================================
+     INICIALITZACIÓ
+  ========================================================= */
 
-
-        weightInput.value =
-            day.weight !== null
-                ? day.weight
-                : "";
-
-
-        updateWeightChange();
-
-
-        /*
-         * ÀPATS
-         */
-
-        document
-            .querySelectorAll(
-                ".meal"
-            )
-            .forEach(button => {
-
-                const key =
-                    button.dataset.key;
-
-
-                const check =
-                    button.querySelector(
-                        ".check"
-                    );
-
-
-                if (
-                    day.meals[key]
-                ) {
-
-                    check.classList
-                        .add("active");
-
-                    check.textContent =
-                        "✓";
-
-                }
-
-                else {
-
-                    check.classList
-                        .remove("active");
-
-                    check.textContent =
-                        "";
-
-                }
-
-            });
-
-
-        /*
-         * ACTIVITAT
-         */
-
-        document
-            .querySelectorAll(
-                ".activity-button"
-            )
-            .forEach(button => {
-
-                button.classList
-                    .remove("active");
-
-
-                if (
-                    button.dataset
-                        .activity ===
-                    day.activity
-                ) {
-
-                    button.classList
-                        .add("active");
-
-                }
-
-            });
-
-
-        /*
-         * DESCANS
-         */
-
-        const sleepInput =
-            document.getElementById(
-                "sleepInput"
-            );
-
-
-        sleepInput.value =
-            day.sleep !== null
-                ? day.sleep
-                : "";
-
-
-        /*
-         * FORÇA
-         */
-
-        renderStrength();
-
-    }
-
-
-    function formatNumber(
-        number
-    ) {
-
-        return number
-            .toLocaleString(
-                "ca-ES",
-                {
-                    maximumFractionDigits: 1
-                }
-            );
-
-    }
-
-
-    /* =========================
-       INICIAR APP
-    ========================== */
-
-    displayDate();
-
-    renderDay();
-
+  renderWeight();
+  renderMeals();
+  renderActivity();
+  renderSleep();
+  renderExercises();
 
 </script>
 
-
 </body>
-
 </html>

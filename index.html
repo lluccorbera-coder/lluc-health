@@ -382,8 +382,6 @@
       margin-top: 4px;
     }
 
-    /* WEIGHT CHART */
-
     .chart-card {
       background: #ffffff;
       border-radius: 22px;
@@ -453,8 +451,6 @@
       white-space: nowrap;
     }
 
-    /* STRENGTH PROGRESS */
-
     .progress-exercise {
       background: #ffffff;
       border-radius: 20px;
@@ -506,6 +502,12 @@
       border-radius: 18px;
       padding: 16px;
       margin-bottom: 10px;
+      cursor: pointer;
+      transition: transform 0.12s ease;
+    }
+
+    .history-item:active {
+      transform: scale(0.985);
     }
 
     .history-top {
@@ -528,6 +530,135 @@
       color: #8e8e93;
       font-size: 13px;
       margin-top: 7px;
+    }
+
+    .history-arrow {
+      color: #8e8e93;
+      font-size: 20px;
+      margin-left: 8px;
+    }
+
+    /* ================= DETALL HISTORIAL ================= */
+
+    .back-button {
+      border: none;
+      background: transparent;
+      padding: 8px 0;
+      color: #007aff;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      margin-bottom: 8px;
+    }
+
+    .detail-date {
+      font-size: 14px;
+      color: #8e8e93;
+      margin-bottom: 5px;
+    }
+
+    .detail-main-title {
+      font-size: 34px;
+      font-weight: 700;
+      letter-spacing: -1px;
+      margin: 0 0 20px;
+    }
+
+    .detail-stat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .detail-stat {
+      background: white;
+      border-radius: 20px;
+      padding: 17px;
+    }
+
+    .detail-stat-label {
+      color: #8e8e93;
+      font-size: 13px;
+      margin-bottom: 5px;
+    }
+
+    .detail-stat-value {
+      font-size: 23px;
+      font-weight: 700;
+    }
+
+    .detail-meal-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      min-height: 45px;
+      border-bottom: 1px solid #f2f2f7;
+    }
+
+    .detail-meal-row:last-child {
+      border-bottom: none;
+    }
+
+    .detail-check {
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .detail-check.done {
+      color: #34c759;
+    }
+
+    .detail-check.not-done {
+      color: #c7c7cc;
+    }
+
+    .detail-exercise {
+      background: white;
+      border-radius: 20px;
+      padding: 17px;
+      margin-bottom: 10px;
+    }
+
+    .detail-exercise-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .detail-exercise-name {
+      font-size: 16px;
+      font-weight: 650;
+    }
+
+    .detail-exercise-volume {
+      color: #8e8e93;
+      font-size: 13px;
+    }
+
+    .detail-set {
+      display: grid;
+      grid-template-columns: 35px 1fr 1fr;
+      gap: 8px;
+      padding: 9px 0;
+      border-bottom: 1px solid #f2f2f7;
+      font-size: 14px;
+    }
+
+    .detail-set:last-child {
+      border-bottom: none;
+    }
+
+    .detail-set-number {
+      color: #8e8e93;
+      text-align: center;
+    }
+
+    .detail-empty {
+      color: #8e8e93;
+      font-size: 14px;
+      padding: 10px 0;
     }
 
     /* ================= MÉS ================= */
@@ -634,8 +765,11 @@
         gap: 6px;
       }
 
-    }
+      .detail-stat-grid {
+        gap: 9px;
+      }
 
+    }
   </style>
 </head>
 
@@ -668,8 +802,6 @@
 
       </div>
 
-
-      <!-- PES -->
 
       <div class="card">
 
@@ -712,8 +844,6 @@
       </div>
 
 
-      <!-- ALIMENTACIÓ -->
-
       <div class="section-header">
 
         <h3>Alimentació</h3>
@@ -732,8 +862,6 @@
 
       </div>
 
-
-      <!-- ACTIVITAT -->
 
       <div class="section-header">
 
@@ -769,8 +897,6 @@
       </div>
 
 
-      <!-- FORÇA -->
-
       <div
         id="strengthSection"
         style="display:none;">
@@ -787,8 +913,6 @@
 
       </div>
 
-
-      <!-- SON -->
 
       <div class="section-header">
 
@@ -866,8 +990,6 @@
       </div>
 
 
-      <!-- RESUM -->
-
       <div class="stat-grid">
 
         <div class="stat-card">
@@ -941,8 +1063,6 @@
       </div>
 
 
-      <!-- PES -->
-
       <div class="section-header">
 
         <h3>Pes</h3>
@@ -982,8 +1102,6 @@
 
       </div>
 
-
-      <!-- ACTIVITAT -->
 
       <div class="section-header">
 
@@ -1034,8 +1152,6 @@
       </div>
 
 
-      <!-- FORÇA -->
-
       <div class="section-header">
 
         <h3>Força</h3>
@@ -1078,6 +1194,64 @@
 
 
       <div id="historyList"></div>
+
+
+      <!-- DETALL D'UN DIA -->
+
+      <div
+        id="historyDetail"
+        style="display:none;">
+
+        <button
+          id="backToHistory"
+          class="back-button"
+          type="button">
+          ‹ Historial
+        </button>
+
+
+        <div
+          class="detail-date"
+          id="detailDate">
+        </div>
+
+
+        <h1
+          class="detail-main-title"
+          id="detailTitle">
+          —
+        </h1>
+
+
+        <div
+          id="detailStats"
+          class="detail-stat-grid">
+        </div>
+
+
+        <div class="section-header">
+          <h3>Alimentació</h3>
+        </div>
+
+
+        <div class="card">
+          <div id="detailMeals"></div>
+        </div>
+
+
+        <div
+          id="detailStrengthSection"
+          style="display:none;">
+
+          <div class="section-header">
+            <h3>Força</h3>
+          </div>
+
+          <div id="detailStrength"></div>
+
+        </div>
+
+      </div>
 
     </div>
 
@@ -1154,7 +1328,7 @@
             </div>
 
             <div class="settings-description">
-              Pas 10
+              Pas 11
             </div>
 
           </div>
@@ -1392,11 +1566,13 @@
           STORAGE_KEY
         );
 
+
       if (!saved) {
 
         return {};
 
       }
+
 
       return JSON.parse(saved) || {};
 
@@ -1408,6 +1584,7 @@
         "Error carregant dades:",
         error
       );
+
 
       return {};
 
@@ -1425,6 +1602,7 @@
         JSON.stringify(data)
       );
 
+
       return true;
 
     }
@@ -1435,6 +1613,7 @@
         "Error guardant dades:",
         error
       );
+
 
       return false;
 
@@ -1448,18 +1627,28 @@
     const now =
       new Date();
 
+
     const year =
       now.getFullYear();
+
 
     const month =
       String(
         now.getMonth() + 1
-      ).padStart(2, "0");
+      ).padStart(
+        2,
+        "0"
+      );
+
 
     const day =
       String(
         now.getDate()
-      ).padStart(2, "0");
+      ).padStart(
+        2,
+        "0"
+      );
+
 
     return (
       year +
@@ -1476,11 +1665,13 @@
 
     const meals = {};
 
+
     mealDefinitions.forEach(
       meal => {
 
-        meals[meal.key] =
-          false;
+        meals[
+          meal.key
+        ] = false;
 
       }
     );
@@ -1488,11 +1679,13 @@
 
     const strength = {};
 
+
     exercises.forEach(
       exercise => {
 
-        strength[exercise.key] =
-          [];
+        strength[
+          exercise.key
+        ] = [];
 
       }
     );
@@ -1597,6 +1790,7 @@
       data[dateKey] =
         createEmptyDay();
 
+
       saveData(data);
 
     }
@@ -1621,7 +1815,9 @@
 
 
   let today =
-    getDay(todayKey);
+    getDay(
+      todayKey
+    );
 
 
   /* =========================================================
@@ -1632,7 +1828,8 @@
 
     const date =
       new Date(
-        dateKey + "T12:00:00"
+        dateKey +
+        "T12:00:00"
       );
 
 
@@ -1652,7 +1849,8 @@
 
     const date =
       new Date(
-        dateKey + "T12:00:00"
+        dateKey +
+        "T12:00:00"
       );
 
 
@@ -1670,7 +1868,9 @@
   document.getElementById(
     "todayDate"
   ).textContent =
-    formatDate(todayKey);
+    formatDate(
+      todayKey
+    );
 
 
   /* =========================================================
@@ -1684,10 +1884,14 @@
 
 
     data[todayKey] =
-      normalizeDay(today);
+      normalizeDay(
+        today
+      );
 
 
-    saveData(data);
+    saveData(
+      data
+    );
 
 
     showSavedMessage();
@@ -1736,7 +1940,9 @@
       loadData();
 
 
-    return Object.entries(data)
+    return Object.entries(
+      data
+    )
 
       .filter(
         ([date, day]) => {
@@ -1745,7 +1951,9 @@
             day &&
             typeof day.weight ===
               "number" &&
-            !isNaN(day.weight)
+            !isNaN(
+              day.weight
+            )
           );
 
         }
@@ -1794,10 +2002,12 @@
         "weightDisplay"
       );
 
+
     const input =
       document.getElementById(
         "weightInput"
       );
+
 
     const change =
       document.getElementById(
@@ -1811,7 +2021,9 @@
     ) {
 
       display.textContent =
-        today.weight.toFixed(1) +
+        today.weight.toFixed(
+          1
+        ) +
         " kg";
 
 
@@ -1839,8 +2051,11 @@
 
           change.textContent =
             "+" +
-            difference.toFixed(1) +
+            difference.toFixed(
+              1
+            ) +
             " kg respecte l'últim registre";
+
 
           change.className =
             "weight-change positive";
@@ -1852,8 +2067,11 @@
         ) {
 
           change.textContent =
-            difference.toFixed(1) +
+            difference.toFixed(
+              1
+            ) +
             " kg respecte l'últim registre";
+
 
           change.className =
             "weight-change negative";
@@ -1864,6 +2082,7 @@
 
           change.textContent =
             "Mateix pes que l'últim registre";
+
 
           change.className =
             "weight-change neutral";
@@ -1877,6 +2096,7 @@
         change.textContent =
           "Primer registre";
 
+
         change.className =
           "weight-change neutral";
 
@@ -1889,11 +2109,14 @@
       display.textContent =
         "— kg";
 
+
       input.value =
         "";
 
+
       change.textContent =
         "";
+
 
       change.className =
         "weight-change neutral";
@@ -1916,7 +2139,9 @@
 
 
       today.weight =
-        isNaN(value)
+        isNaN(
+          value
+        )
           ? null
           : value;
 
@@ -2068,6 +2293,7 @@
 
             renderActivity();
 
+
             renderExercises();
 
           }
@@ -2109,7 +2335,9 @@
 
 
       today.sleep =
-        isNaN(value)
+        isNaN(
+          value
+        )
           ? null
           : value;
 
@@ -2135,17 +2363,21 @@
       ) => {
 
         const reps =
-          Number(set.reps) ||
-          0;
+          Number(
+            set.reps
+          ) || 0;
+
 
         const kg =
-          Number(set.kg) ||
-          0;
+          Number(
+            set.kg
+          ) || 0;
 
 
         return (
           total +
-          reps * kg
+          reps *
+          kg
         );
 
       },
@@ -2319,7 +2551,8 @@
           () => {
 
             set.reps =
-              repsInput.value === ""
+              repsInput.value ===
+              ""
                 ? ""
                 : Number(
                     repsInput.value
@@ -2343,7 +2576,8 @@
           () => {
 
             set.kg =
-              kgInput.value === ""
+              kgInput.value ===
+              ""
                 ? ""
                 : Number(
                     kgInput.value
@@ -2447,7 +2681,9 @@
     if (element) {
 
       element.textContent =
-        volume.toFixed(0) +
+        volume.toFixed(
+          0
+        ) +
         " kg";
 
     }
@@ -2554,7 +2790,7 @@
               "history"
             ) {
 
-              renderHistory();
+              showHistoryList();
 
             }
 
@@ -2593,13 +2829,13 @@
         : null;
 
 
-    /* PES ACTUAL */
-
     document.getElementById(
       "progressCurrentWeight"
     ).textContent =
       currentWeight !== null
-        ? currentWeight.toFixed(1) +
+        ? currentWeight.toFixed(
+            1
+          ) +
           " kg"
         : "—";
 
@@ -2608,7 +2844,9 @@
       "chartCurrentWeight"
     ).textContent =
       currentWeight !== null
-        ? currentWeight.toFixed(1) +
+        ? currentWeight.toFixed(
+            1
+          ) +
           " kg"
         : "—";
 
@@ -2638,8 +2876,6 @@
     }
 
 
-    /* CANVI TOTAL */
-
     if (
       currentWeight !== null &&
       firstWeight !== null &&
@@ -2663,7 +2899,9 @@
             ? "+"
             : ""
         ) +
-        difference.toFixed(1) +
+        difference.toFixed(
+          1
+        ) +
         " kg";
 
 
@@ -2689,50 +2927,50 @@
     }
 
 
-    /* DIES */
-
     document.getElementById(
       "progressDays"
     ).textContent =
-      Object.keys(data).length;
+      Object.keys(
+        data
+      ).length;
 
-
-    /* ENTRENAMENTS */
 
     let hiit = 0;
+
     let strength = 0;
 
 
-    Object.values(data)
-      .forEach(
-        day => {
+    Object.values(
+      data
+    ).forEach(
+      day => {
 
-          if (!day) {
-            return;
-          }
-
-
-          if (
-            day.activity ===
-            "hiit"
-          ) {
-
-            hiit++;
-
-          }
+        if (!day) {
+          return;
+        }
 
 
-          if (
-            day.activity ===
-            "strength"
-          ) {
+        if (
+          day.activity ===
+          "hiit"
+        ) {
 
-            strength++;
-
-          }
+          hiit++;
 
         }
-      );
+
+
+        if (
+          day.activity ===
+          "strength"
+        ) {
+
+          strength++;
+
+        }
+
+      }
+    );
 
 
     document.getElementById(
@@ -2750,17 +2988,14 @@
     document.getElementById(
       "progressWorkouts"
     ).textContent =
-      hiit + strength;
+      hiit +
+      strength;
 
-
-    /* GRÀFIC */
 
     renderWeightChart(
       weights
     );
 
-
-    /* FORÇA */
 
     renderStrengthProgress(
       data
@@ -2801,7 +3036,9 @@
 
 
     const recent =
-      weights.slice(-14);
+      weights.slice(
+        -14
+      );
 
 
     const values =
@@ -2824,7 +3061,9 @@
 
 
     const range =
-      max - min || 1;
+      max -
+      min ||
+      1;
 
 
     recent.forEach(
@@ -2853,7 +3092,9 @@
 
 
         value.textContent =
-          day.weight.toFixed(1);
+          day.weight.toFixed(
+            1
+          );
 
 
         const bar =
@@ -2870,7 +3111,8 @@
           25 +
           (
             (
-              day.weight - min
+              day.weight -
+              min
             ) /
             range
           ) *
@@ -2878,7 +3120,8 @@
 
 
         bar.style.height =
-          height + "px";
+          height +
+          "px";
 
 
         const label =
@@ -2943,101 +3186,90 @@
 
         let bestReps = 0;
 
-        let bestVolumeSet = 0;
-
         let totalVolume = 0;
 
         let totalSets = 0;
 
 
-        Object.values(data)
-          .forEach(
-            day => {
+        Object.values(
+          data
+        ).forEach(
+          day => {
 
-              if (
-                !day ||
-                !day.strength ||
-                !Array.isArray(
-                  day.strength[
-                    exercise.key
-                  ]
-                )
-              ) {
+            if (
+              !day ||
+              !day.strength ||
+              !Array.isArray(
+                day.strength[
+                  exercise.key
+                ]
+              )
+            ) {
 
-                return;
-
-              }
-
-
-              day.strength[
-                exercise.key
-              ].forEach(
-                set => {
-
-                  const kg =
-                    Number(
-                      set.kg
-                    ) || 0;
-
-
-                  const reps =
-                    Number(
-                      set.reps
-                    ) || 0;
-
-
-                  const setVolume =
-                    kg * reps;
-
-
-                  if (
-                    kg > bestKg
-                  ) {
-
-                    bestKg =
-                      kg;
-
-                    bestReps =
-                      reps;
-
-                  }
-
-                  else if (
-                    kg === bestKg &&
-                    reps > bestReps
-                  ) {
-
-                    bestReps =
-                      reps;
-
-                  }
-
-
-                  bestVolumeSet =
-                    Math.max(
-                      bestVolumeSet,
-                      setVolume
-                    );
-
-
-                  totalVolume +=
-                    setVolume;
-
-
-                  if (
-                    kg ||
-                    reps
-                  ) {
-
-                    totalSets++;
-
-                  }
-
-                }
-              );
+              return;
 
             }
-          );
+
+
+            day.strength[
+              exercise.key
+            ].forEach(
+              set => {
+
+                const kg =
+                  Number(
+                    set.kg
+                  ) || 0;
+
+
+                const reps =
+                  Number(
+                    set.reps
+                  ) || 0;
+
+
+                if (
+                  kg > bestKg
+                ) {
+
+                  bestKg =
+                    kg;
+
+                  bestReps =
+                    reps;
+
+                }
+
+                else if (
+                  kg === bestKg &&
+                  reps > bestReps
+                ) {
+
+                  bestReps =
+                    reps;
+
+                }
+
+
+                totalVolume +=
+                  kg *
+                  reps;
+
+
+                if (
+                  kg ||
+                  reps
+                ) {
+
+                  totalSets++;
+
+                }
+
+              }
+            );
+
+          }
+        );
 
 
         const card =
@@ -3061,7 +3293,9 @@
             <div class="progress-exercise-best">
               ${
                 bestKg
-                  ? bestKg.toFixed(1) +
+                  ? bestKg.toFixed(
+                      1
+                    ) +
                     " kg"
                   : "—"
               }
@@ -3083,7 +3317,9 @@
                   bestKg
                     ? bestReps +
                       " × " +
-                      bestKg.toFixed(1)
+                      bestKg.toFixed(
+                        1
+                      )
                     : "—"
                 }
               </div>
@@ -3139,10 +3375,22 @@
 
 
   /* =========================================================
-     HISTORIAL
+     HISTORIAL — LLISTA
   ========================================================= */
 
-  function renderHistory() {
+  function showHistoryList() {
+
+    document.getElementById(
+      "historyList"
+    ).style.display =
+      "block";
+
+
+    document.getElementById(
+      "historyDetail"
+    ).style.display =
+      "none";
+
 
     const list =
       document.getElementById(
@@ -3159,7 +3407,9 @@
 
 
     const dates =
-      Object.keys(data)
+      Object.keys(
+        data
+      )
         .sort()
         .reverse();
 
@@ -3172,7 +3422,7 @@
 
         <div class="card">
 
-          <div class="empty-state">
+          <div class="detail-empty">
             Encara no tens cap dia registrat.
           </div>
 
@@ -3190,7 +3440,9 @@
 
         const day =
           normalizeDay(
-            data[dateKey]
+            data[
+              dateKey
+            ]
           );
 
 
@@ -3256,7 +3508,9 @@
           <div class="history-top">
 
             <div class="history-date">
-              ${formatDate(dateKey)}
+              ${formatDate(
+                dateKey
+              )}
             </div>
 
             <div class="history-weight">
@@ -3264,10 +3518,16 @@
               ${
                 typeof day.weight ===
                 "number"
-                  ? day.weight.toFixed(1) +
+                  ? day.weight.toFixed(
+                      1
+                    ) +
                     " kg"
                   : "—"
               }
+
+              <span class="history-arrow">
+                ›
+              </span>
 
             </div>
 
@@ -3296,6 +3556,18 @@
         `;
 
 
+        item.addEventListener(
+          "click",
+          () => {
+
+            showHistoryDetail(
+              dateKey
+            );
+
+          }
+        );
+
+
         list.appendChild(
           item
         );
@@ -3304,6 +3576,422 @@
     );
 
   }
+
+
+  /* =========================================================
+     HISTORIAL — DETALL
+  ========================================================= */
+
+  function showHistoryDetail(
+    dateKey
+  ) {
+
+    const data =
+      loadData();
+
+
+    const day =
+      normalizeDay(
+        data[
+          dateKey
+        ]
+      );
+
+
+    document.getElementById(
+      "historyList"
+    ).style.display =
+      "none";
+
+
+    document.getElementById(
+      "historyDetail"
+    ).style.display =
+      "block";
+
+
+    document.getElementById(
+      "detailDate"
+    ).textContent =
+      formatDate(
+        dateKey
+      );
+
+
+    document.getElementById(
+      "detailTitle"
+    ).textContent =
+      "Resum del dia";
+
+
+    let activityText =
+      "Sense activitat";
+
+
+    if (
+      day.activity ===
+      "hiit"
+    ) {
+
+      activityText =
+        "HIIT";
+
+    }
+
+
+    if (
+      day.activity ===
+      "strength"
+    ) {
+
+      activityText =
+        "Força";
+
+    }
+
+
+    if (
+      day.activity ===
+      "rest"
+    ) {
+
+      activityText =
+        "Descans";
+
+    }
+
+
+    const mealCount =
+      Object.values(
+        day.meals
+      ).filter(
+        Boolean
+      ).length;
+
+
+    const stats =
+      document.getElementById(
+        "detailStats"
+      );
+
+
+    stats.innerHTML = `
+
+      <div class="detail-stat">
+
+        <div class="detail-stat-label">
+          Pes
+        </div>
+
+        <div class="detail-stat-value">
+          ${
+            typeof day.weight ===
+            "number"
+              ? day.weight.toFixed(
+                  1
+                ) +
+                " kg"
+              : "—"
+          }
+        </div>
+
+      </div>
+
+
+      <div class="detail-stat">
+
+        <div class="detail-stat-label">
+          Activitat
+        </div>
+
+        <div class="detail-stat-value">
+          ${activityText}
+        </div>
+
+      </div>
+
+
+      <div class="detail-stat">
+
+        <div class="detail-stat-label">
+          Alimentació
+        </div>
+
+        <div class="detail-stat-value">
+          ${mealCount}/8
+        </div>
+
+      </div>
+
+
+      <div class="detail-stat">
+
+        <div class="detail-stat-label">
+          Son
+        </div>
+
+        <div class="detail-stat-value">
+          ${
+            typeof day.sleep ===
+            "number"
+              ? day.sleep +
+                " h"
+              : "—"
+          }
+        </div>
+
+      </div>
+
+    `;
+
+
+    /* MENJARS */
+
+    const meals =
+      document.getElementById(
+        "detailMeals"
+      );
+
+
+    meals.innerHTML =
+      "";
+
+
+    mealDefinitions.forEach(
+      meal => {
+
+        const row =
+          document.createElement(
+            "div"
+          );
+
+
+        row.className =
+          "detail-meal-row";
+
+
+        const done =
+          Boolean(
+            day.meals[
+              meal.key
+            ]
+          );
+
+
+        row.innerHTML = `
+
+          <div>
+            ${meal.name}
+          </div>
+
+          <div
+            class="detail-check ${
+              done
+                ? "done"
+                : "not-done"
+            }">
+
+            ${
+              done
+                ? "✓"
+                : "—"
+            }
+
+          </div>
+
+        `;
+
+
+        meals.appendChild(
+          row
+        );
+
+      }
+    );
+
+
+    /* FORÇA */
+
+    const strengthSection =
+      document.getElementById(
+        "detailStrengthSection"
+      );
+
+
+    const strengthContainer =
+      document.getElementById(
+        "detailStrength"
+      );
+
+
+    strengthContainer.innerHTML =
+      "";
+
+
+    const hasStrength =
+      day.activity ===
+      "strength" &&
+      exercises.some(
+        exercise =>
+          Array.isArray(
+            day.strength[
+              exercise.key
+            ]
+          ) &&
+          day.strength[
+            exercise.key
+          ].length > 0
+      );
+
+
+    if (
+      hasStrength
+    ) {
+
+      strengthSection.style.display =
+        "block";
+
+
+      exercises.forEach(
+        exercise => {
+
+          const sets =
+            day.strength[
+              exercise.key
+            ] || [];
+
+
+          if (
+            sets.length === 0
+          ) {
+
+            return;
+
+          }
+
+
+          const card =
+            document.createElement(
+              "div"
+            );
+
+
+          card.className =
+            "detail-exercise";
+
+
+          const volume =
+            calculateVolume(
+              sets
+            );
+
+
+          card.innerHTML = `
+
+            <div class="detail-exercise-header">
+
+              <div class="detail-exercise-name">
+                ${exercise.name}
+              </div>
+
+              <div class="detail-exercise-volume">
+                ${volume.toFixed(0)} kg
+              </div>
+
+            </div>
+
+
+            <div class="detail-sets"></div>
+
+          `;
+
+
+          const setsContainer =
+            card.querySelector(
+              ".detail-sets"
+            );
+
+
+          sets.forEach(
+            (
+              set,
+              index
+            ) => {
+
+              const row =
+                document.createElement(
+                  "div"
+                );
+
+
+              row.className =
+                "detail-set";
+
+
+              row.innerHTML = `
+
+                <div class="detail-set-number">
+                  ${index + 1}
+                </div>
+
+                <div>
+                  ${
+                    set.reps !== ""
+                      ? set.reps +
+                        " repeticions"
+                      : "—"
+                  }
+                </div>
+
+                <div>
+                  ${
+                    set.kg !== ""
+                      ? set.kg +
+                        " kg"
+                      : "—"
+                  }
+                </div>
+
+              `;
+
+
+              setsContainer.appendChild(
+                row
+              );
+
+            }
+          );
+
+
+          strengthContainer.appendChild(
+            card
+          );
+
+        }
+      );
+
+    }
+
+    else {
+
+      strengthSection.style.display =
+        "none";
+
+    }
+
+  }
+
+
+  document.getElementById(
+    "backToHistory"
+  ).addEventListener(
+    "click",
+    () => {
+
+      showHistoryList();
+
+    }
+  );
 
 
   /* =========================================================

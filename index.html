@@ -3974,6 +3974,11 @@ function closeHistoryDetail() {
 
 function renderGoals() {
 
+  document.getElementById(
+    "goalWeightInput"
+  ).value =
+    goals.weight ?? "";
+
   renderWeightGoal();
 
   renderStrengthGoals();

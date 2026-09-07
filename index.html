@@ -559,6 +559,57 @@
       padding-top: 10px;
     }
 
+    .heatmap-scroll {
+      overflow-x: auto;
+      padding: 12px 0 8px;
+    }
+
+    .heatmap-grid {
+      display: grid;
+      grid-template-columns: repeat(53, 16px);
+      grid-template-rows: repeat(7, 16px);
+      grid-auto-flow: column;
+      gap: 3px;
+      width: max-content;
+    }
+
+    .heatmap-day {
+      width: 16px;
+      height: 16px;
+      padding: 0;
+      border: 0;
+      border-radius: 5px;
+      background: var(--border);
+      cursor: pointer;
+    }
+
+    .heatmap-day.level-1 { background: color-mix(in srgb, var(--accent) 25%, var(--soft)); }
+    .heatmap-day.level-2 { background: color-mix(in srgb, var(--accent) 45%, var(--soft)); }
+    .heatmap-day.level-3 { background: color-mix(in srgb, var(--accent) 70%, var(--soft)); }
+    .heatmap-day.level-4 { background: var(--accent); }
+
+    .heatmap-legend {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      color: var(--secondary);
+      font-size: 11px;
+    }
+
+    .heatmap-legend span {
+      width: 11px;
+      height: 11px;
+      border-radius: 4px;
+      background: var(--border);
+    }
+
+    .heatmap-detail {
+      margin-top: 10px;
+      font-size: 12px;
+      line-height: 1.5;
+      color: var(--secondary);
+    }
+
     .chart-title {
       font-size: 12px;
       color: var(--secondary);
@@ -1213,6 +1264,16 @@
           </div>
 
           <div class="stat">
+            <div class="stat-value" id="progressMonthChange">—</div>
+            <div class="stat-label">Últim mes</div>
+          </div>
+
+          <div class="stat">
+            <div class="stat-value" id="progressWeightTrend">—</div>
+            <div class="stat-label">Tendència</div>
+          </div>
+
+          <div class="stat">
             <div
               class="stat-value"
               id="progressDays"
@@ -1311,6 +1372,14 @@
 
       </div>
 
+
+      <div class="card">
+        <div class="card-title">Constància</div>
+        <div class="input-description">
+          Activitat i registre dels últims 12 mesos
+        </div>
+        <div id="consistencyHeatmap"></div>
+      </div>
 
       <div id="strengthProgressList"></div>
 
@@ -3378,6 +3447,163 @@ function updateDailySummary() {
     "dailyRingText"
   ).textContent =
     `${percentage}%`;
+
+}
+
+
+
+function getWeightRecords() {
+
+  return Object.keys(data)
+    .sort()
+    .map(date => ({
+      date,
+      weight: Number(normalizeDay(data[date]).weight)
+    }))
+    .filter(record =>
+      Number.isFinite(record.weight) &&
+      record.weight > 0
+    );
+
+}
+
+
+
+function formatSignedWeight(value, suffix = " kg") {
+
+  if (!Number.isFinite(value))
+    return "—";
+
+  return `${value > 0 ? "+" : ""}${value.toFixed(1)}${suffix}`;
+
+}
+
+
+
+function updateWeightTrend(records) {
+
+  const monthElement = document.getElementById("progressMonthChange");
+  const trendElement = document.getElementById("progressWeightTrend");
+
+  if (records.length < 2) {
+    monthElement.textContent = "—";
+    trendElement.textContent = "—";
+    return;
+  }
+
+  const first = records[0];
+  const latest = records[records.length - 1];
+  const latestDate = new Date(latest.date + "T12:00:00");
+  const target = new Date(latestDate);
+  target.setDate(target.getDate() - 30);
+  const monthReference = records.slice(0, -1).reduce(
+    (closest, record) => {
+      const distance = Math.abs(
+        new Date(record.date + "T12:00:00") - target
+      );
+      return !closest || distance < closest.distance
+        ? { record, distance }
+        : closest;
+    },
+    null
+  );
+
+  monthElement.textContent = monthReference
+    ? formatSignedWeight(latest.weight - monthReference.record.weight)
+    : "—";
+
+  const elapsedDays = Math.round(
+    (latestDate - new Date(first.date + "T12:00:00")) /
+    86400000
+  );
+
+  trendElement.textContent = elapsedDays > 0
+    ? formatSignedWeight(
+        ((latest.weight - first.weight) / elapsedDays) * 7,
+        " kg/setmana"
+      )
+    : "—";
+
+}
+
+
+
+function getDayConsistency(day) {
+
+  const normalized = normalizeDay(day);
+  const mealCount = meals.filter(([key]) => normalized.meals[key]).length;
+  const hasWeight = Number(normalized.weight) > 0;
+  const hasSleep = Number(normalized.sleep) > 0;
+  const hasActivity = !!normalized.activity;
+  const hasStrength = Object.values(normalized.strength).some(
+    sets => getValidExerciseSets(sets).length > 0
+  );
+  const types = [hasWeight, hasSleep, mealCount > 0, hasActivity, hasStrength]
+    .filter(Boolean).length;
+
+  if (!types) return 0;
+  if (hasStrength && hasWeight && hasSleep && mealCount >= 6) return 4;
+  if (hasStrength || (hasActivity && (hasWeight || hasSleep || mealCount >= 4)) || mealCount >= 6) return 3;
+  if (hasActivity || mealCount >= 4 || types >= 3) return 2;
+  return 1;
+
+}
+
+
+
+function getDaySummary(date, day) {
+
+  if (!day || getDayConsistency(day) === 0)
+    return `${formatDate(date)} · Sense dades registrades`;
+
+  const normalized = normalizeDay(day);
+  const mealCount = meals.filter(([key]) => normalized.meals[key]).length;
+  const parts = [];
+  if (Number(normalized.weight) > 0) parts.push(`${Number(normalized.weight).toFixed(1)} kg`);
+  if (normalized.activity) parts.push(activityLabel(normalized.activity));
+  if (Number(normalized.sleep) > 0) parts.push(`${normalized.sleep} h de son`);
+  if (mealCount) parts.push(`${mealCount}/8 alimentació`);
+  return `${formatDate(date)} · ${parts.join(" · ")}`;
+
+}
+
+
+
+function renderConsistencyHeatmap() {
+
+  const container = document.getElementById("consistencyHeatmap");
+  const today = new Date();
+  today.setHours(12, 0, 0, 0);
+  const start = new Date(today);
+  start.setDate(start.getDate() - 364);
+  const days = [];
+
+  for (let offset = 0; offset < 365; offset++) {
+    const date = new Date(start);
+    date.setDate(start.getDate() + offset);
+    const key = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+    days.push({ key, day: data[key], level: data[key] ? getDayConsistency(data[key]) : 0 });
+  }
+
+  container.innerHTML = `
+    <div class="heatmap-scroll">
+      <div class="heatmap-grid">
+        ${days.map(item => `
+          <button type="button" class="heatmap-day level-${item.level}" data-date="${item.key}" aria-label="${item.key}"></button>
+        `).join("")}
+      </div>
+    </div>
+    <div class="heatmap-legend">
+      Menys <span></span><span class="level-1"></span><span class="level-2"></span><span class="level-3"></span><span class="level-4"></span> Més
+    </div>
+    <div class="heatmap-detail">Toca un dia per veure el resum.</div>
+  `;
+
+  container.querySelectorAll(".heatmap-day").forEach(button => {
+    button.addEventListener("click", () => {
+      container.querySelector(".heatmap-detail").textContent = getDaySummary(button.dataset.date, data[button.dataset.date]);
+    });
+  });
 
 }
 

@@ -479,15 +479,18 @@
       font-weight: 650;
     }
 
-    .comparison.up {
+    .comparison.up,
+    .comparison-metric.up {
       color: var(--green);
     }
 
-    .comparison.down {
+    .comparison.down,
+    .comparison-metric.down {
       color: var(--red);
     }
 
-    .comparison.same {
+    .comparison.same,
+    .comparison-metric.same {
       color: var(--secondary);
     }
 
@@ -495,6 +498,60 @@
       margin-top: 7px;
       font-size: 12px;
       color: var(--secondary);
+    }
+
+    .session-comparison {
+      margin-top: 10px;
+      padding: 12px;
+      border-radius: 14px;
+      background: var(--card);
+      border: 1px solid var(--border);
+    }
+
+    .session-summary {
+      margin-top: 4px;
+      font-size: 12px;
+      color: var(--secondary);
+    }
+
+    .comparison-grid,
+    .personal-best-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .comparison-metric,
+    .personal-best-item {
+      padding: 9px;
+      border-radius: 11px;
+      background: var(--soft);
+    }
+
+    .comparison-metric-label,
+    .personal-best-label,
+    .personal-best-date {
+      font-size: 11px;
+      color: var(--secondary);
+    }
+
+    .comparison-metric-value,
+    .personal-best-value {
+      margin-top: 3px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .personal-best-title {
+      margin-top: 14px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--secondary);
+    }
+
+    .personal-best-date {
+      margin-top: 3px;
     }
 
     .chart {
@@ -1954,9 +2011,9 @@ function getBestKg(sets) {
 
 
 
-function getExerciseSessionMetrics(sets) {
+function getValidExerciseSets(sets) {
 
-  const validSets =
+  return (
     (Array.isArray(sets)
       ? sets
       : []
@@ -1979,7 +2036,18 @@ function getExerciseSessionMetrics(sets) {
       set =>
         set.reps > 0 ||
         set.kg > 0
-    );
+    )
+
+  );
+
+}
+
+
+
+function getExerciseSessionMetrics(sets) {
+
+  const validSets =
+    getValidExerciseSets(sets);
 
 
   const totalReps =
@@ -2040,6 +2108,215 @@ function formatMetricValue(value, unit) {
   return unit
     ? `${formatted} ${unit}`
     : formatted;
+
+}
+
+
+
+function getComparisonMetric(
+  label,
+  current,
+  previous,
+  unit,
+  showPercent = false
+) {
+
+  if (
+    !Number.isFinite(current) ||
+    !Number.isFinite(previous) ||
+    previous <= 0
+  ) {
+
+    return {
+      label,
+      className: "same",
+      text: "Sense referència"
+    };
+
+  }
+
+
+  const difference =
+    current - previous;
+
+
+  if (difference === 0) {
+
+    return {
+      label,
+      className: "same",
+      text: "→ Igual"
+    };
+
+  }
+
+
+  const direction =
+    difference > 0
+      ? "↑"
+      : "↓";
+
+
+  const absolute =
+    formatMetricValue(
+      Math.abs(difference),
+      unit
+    );
+
+
+  const percentage =
+    ((Math.abs(difference) / previous) * 100)
+      .toFixed(1);
+
+
+  return {
+    label,
+    className:
+      difference > 0
+        ? "up"
+        : "down",
+    text:
+      showPercent
+        ? `${direction} ${percentage}% (${absolute})`
+        : `${direction} ${absolute}`
+  };
+
+}
+
+
+
+function getSessionComparison(
+  currentSets,
+  previousSets
+) {
+
+  const current =
+    getExerciseSessionMetrics(
+      currentSets
+    );
+
+
+  const previous =
+    getExerciseSessionMetrics(
+      previousSets
+    );
+
+
+  if (
+    !current.sets ||
+    !previous.sets
+  ) {
+
+    return null;
+
+  }
+
+
+  return {
+    current,
+    previous,
+    metrics: [
+      getComparisonMetric(
+        "Pes màxim",
+        current.weight,
+        previous.weight,
+        "kg"
+      ),
+      getComparisonMetric(
+        "Repeticions",
+        current.reps,
+        previous.reps,
+        "reps"
+      ),
+      getComparisonMetric(
+        "Sèries",
+        current.sets,
+        previous.sets,
+        "sèries"
+      ),
+      getComparisonMetric(
+        "Volum",
+        current.volume,
+        previous.volume,
+        "kg",
+        true
+      )
+    ]
+  };
+
+}
+
+
+
+function getExercisePersonalBests(exerciseKey) {
+
+  const bests = {
+    weight: null,
+    reps: null,
+    kgReps: null,
+    volume: null
+  };
+
+
+  getAllExerciseSessions(
+    exerciseKey
+  ).forEach(
+    session => {
+
+      const sets =
+        getValidExerciseSets(
+          session.sets
+        );
+
+
+      const metrics =
+        getExerciseSessionMetrics(sets);
+
+
+      const values = {
+        weight:
+          metrics.weight,
+        reps:
+          sets.length
+            ? Math.max(
+                ...sets.map(
+                  set => set.reps
+                )
+              )
+            : 0,
+        kgReps:
+          metrics.kgReps,
+        volume:
+          metrics.volume
+      };
+
+
+      Object.keys(bests).forEach(
+        key => {
+
+          if (
+            values[key] > 0 &&
+            (
+              !bests[key] ||
+              values[key] >= bests[key].value
+            )
+          ) {
+
+            bests[key] = {
+              value: values[key],
+              date: session.date
+            };
+
+          }
+
+        }
+      );
+
+    }
+  );
+
+
+  return bests;
 
 }
 
@@ -2255,6 +2532,15 @@ function renderExercises() {
       const volume =
         getExerciseVolume(sets);
 
+      const sessionComparison =
+        previous
+          ? getSessionComparison(
+              sets,
+              previous.sets
+            )
+          : null;
+
+
       const card =
         document.createElement("div");
 
@@ -2329,19 +2615,68 @@ function renderExercises() {
 
                 </div>
 
-                <div class="comparison ${
-                  getComparisonClass(
-                    sets,
-                    previous.sets
-                  )
-                }">
+                ${
+                  sessionComparison
+                    ? `
+                      <div class="session-comparison">
 
-                  ${getComparisonText(
-                    sets,
-                    previous.sets
-                  )}
+                        <div class="last-session-title">
+                          Comparació amb l'última sessió
+                        </div>
 
-                </div>
+                        <div class="session-summary">
+                          Última: ${formatMetricValue(
+                            sessionComparison.previous.weight,
+                            "kg"
+                          )} · ${formatMetricValue(
+                            sessionComparison.previous.reps,
+                            "reps"
+                          )} · ${formatMetricValue(
+                            sessionComparison.previous.sets,
+                            "sèries"
+                          )} · Volum ${formatMetricValue(
+                            sessionComparison.previous.volume,
+                            "kg"
+                          )}
+                        </div>
+
+                        <div class="session-summary">
+                          Aquesta: ${formatMetricValue(
+                            sessionComparison.current.weight,
+                            "kg"
+                          )} · ${formatMetricValue(
+                            sessionComparison.current.reps,
+                            "reps"
+                          )} · ${formatMetricValue(
+                            sessionComparison.current.sets,
+                            "sèries"
+                          )} · Volum ${formatMetricValue(
+                            sessionComparison.current.volume,
+                            "kg"
+                          )}
+                        </div>
+
+                        <div class="comparison-grid">
+
+                          ${sessionComparison.metrics.map(
+                            item => `
+                              <div class="comparison-metric ${item.className}">
+                                <div class="comparison-metric-label">
+                                  ${item.label}
+                                </div>
+                                <div class="comparison-metric-value">
+                                  ${item.text}
+                                </div>
+                              </div>
+                            `
+                          ).join("")}
+
+                        </div>
+
+                      </div>
+                    `
+                    : ""
+                }
 
               </div>
             `
@@ -2701,57 +3036,68 @@ function getPersonalBestHTML(
   exerciseKey
 ) {
 
-  const sessions =
-    getAllExerciseSessions(
+  const bests =
+    getExercisePersonalBests(
       exerciseKey
     );
 
-  if (!sessions.length)
-    return "";
 
-  let bestKg = 0;
-
-  let bestDate = null;
-
-  let bestSet = null;
-
-
-  sessions.forEach(
-    session => {
-
-      const kg =
-        getBestKg(session.sets);
-
-      if (kg > bestKg) {
-
-        bestKg = kg;
-
-        bestDate =
-          session.date;
-
-        bestSet =
-          getBestSet(
-            session.sets
-          );
-
-      }
-
+  const items = [
+    {
+      label: "Pes màxim",
+      record: bests.weight,
+      unit: "kg"
+    },
+    {
+      label: "Màx. reps",
+      record: bests.reps,
+      unit: "reps"
+    },
+    {
+      label: "Millor kg × reps",
+      record: bests.kgReps,
+      unit: "kg × reps"
+    },
+    {
+      label: "Major volum",
+      record: bests.volume,
+      unit: "kg"
     }
+  ].filter(
+    item => item.record
   );
 
 
-  if (!bestKg || !bestSet)
+  if (!items.length)
     return "";
 
 
   return `
 
-    <div class="personal-best">
+    <div class="personal-best-title">
+      Millors marques
+    </div>
 
-      🏆 Millor marca:
-      ${bestSet.reps} ×
-      ${bestSet.kg} kg
-      · ${shortDate(bestDate)}
+    <div class="personal-best-grid">
+
+      ${items.map(
+        item => `
+          <div class="personal-best-item">
+            <div class="personal-best-label">
+              ${item.label}
+            </div>
+            <div class="personal-best-value">
+              ${formatMetricValue(
+                item.record.value,
+                item.unit
+              )}
+            </div>
+            <div class="personal-best-date">
+              ${shortDate(item.record.date)}
+            </div>
+          </div>
+        `
+      ).join("")}
 
     </div>
 

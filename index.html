@@ -566,6 +566,25 @@
       box-shadow: 0 1px 4px rgba(0,0,0,0.08);
     }
 
+    .metric-selector {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      background: var(--soft);
+      padding: 4px;
+      border-radius: 13px;
+      margin-top: 15px;
+    }
+
+    .metric-detail {
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 13px;
+      background: var(--soft);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
     .stat-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -1569,11 +1588,47 @@ const exercises = [
 ];
 
 
+const exerciseMetrics = [
+  {
+    key: "weight",
+    label: "Pes (kg)",
+    unit: "kg"
+  },
+  {
+    key: "kgReps",
+    label: "Kg × reps",
+    unit: "kg × reps"
+  },
+  {
+    key: "reps",
+    label: "Repeticions",
+    unit: "reps"
+  },
+  {
+    key: "sets",
+    label: "Sèries",
+    unit: "sèries"
+  },
+  {
+    key: "repsSets",
+    label: "Reps × sèries",
+    unit: "reps × sèries"
+  },
+  {
+    key: "volume",
+    label: "Volum total",
+    unit: "kg"
+  }
+];
+
+
 let data = loadData();
 
 let goals = loadGoals();
 
 let selectedRange = 30;
+
+let selectedExerciseMetrics = {};
 
 let currentHistoryDate = null;
 
@@ -1894,6 +1949,97 @@ function getBestKg(sets) {
       set => Number(set.kg) || 0
     )
   );
+
+}
+
+
+
+function getExerciseSessionMetrics(sets) {
+
+  const validSets =
+    (Array.isArray(sets)
+      ? sets
+      : []
+    ).map(
+      set => ({
+        reps:
+          Number.isFinite(
+            Number(set.reps)
+          )
+            ? Number(set.reps)
+            : 0,
+        kg:
+          Number.isFinite(
+            Number(set.kg)
+          )
+            ? Number(set.kg)
+            : 0
+      })
+    ).filter(
+      set =>
+        set.reps > 0 ||
+        set.kg > 0
+    );
+
+
+  const totalReps =
+    validSets.reduce(
+      (total, set) =>
+        total + set.reps,
+      0
+    );
+
+
+  const series =
+    validSets.length;
+
+
+  const kgReps =
+    validSets.length
+      ? Math.max(
+          ...validSets.map(
+            set =>
+              set.kg * set.reps
+          )
+        )
+      : 0;
+
+
+  return {
+    weight:
+      getBestKg(validSets),
+    kgReps,
+    reps:
+      totalReps,
+    sets:
+      series,
+    repsSets:
+      totalReps * series,
+    volume:
+      getExerciseVolume(validSets)
+  };
+
+}
+
+
+
+function formatMetricValue(value, unit) {
+
+  const safeValue =
+    Number.isFinite(value)
+      ? value
+      : 0;
+
+
+  const formatted =
+    Number.isInteger(safeValue)
+      ? safeValue.toFixed(0)
+      : safeValue.toFixed(1);
+
+
+  return unit
+    ? `${formatted} ${unit}`
+    : formatted;
 
 }
 
@@ -3420,6 +3566,27 @@ function renderStrengthProgress() {
       }
 
 
+      const selectedMetricKey =
+        selectedExerciseMetrics[key] ||
+        "weight";
+
+
+      const metric =
+        exerciseMetrics.find(
+          item =>
+            item.key === selectedMetricKey
+        ) || exerciseMetrics[0];
+
+
+      const sessionMetrics =
+        sessions.map(
+          session =>
+            getExerciseSessionMetrics(
+              session.sets
+            )
+        );
+
+
       const bestKg =
         Math.max(
           ...sessions.flatMap(
@@ -3559,28 +3726,175 @@ function renderStrengthProgress() {
         <div class="chart">
 
           <div class="chart-title">
-            Evolució del pes màxim
+            Mètrica del gràfic
           </div>
 
-          ${createLineChart(
-            sessions.map(
-              session =>
-                getBestKg(
-                  session.sets
-                )
-            ),
-            sessions.map(
-              session =>
-                shortDate(
-                  session.date
-                )
-            ),
-            "kg"
-          )}
+          <div class="metric-selector">
+
+            ${exerciseMetrics.map(
+              item => `
+                <button
+                  type="button"
+                  class="range-btn metric-btn ${
+                    item.key === metric.key
+                      ? "selected"
+                      : ""
+                  }"
+                  data-metric="${item.key}"
+                >
+                  ${item.label}
+                </button>
+              `
+            ).join("")}
+
+          </div>
+
+          <div class="chart-title" style="margin-top:15px;">
+            Evolució: ${metric.label}
+          </div>
+
+          <div class="exercise-metric-chart">
+
+            ${createLineChart(
+              sessionMetrics.map(
+                values =>
+                  values[metric.key]
+              ),
+              sessions.map(
+                session =>
+                  shortDate(
+                    session.date
+                  )
+              ),
+              metric.unit
+            )}
+
+          </div>
+
+          <div class="metric-detail" aria-live="polite">
+            Toca un punt del gràfic per veure el detall de l'entrenament.
+          </div>
 
         </div>
 
       `;
+
+
+      card
+        .querySelectorAll(
+          ".metric-btn"
+        )
+        .forEach(
+          button => {
+
+            button.addEventListener(
+              "click",
+              () => {
+
+                selectedExerciseMetrics[key] =
+                  button.dataset.metric;
+
+                renderStrengthProgress();
+
+              }
+            );
+
+          }
+        );
+
+
+      const detail =
+        card.querySelector(
+          ".metric-detail"
+        );
+
+
+      const showSessionDetail =
+        index => {
+
+          const session =
+            sessions[index];
+
+          const values =
+            sessionMetrics[index];
+
+          if (!session || !values)
+            return;
+
+          detail.innerHTML = `
+
+            <strong>
+              ${formatDate(session.date)} ·
+              ${formatMetricValue(
+                values[metric.key],
+                metric.unit
+              )}
+            </strong>
+            <br>
+            Pes màxim: ${formatMetricValue(
+              values.weight,
+              "kg"
+            )}
+            · Reps: ${formatMetricValue(
+              values.reps,
+              ""
+            )}
+            · Sèries: ${formatMetricValue(
+              values.sets,
+              ""
+            )}
+            · Volum: ${formatMetricValue(
+              values.volume,
+              "kg"
+            )}
+
+          `;
+
+        };
+
+
+      const chart =
+        card.querySelector(
+          ".exercise-metric-chart svg"
+        );
+
+
+      if (chart) {
+
+        chart.addEventListener(
+          "click",
+          event => {
+
+            const rect =
+              chart.getBoundingClientRect();
+
+
+            const position =
+              Math.max(
+                0,
+                Math.min(
+                  1,
+                  (event.clientX - rect.left) /
+                  rect.width
+                )
+              );
+
+
+            const index =
+              sessions.length === 1
+                ? 0
+                : Math.round(
+                    position *
+                    (sessions.length - 1)
+                  );
+
+
+            showSessionDetail(index);
+
+          }
+        );
+
+      }
 
 
       container.appendChild(card);
